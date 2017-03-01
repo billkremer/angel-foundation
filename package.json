@@ -1,0 +1,32 @@
+{
+  "name": "angel-foundation",
+  "version": "1.0.0",
+  "description": "Angel Foundation Emergency Finacial Assistance Reporting Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/billkremer/angel-foundation.git"
+  },
+  "keywords": [
+    "Angel",
+    "Foundation",
+    "Emergency",
+    "Financial",
+    "Assistance",
+    "EFA"
+  ],
+  "author": "Bill Kremer <bill.kremer.csp@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/billkremer/angel-foundation/issues"
+  },
+  "homepage": "https://github.com/billkremer/angel-foundation#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "pg": "^6.1.2"
+  }
+}
