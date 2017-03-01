@@ -3,11 +3,11 @@ var bodyParser = require('body-parser');
 var path = require('path');
 
 
-var connection = require('./db/connection');
+// var connection = require('./db/connection');
 
 
 
-connection.connect();
+// connection.connect();
 
 var app = express();
 
