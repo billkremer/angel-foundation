@@ -1,6 +1,6 @@
-angular.module("AngelApp").controller("CustomReportController", ['$location','$http',
+angular.module("AngelApp").controller("DataVisController", ['$location','$http',
   function($location,$http) {
-    console.log('custom controller loaded');
+    console.log('Data vis controller loaded');
 
     var vm=this;
 
