@@ -12,12 +12,20 @@
   <button>All</button>
   <button>Addendum</button>
 
-  <input type="file" placeholder="File upload" />
-  <input type="submit" value="Submit" placeholder="Upload">
+
 
 </div>
 
-<ng-csv-import content="csv.content"
+<ng-csv-import content="uploadCtrl.csv.content"
+    material
+    md-button-class="md-icon-button md-raised md-accent"
     header="csv.header"
     separator="csv.separator"
-    result="csv.result"></ng-csv-import>
+    result="uploadCtrl.csv.result"
+      id="uploader"
+    >
+    <!-- <input type="file" placeholder="File upload" />
+      <input type="submit" value="Submit" placeholder="Upload"> -->
+    </ng-csv-import>
+    <button ng-click="uploadCtrl.test()">button</button>
+    {{csv.result}}
