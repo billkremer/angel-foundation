@@ -1,6 +1,6 @@
-angular.module("AngelApp").controller("UploadReportController", ['$location','$http',
+angular.module("AngelApp").controller("CustomReportController", ['$location','$http',
   function($location,$http) {
-    console.log('upload controller loaded');
+    console.log('custom controller loaded');
 
     var vm=this;
 
