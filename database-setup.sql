@@ -16,7 +16,7 @@ CREATE TABLE patient (
 );
 
 CREATE TABLE users (
-  users_id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   username varchar (50),
   password varchar (300)
 );
