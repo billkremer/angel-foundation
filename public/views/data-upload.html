@@ -1,18 +1,32 @@
-
 <div class="container-fluid">
   <div class="col-md-3 col-xs-12">
     logo
   </div>
-  <div class="col-md-2 col-md-offset-7 col-xs-12">
-    menu button
+  <div class="dropdown">
+    <div class="col-md-2 col-md-offset-7 col-xs-12">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="/">Standard Reports</a></li>
+        <li><a href="/custom-report">Custom Reports</a></li>
+        <li><a href="/data-upload">Upload</a></li>
+      </ul>
+    </div>
   </div>
 </div>
-<div class=container>
 
-  <button>All</button>
-  <button>Addendum</button>
+<div class="container">
+  <div class = "row">
+    <div id="inputOptions" >
+      <button class = "btn-default col-sm-2 col-sm-offset-3">All</button>
+      <button class = "btn-default col-sm-2 col-sm-offset-2">Addendum</button>
+      <br />
+      <input type="file" placeholder="File upload" class = "col-sm-4 col-sm-offset-3"/>
+      <input type="submit" value="Submit" placeholder="Upload" class = "btn-primary col-sm-2 ">
+    </div>
+  </div>
 
-  <input type="file" placeholder="File upload" />
-  <input type="submit" value="Submit" placeholder="Upload">
+
 
 </div>
