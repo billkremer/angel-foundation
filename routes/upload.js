@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var pg = require('pg');
-var config = {database: 'Angel_Data_Reporting'};
+var config = {database: 'angel_data_reporting'};
 var pool = new pg.Pool(config);
 
 router.post('/', function(req, res) {
@@ -27,3 +27,4 @@ router.post('/', function(req, res) {
     }
   })
 })
+module.exports=router;

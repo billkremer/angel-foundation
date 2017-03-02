@@ -7,21 +7,17 @@ var pg = require('pg');
 
 
 var connection = require('./db/connection');
-<<<<<<< HEAD
-=======
-var upload = require('./routes/upload');
->>>>>>> 47921e448613e919bea684d0e2944c9604cc4ba5
+
 
 require('./auth/setup');
 
-<<<<<<< HEAD
-//routes
-var upload = require('./routes/upload.js');
 
-// connection.connect();
-=======
+//routes
+var upload = require('./routes/upload');
+
+
 connection.connect();
->>>>>>> 47921e448613e919bea684d0e2944c9604cc4ba5
+
 
 var app = express();
 
@@ -43,11 +39,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // no auth needed
-app.use('/login', login);
-app.use('/register', register)
-app.get('/loginStatus', function(req, res){
-  res.send(req.isAuthenticated());
-});
+// app.use('/login', login);
+// app.use('/register', register)
+// app.get('/loginStatus', function(req, res){
+//   res.send(req.isAuthenticated());
+// });
 
 
 // the following routes require authentication
