@@ -8,6 +8,8 @@ var pg = require('pg');
 
 var connection = require('./db/connection');
 var upload = require('./routes/upload');
+var login = require('./routes/login');
+var register = require('./routes/register')
 
 require('./auth/setup');
 
@@ -35,15 +37,16 @@ app.use(passport.session());
 // no auth needed
 app.use('/login', login);
 app.use('/register', register)
-app.get('/loginStatus', function(req, res){
-  res.send(req.isAuthenticated());
-});
+app.use('/upload', upload);
+// app.get('/loginStatus', function(req, res){
+//   res.send(req.isAuthenticated());
+// });
 
 
 // the following routes require authentication
 
 // app.use('/private', ensureAuthenticated);
-app.use('/upload', upload);
+// app.use('/upload', upload);
 
 
 // app.get('/private/secretInfo', function(req, res){

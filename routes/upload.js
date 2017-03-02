@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var pg = require('pg');
-var config = {database: 'SoloProject'};
+var config = {database: 'angel_data_reporting'};
 var pool = new pg.Pool(config);
 
 router.post('/addNewQuestion', function(req, res) {
@@ -26,3 +26,5 @@ router.post('/addNewQuestion', function(req, res) {
     }
   })
 })
+
+module.exports = router;

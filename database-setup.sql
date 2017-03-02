@@ -1,5 +1,5 @@
 
-CREATE DATABASE Angel_Data_Reporting
+CREATE DATABASE angel_data_reporting
 
 CREATE TABLE patient (
   patient_id SERIAL PRIMARY KEY,
