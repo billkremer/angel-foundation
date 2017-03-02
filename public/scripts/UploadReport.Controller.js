@@ -3,23 +3,33 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
     console.log('upload controller loaded');
 
     var vm=this;
+    vm.csv = {
+          content: null,
+          header: true,
+          headerVisible: true,
+          separator: ',',
+          separatorVisible: true,
+          result: null,
+          encoding: 'ISO-8859-1',
+          encodingVisible: true,
+          accept:".csv"
+      };
 
-
-    vm.test = function(){
+    vm.upload = function($event){
+      $event.preventDefault();
       console.log(vm.csv.result);
       vm.csv.result.forEach(function(object){
-        var stringAsArray=object['0'].split(',');
             $http.post('/upload', {
-                id:stringAsArray[0],
-                age:stringAsArray[1],
-                ethnicity:stringAsArray[2],
-                status:stringAsArray[3],
-                diagnoses:stringAsArray[4],
-                grant:stringAsArray[5],
-                county:stringAsArray[6],
-                clinic:stringAsArray[7],
-                income:stringAsArray[8],
-                gender:stringAsArray[9]
+                id        :object['angel patient id'],
+                age       :object.age,
+                ethnicity :object.ethnicity,
+                status    :object['marital status'],
+                diagnoses :object.diagnoses,
+                grant     :object['grant used'],
+                county    :object.county,
+                clinic    :object.clinic,
+                income    :object.income,
+                gender    :object.gender
               }).then(function(response){
                 console.log(response);
               }, function(error) {

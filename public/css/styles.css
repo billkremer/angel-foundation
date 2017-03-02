@@ -5,10 +5,17 @@
   margin-top: 20%;
 }
 
-#inputOptions input {
+#uploadSubmit {
   margin-top: 4%;
 }
-
 #uploader{
-  background-color:yellow;
+  margin-top:4%;
+  padding:0px;
+  max-height:25px;
+
+}
+#uploadCSVInput{
+  border:none;
+  padding:0px;
+  text-align: center;
 }
