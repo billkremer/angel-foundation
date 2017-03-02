@@ -5,4 +5,8 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
     var vm=this;
 
 
+    
+
+
+
 }]);
