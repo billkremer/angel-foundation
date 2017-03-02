@@ -1,4 +1,4 @@
-var app=angular.module('AngelApp',['ngRoute']);
+var app=angular.module('AngelApp',['ngRoute','ngCsvImport']);
 
 
 app.config(function($routeProvider,$locationProvider){

@@ -11,9 +11,15 @@ var upload = require('./routes/upload');
 var login = require('./routes/login');
 var register = require('./routes/register')
 
-require('./auth/setup');
+
+
+//routes
+var upload = require('./routes/upload');
+
+
 
 connection.connect();
+
 
 var app = express();
 
@@ -63,7 +69,7 @@ function ensureAuthenticated(req, res, next) {
   };
 };
 
-
+app.use('/upload', upload);
 
 app.get('/*', function(req, res){
   res.sendFile(path.join(__dirname, 'public/views/index.html'));
