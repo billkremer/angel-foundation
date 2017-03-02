@@ -1,6 +1,6 @@
-angular.module("AngelApp").controller("DataVizController", ['$location','$http',
+angular.module("AngelApp").controller("DataVisController", ['$location','$http',
   function($location,$http) {
-    console.log('datavia controller loaded');
+    console.log('datavis controller loaded');
 
     var vm=this;
 
