@@ -15,7 +15,11 @@ CREATE TABLE patient (
   gender varchar (10)
 );
 
-
+CREATE TABLE users (
+  users_id SERIAL PRIMARY KEY,
+  username varchar (50),
+  password varchar (300)
+);
 
 
 
