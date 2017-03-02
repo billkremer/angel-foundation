@@ -4,6 +4,7 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
 
     var vm=this;
 
+    
     vm.test = function(){
       console.log(vm.csv.result);
       vm.csv.result.forEach(function(object){
