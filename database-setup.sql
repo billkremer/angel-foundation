@@ -1,5 +1,5 @@
 
-CREATE DATABASE Angel_Data_Reporting
+CREATE DATABASE Angel_Data_Reporting;
 
 CREATE TABLE patient (
   patient_id SERIAL PRIMARY KEY,
@@ -16,9 +16,9 @@ CREATE TABLE patient (
 );
 
 
-INSERT INTO "public"."patient"("patient_id","angel_patient_id","age","ethnicity","martial_status","diagnoses","grant_used","county","clinic","income","gender")
+INSERT INTO patient ("patient_id","angel_patient_id","age","ethnicity","marital_status","diagnoses","grant_used","county","clinic","income","gender")
 VALUES
-(1,1,21,E'caucasian',E'single',E'cancer',E'$1000',E'Hennipen',E'HCMC',50000,E'male'),
+(1,1,21,E'caucasian',E'single',E'cancer',E'$1000',E'Hennepin',E'HCMC',50000,E'male'),
 (2,2,40,E'hispanic',E'married',E'cancer',E'$700',E'Ramsey',E'The Hospital',70000,E'female');
 
 CREATE TABLE standard_reports (
