@@ -3,7 +3,23 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     console.log('datavis controller loaded');
 
     var vm=this;
-
+    var lowLimit=null;
+    var highLimit=null;
+    var years=["1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010"];
+    d3.select('#slider').call(d3.slider().axis(true).min(1998).max(2010).step(1).value( [ 1998, 2010 ] ).on("slide", function(evt, value) {
+      // d3.select('#slidertextmin').text(value[ 0 ]);
+      lowLimit=value[0];
+      // console.log(value[0]);
+      years=[];
+      // d3.select('#slidertextmax').text(value[ 1 ]);
+      highLimit=value[1];
+      // console.log(value[1]);
+      for(var i=0;i<value[1]-value[0]+1;i++){
+        years[i]=(value[0]+i).toString();
+      }
+      years = years.map(function(d){return parseDate.parse(d);});
+      getSelectToggleCounty();
+    }));
     //Check if info exists, by school number
     Array.prototype.returnCountyInfo = function(county){
     		for (var i = 0; i < this.length; i++) {
@@ -60,9 +76,10 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     var countyJson = {};
 
     var parseDate = d3.time.format("%Y");
-    var years = ["1998","2001","2004","2007","2010"];
-    years = years.map(function(d){return parseDate.parse(d);});
 
+    // var years = ["1998","2001","2004","2007","2010"];
+    years = years.map(function(d){return parseDate.parse(d);});
+    console.log(years);
     var width = 400,height = 430;
 
     //other functions use the projection/path for highlighting certain sections of the map
@@ -85,7 +102,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     		countyJson=mn;
     		d3.csv("data/regionData.csv", function(errorC, regionData){
     			allRegionInfo=regionData;
-    			d3.csv("data/ruralPostSecondary-condensed.csv", function(errorC, studentData){
+    			d3.csv("data/testdata.csv", function(errorC, studentData){
     				allCountyInfo = studentData;
 
     				//build the county list in a separate variable so we can sort them easily
