@@ -8,6 +8,7 @@ app.config(function($routeProvider,$locationProvider){
   }).when('/data-upload',{
     templateUrl:'views/data-upload.html',
     controller: 'UploadReportController as uploadCtrl'
+    // authRequired: true
   }).when('/data-vis',{
     templateUrl:'views/data-vis.html',
     controller: 'DataVisController as visCtrl'
@@ -22,5 +23,18 @@ app.config(function($routeProvider,$locationProvider){
     controller: 'RegisterController as registerCtrl'
   });
 
-    $locationProvider.html5Mode(true);
+  $locationProvider.html5Mode(true);
+
+})
+
+.run(function($rootScope, $location, $route, AuthService) {
+  $rootScope.$on("$routeChangeStart", function(event, next, current) {
+    AuthService.checkLoginStatus().then(function(loggedIn) {
+      console.log(loggedIn);
+      if (next.authRequired && !loggedIn) {
+        $location.path("/login");
+        $route.reload();
+      }
+    });
+  });
 });

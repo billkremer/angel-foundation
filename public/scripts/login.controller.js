@@ -17,7 +17,7 @@ function LoginController($http, $location) {
       // console.log('User ID', req.user.id);
 
       console.log(response);
-      $location.path('/upload');
+      $location.path('/data-upload');
     }, function(error) {
       console.log('error logging in', error);
     });

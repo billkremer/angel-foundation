@@ -39,6 +39,15 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
     }
 
 
+    vm.logout = function() {
+      console.log('Inside logout function');
+      $http.delete('/login').then(function(){
+        console.log('Successfully logged out!');
+        $location.path('/');
+      }).catch(function(err){
+        console.log('Error logging out');
+      });
+    }
 
 
 }]);
