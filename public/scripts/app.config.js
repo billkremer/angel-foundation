@@ -7,8 +7,8 @@ app.config(function($routeProvider,$locationProvider){
     controller: 'StandardReportController as standardCtrl'
   }).when('/data-upload',{
     templateUrl:'views/data-upload.html',
-    controller: 'UploadReportController as uploadCtrl'
-    // authRequired: true
+    controller: 'UploadReportController as uploadCtrl',
+    authRequired: true
   }).when('/data-vis',{
     templateUrl:'views/data-vis.html',
     controller: 'DataVisController as visCtrl'
