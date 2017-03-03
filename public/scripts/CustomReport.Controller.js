@@ -22,8 +22,12 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
         options:['married','single']
       },
     ]
-    vm.dataSetSelections=[];
+    vm.dataSetSelections=[{title:'no selections'}];
     vm.addSelection=function(category,option){
+      if (vm.dataSetSelections[0].title=='no selections'){
+        vm.dataSetSelections=[];
+      }
+
       console.log('category',category);
       console.log('option',option);
         function isMatch(element,index,array){
@@ -43,4 +47,27 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
             });
         }
     }
+
+    vm.removeOptionSelection=function(category,option){
+      for(var i=0;i<vm.dataSetSelections.length;i++){
+          if (vm.dataSetSelections[i].title==category.title){
+            var index =vm.dataSetSelections[i].options.indexOf(option);
+            vm.dataSetSelections[i].options.splice(index,1);
+          }
+      }console.log(vm.dataSetSelections[0]);
+      if(vm.dataSetSelections[0]==undefined){
+        vm.dataSetSelections=[{title:'no selections'}];
+      }console.log(vm.dataSetSelections[0]);
+    }
+    vm.removeCategorySelection=function(category){
+      for(var i=0;i<vm.dataSetSelections.length;i++){
+          if (vm.dataSetSelections[i].title==category.title){
+            vm.dataSetSelections.splice(i,1);
+          }
+      }console.log(vm.dataSetSelections[0]);
+      if(vm.dataSetSelections[0]==undefined){
+          vm.dataSetSelections=[{title:'no selections'}];
+        }console.log(vm.dataSetSelections[0]);
+    }
+
 }]);

@@ -31,11 +31,11 @@
 </div>
 <div id="customReportSelections" class="col-xs-3 col-xs-offset-2">
   <div id="selectionDiv" ng-repeat="category in customCtrl.dataSetSelections" >
-    <div id="categoryTitle">
+    <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
     {{category.title}}
     </div>
     <ul>
-      <li ng-repeat="option in category.options">{{option}}</li>
+      <li ng-repeat="option in category.options" ng-click="customCtrl.removeOptionSelection(category,option)">{{option}}</li>
     </ul>
   </div>
 
