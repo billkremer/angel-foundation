@@ -20,12 +20,12 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
       console.log(vm.csv.result);
       vm.csv.result.forEach(function(object){
             $http.post('/upload', {
-                id        :object['angel patient id'],
+                id        :object['angel_patient_id'],
                 age       :object.age,
                 ethnicity :object.ethnicity,
-                status    :object['marital status'],
+                status    :object['marital_status'],
                 diagnoses :object.diagnoses,
-                grant     :object['grant used'],
+                grant     :object['grant_used'],
                 county    :object.county,
                 clinic    :object.clinic,
                 income    :object.income,

@@ -11,7 +11,7 @@ router.post('/', function(req, res) {
       res.sendStatus(500);
       done()
     } else {
-        client.query('INSERT INTO patient (angel_patient_id,age,ethnicity,martial_status,diagnoses,grant_used,county,clinic,income,gender) VALUES($1, $2, $3, $4, $5, $6,$7,$8,$9,$10)',
+        client.query('INSERT INTO patient (angel_patient_id,age,ethnicity,marital_status,diagnoses,grant_used,county,clinic,income,gender) VALUES($1, $2, $3, $4, $5, $6,$7,$8,$9,$10)',
         [req.body.id, req.body.age, req.body.ethnicity, req.body.status, req.body.diagnoses, req.body.grant,req.body.county,req.body.clinic,req.body.income,req.body.gender],
           function(err, result) {
           done();

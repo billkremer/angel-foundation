@@ -6,7 +6,7 @@ CREATE TABLE patient (
   angel_patient_id int,
   age int,
   ethnicity varchar (100),
-  martial_status varchar (50),
+  marital_status varchar (50),
   diagnoses varchar (100),
   grant_used varchar (50),
   county varchar (50),
