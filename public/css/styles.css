@@ -29,6 +29,16 @@ border: 1px solid purple;
   border: 1px solid purple;
 }
 
+#standardReport-reportList li {
+  list-style: none;
+  border: 2px solid rgb(0, 0, 0);
+  margin: 5px;
+}
+
+#standardReport-reportList li:hover {
+  background-color: rgb(84, 84, 84);
+}
+
 #standardReport-reportPreview {
   border: 1px solid purple;
 }
@@ -63,6 +73,8 @@ border: 1px solid purple;
   background-color: #d3df73;
   color: black;
 }
+
+
 /* table styling */
 table {
   font-family: arial, sans-serif;

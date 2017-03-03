@@ -16,7 +16,7 @@ router.get("/", function(req, res) {
             res.sendStatus(500);
             done();
         } else {
-            client.query("SELECT * FROM patient;", function(err, result) {
+            client.query(req.query.search, function(err, result) {
                 done();
                 if (err) {
                     console.log("Error querying DB", err);

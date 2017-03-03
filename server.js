@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var data = require('./routes/data');
 var index = require('./routes/index');
+var standardReports = require('./routes/standardReports')
 
 
 // var connection = require('./db/connection');
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.use('/data', data);
+app.use('/standardReports', standardReports);
 app.use('/', index);
 
 

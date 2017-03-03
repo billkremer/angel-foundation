@@ -7,6 +7,9 @@ app.controller("StandardReportController", function(StandardReportGetService) {
     vm.keys = [];
     vm.data.data = [];
 
+    vm.standardReportList = [];
+    vm.standardReportResponse = {};
+
     vm.csvButtonClass = "active";
     vm.csvButton = "csvButton";
     vm.pdfButton = "pdfButton";
@@ -26,15 +29,21 @@ app.controller("StandardReportController", function(StandardReportGetService) {
       });
     };//end of getAllData
 
+    //queries db for all saved standard reports
     vm.showStandardReports = function () {
-
+      StandardReportGetService.getAllStandardReports().then(function(response){
+        vm.standardReportList = response;
+      })
     }; // closes showStandardReports
 
     vm.showStandardReports();
 
-
-    vm.selectStandardReport = function () {
-
+    //queries db for specific report
+    vm.selectStandardReport = function (report) {
+      StandardReportGetService.selectedStandardReport(report).then(function(response){
+        vm.standardReportResponse=response.data;
+        console.log('standard report returned', vm.standardReportResponse);
+      })
     }; // closes selectStandardReport
 
 

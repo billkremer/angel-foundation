@@ -21,10 +21,18 @@ VALUES
 (1,1,21,E'caucasian',E'single',E'cancer',E'$1000',E'Hennipen',E'HCMC',50000,E'male'),
 (2,2,40,E'hispanic',E'married',E'cancer',E'$700',E'Ramsey',E'The Hospital',70000,E'female');
 
+CREATE TABLE standard_reports (
+  report_number SERIAL PRIMARY KEY,
+  report_name varchar (100),
+  query varchar (300)
+  );
 
 
+INSERT INTO standard_reports (report_name, query)
+VALUES ('Report One', 'SELECT * FROM patient');
 
-
+INSERT INTO standard_reports (report_name, query)
+VALUES ('Report Two', 'SELECT ethnicity, income FROM patient');
 
 
 
