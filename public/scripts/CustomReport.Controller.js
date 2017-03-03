@@ -7,7 +7,7 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
     vm.dataSetList=[
       {
         title:'gender',
-        options:['male','female']
+        options:['female','male']
       },
       {
         title:'age',
@@ -21,44 +21,58 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
         title:'marital status',
         options:['married','single']
       },
-    ]
+    ];  // end of dataSetList object
+
+    // vm.dataSetListCategoryOrder = ['gender', 'age', 'income', 'marital'];
+    // trying to order the categories on the html page.
+
     vm.dataSetSelections=[{title:'no selections'}];
-    vm.addSelection=function(category,option){
-      if (vm.dataSetSelections[0].title=='no selections'){
+
+
+    vm.addSelection = function(category,option) {
+      if (vm.dataSetSelections[0].title == 'no selections'){
         vm.dataSetSelections=[];
       }
 
-      console.log('category',category);
-      console.log('option',option);
+      console.log('category', category);
+      console.log('option', option);
+
         function isMatch(element,index,array){
-          return element.title == category.title
+          return element.title == category.title;
         }
-      if(vm.dataSetSelections.some(isMatch)){
-        for(var i=0;i<vm.dataSetSelections.length;i++){
-            if (vm.dataSetSelections[i].title==category.title){
-              vm.dataSetSelections[i].options.push(option);
-            }
-        }
-      }else{
+
+      if (vm.dataSetSelections.some(isMatch)) {
+        for(var i=0; i < vm.dataSetSelections.length; i++) {
+            if (vm.dataSetSelections[i].title == category.title){
+              if (vm.dataSetSelections[i].options.indexOf(option) == -1) {
+                vm.dataSetSelections[i].options.push(option);
+              };
+            };
+        };
+      } else {
           vm.dataSetSelections.push(
             {
               title:category.title,
               options:[option]
             });
-        }
-    }
+      }
+      console.log(vm);
+    }; // close addSelection
 
-    vm.removeOptionSelection=function(category,option){
+
+    vm.removeOptionSelection = function(category,option){
       for(var i=0;i<vm.dataSetSelections.length;i++){
-          if (vm.dataSetSelections[i].title==category.title){
-            var index =vm.dataSetSelections[i].options.indexOf(option);
+          if (vm.dataSetSelections[i].title == category.title){
+            var index = vm.dataSetSelections[i].options.indexOf(option);
             vm.dataSetSelections[i].options.splice(index,1);
           }
-      }console.log(vm.dataSetSelections[0]);
-      if(vm.dataSetSelections[0]==undefined){
+      } console.log(vm.dataSetSelections[0]);
+      if(vm.dataSetSelections[0] == undefined){
         vm.dataSetSelections=[{title:'no selections'}];
-      }console.log(vm.dataSetSelections[0]);
+      } console.log(vm.dataSetSelections[0]);
     }
+
+
     vm.removeCategorySelection=function(category){
       for(var i=0;i<vm.dataSetSelections.length;i++){
           if (vm.dataSetSelections[i].title==category.title){
