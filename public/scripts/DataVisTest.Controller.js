@@ -85,7 +85,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     		countyJson=mn;
     		d3.csv("data/regionData.csv", function(errorC, regionData){
     			allRegionInfo=regionData;
-    			d3.csv("data/ruralPostSecondary-condensed.csv", function(errorC, studentData){
+    			d3.csv("data/countysample.csv", function(errorC, studentData){
     				allCountyInfo = studentData;
 
     				//build the county list in a separate variable so we can sort them easily
@@ -98,7 +98,6 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     				d3.select("select#statewideOptions").selectAll('option').data(statewideOptionList).enter()
     				.append("option").attr("value", function(d){return d.condensedName;}).text(function(d){return d.friendlyName;});
 
-            //building svg map
     				svg.selectAll(".county")
     				.data(topojson.feature(mn, mn.objects.counties).features).enter().append("path")
     				.attr({

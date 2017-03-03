@@ -8,3 +8,151 @@
 #inputOptions input {
   margin-top: 4%;
 }
+
+/*-----------test-----------*/
+
+p.chartNav {
+	margin: 3px;
+	font-weight: bold;
+}
+
+select.drgSelect {
+	width: 500px;
+}
+
+.barLabel, .barValueLabel {
+	pointer-events : none;
+}
+
+.footer {
+	background-color: #E8E8E8;
+	margin-left: 3px;
+	margin-top: 10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	font-size: 10px;
+	clear: both;
+}
+
+.footer p {
+	margin-top: 10px;
+}
+
+.strong{
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.d3-tip {
+    font-size: 12px;
+    padding: 9px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+#mapDiv {
+	float: left;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: inline-block;
+}
+
+#countyInfo {
+	margin-left: 400px;
+}
+
+select {
+	margin-left: 25px;
+}
+
+.MinneapolisStPaulBloomingtonMNWI{
+	fill: #5E98E2;
+}
+
+.StCloudMN{
+	fill: #5E98E2;
+}
+
+.MankatoNorthMankatoMN{
+	fill: #5E98E2;
+}
+
+.DuluthMNWI{
+	fill: #5E98E2;
+}
+
+.FargoNDMN{
+	fill: #5E98E2;
+}
+
+.RochesterMN{
+	fill: #5E98E2;
+}
+
+.LaCrosseOnalaskaWIMN{
+	fill: #5E98E2;
+}
+
+.GrandForksNDMN{
+	fill: #5E98E2;
+}
+
+.nonMetro {
+	fill: #9BBAE2;
+}
+
+#highlightPath {
+	fill: none;
+	stroke-width: 4;
+	stroke: #005bcf
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+text{
+	font-size:12px
+}
+
+.popArea {
+  fill: #007AFF;
+}
+
+.schoolArea {
+  fill: #1750CA;
+}
+
+.stateLine {
+  fill: none;
+  stroke: #FFFF00;
+  stroke-width: 3;
+  stroke-dasharray: 5,5;
+}
+
+.lowest{
+  fill:#111;
+}
+.lower{
+  fill:#333;
+}
+.low{
+  fill:#555;
+}
+.medium{
+  fill:#777;
+}
+.high{
+  fill:#999;
+}
+.higher{
+  fill:#bbb;
+}
+.highest{
+  fill:#ddd;
+}

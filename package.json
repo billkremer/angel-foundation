@@ -27,6 +27,7 @@
   "dependencies": {
     "angular-route": "^1.6.2",
     "body-parser": "^1.16.1",
+    "d3": "^4.7.1",
     "express": "^4.14.1",
     "pg": "^6.1.2"
   }
