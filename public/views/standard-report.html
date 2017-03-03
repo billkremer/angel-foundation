@@ -1,61 +1,64 @@
 <div class="container-fluid">
 
-<div class="row">
+  <div class="standardReportHeader">
+  <div class="row">
 
 
-  <div class="col-md-3 col-sm-3 col-xs-12">
-    <img src="../images/angel-foundation-logo.png" alt="Angel Foundation Logo">
-  </div>
-  <div class="col-md-6 col-sm-6">
-    <!-- title -->
-    <h1>Standard Report</h1>
-  </div>
-  <!-- <div class="col-md-3 col-sm-3 col-xs-12"> -->
-
-  <div class="dropdown">
-    <div class="col-md-2 col-md-offset-7 col-xs-12">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a href="/">Standard Reports</a></li>
-        <li><a href="/custom-report">Custom Reports</a></li>
-        <li><a href="/data-upload">Upload</a></li>
-      </ul>
+    <div class="col-xs-11 col-sm-3 col-md-3">
+      <img src="../images/image001.png" alt="Angel Foundation Logo">
     </div>
+    <div class="col-xs-11 col-sm-6 col-md-6">
+      <!-- title -->
+      <h1>Standard Report</h1>
+    </div>
+    <!-- <div class="col-md-3 col-sm-3 col-xs-12"> -->
 
+    <div class="dropdown col-xs-11 col-sm-2 col-md-2">
+      <div class="">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/">Standard Reports</a></li>
+          <li><a href="/custom-report">Custom Reports</a></li>
+          <li><a href="/data-upload">Upload</a></li>
+        </ul>
+      </div>
+
+    </div>
   </div>
 </div>
 
 </div>
 
+<div>
+  <p>
+    <!-- spacing div -->
+  </p>
+</div>
 
 
-<div class=container>
-
-
-
+<div class=container-fluid>
 
   <div class="row">
 
-  </div>
 
 
 
   <!-- report list div -->
-  <div id="standardReport-reportList" class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+  <div id="standardReport-reportList" class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
 
-<p>
-  asdlkmasdlfkj
+    <p>
+      Standard Reports List
 
-</p>
+    </p>
 
 
   </div>
 
 
 
-  <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" >
+  <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10" >
 
 
 
@@ -63,7 +66,7 @@
     <div id="standardReport-reportPreview" class="">
 
       <p>
-        asdflkjsadf
+        Standard Report Preview
       </p>
 
     </div>
@@ -71,32 +74,32 @@
 
 
     <!-- buttons div -->
-    <div id="standardReport-reportButtons" class="">
-<p>
-  asdlkjlds
-</p>
-
-<button>All</button>
-<button>Addendum</button>
-
-<input type="file" placeholder="File upload" />
-<input type="submit" value="Submit" placeholder="Upload">
+    <div id="standardReport-reportButtons" class="container-fluid">
+      <p>
+        Please Select, then click GO:
+      </p>
+      <div class="row">
 
 
-<div class="radio">
-  <label><input class="btn" type="radio" name="optradio">Option 1</label>
-</div>
-<div class="radio">
-  <label><input type="radio" name="optradio">Option 2</label>
-</div>
-<div class="radio disabled">
-  <label><input type="radio" name="optradio" disabled>Option 3</label>
-</div>
+        <div class="btn-group col-xs-12 col-sm-11" role="group" aria-label="...">
+          <button type="button" class="btn btn-default" ng-model="standardCtrl.csvButton" ng-class="standardCtrl.csvButtonClass"  ng-click="standardCtrl.changeActive(standardCtrl.csvButton)">Save as CSV</button>
+
+          <button type="button" class="btn btn-default"  ng-model="standardCtrl.pdfButton" ng-class="standardCtrl.pdfButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.pdfButton)">Save as PDF</button>
+
+          <button type="button" class="btn btn-default"  ng-model="standardCtrl.dataVisButton" ng-class="standardCtrl.dataVisButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.dataVisButton)">Change Visualization</button>
+        </div>
+        <div class="col-xs-12 col-sm-1">
+          <button type="button" id="standardReport-goButton" class="btn btn-success"  ng-model="standardCtrl.goButton" ng-click="standardCtrl.goNext()">Go</button>
+
+        </div>
 
 
-
+      </div>
 
     </div>
 
+
   </div>
+
+</div>
 </div>
