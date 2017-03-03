@@ -8,7 +8,7 @@ router.post('/', function(req, res){
     }
 
     return User.create(req.body.username, req.body.password).then(function(user){
-      console.log('Created new user');
+      console.log('Created new user!');
       req.login(user, function(err){
         if (err) {
           console.log('Error logging in newly registered user', err);

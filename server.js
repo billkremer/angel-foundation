@@ -14,7 +14,7 @@ var register = require('./routes/register')
 
 
 
-
+require('./auth/setup');
 
 
 //routes
