@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var data = require('./routes/data');
+var index = require('./routes/index');
 
 
 // var connection = require('./db/connection');
@@ -15,11 +17,9 @@ var app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+app.use('/data', data);
+app.use('/', index);
 
-
-app.get('/*', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/views/index.html'));
-});
 
 
 
