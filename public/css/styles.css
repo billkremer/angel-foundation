@@ -1,3 +1,6 @@
+
+/* data upload page*/
+
 /*
 COLORS:
 
@@ -60,8 +63,28 @@ border: 1px solid purple;
   background-color: #d3df73;
   color: black;
 }
+/* table styling */
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
 
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+#fakeTable{
+  display: inline-block;
+  list-style: none;
+}
+
+/* Data Upload page */
 #inputOptions {
   width: 100%;
   height: 100%;

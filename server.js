@@ -4,6 +4,8 @@ var path = require('path');
 var session = require('express-session');
 var passport = require('passport');
 var pg = require('pg');
+var data = require('./routes/data');
+var index = require('./routes/index');
 
 
 var connection = require('./db/connection');
@@ -64,6 +66,7 @@ app.use('/upload', upload);
 //   res.send('This is very secret!');
 // });
 
+
 function ensureAuthenticated(req, res, next) {
   console.log('Ensuring the user is authenticated');
   if (req.isAuthenticated()) {
@@ -73,11 +76,9 @@ function ensureAuthenticated(req, res, next) {
   };
 };
 
+app.use('/data', data);
 app.use('/upload', upload);
-
-app.get('/*', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/views/index.html'));
-});
+app.use('/', index);
 
 
 

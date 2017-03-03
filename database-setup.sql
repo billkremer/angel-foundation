@@ -1,5 +1,7 @@
 
+
 CREATE DATABASE angel_data_reporting
+
 
 CREATE TABLE patient (
   patient_id SERIAL PRIMARY KEY,
@@ -15,11 +17,20 @@ CREATE TABLE patient (
   gender varchar (10)
 );
 
+<<<<<<< HEAD
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username varchar (50),
   password varchar (300)
 );
+=======
+
+INSERT INTO patient ("patient_id","angel_patient_id","age","ethnicity","marital_status","diagnoses","grant_used","county","clinic","income","gender")
+VALUES
+(1,1,21,E'caucasian',E'single',E'cancer',E'$1000',E'Hennepin',E'HCMC',50000,E'male'),
+(2,2,40,E'hispanic',E'married',E'cancer',E'$700',E'Ramsey',E'The Hospital',70000,E'female');
+
+>>>>>>> master
 
 
 
