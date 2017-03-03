@@ -19,4 +19,27 @@
 </div>
 <div class=container>
 
+<div id="dataSetContainer" class="col-xs-3">
+  <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetList" >
+    <div id="categoryTitle">
+    {{category.title}}
+    </div>
+    <ul>
+      <li ng-repeat="option in category.options" ng-click="customCtrl.addSelection(category,option)">{{option}}</li>
+    </ul>
+  </div>
+</div>
+<div id="customReportSelections" class="col-xs-3 col-xs-offset-2">
+  <div id="selectionDiv" ng-repeat="category in customCtrl.dataSetSelections" >
+    <div id="categoryTitle">
+    {{category.title}}
+    </div>
+    <ul>
+      <li ng-repeat="option in category.options">{{option}}</li>
+    </ul>
+  </div>
+
+</div>
+
+
 </div>
