@@ -124,17 +124,17 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     					stroke: '#000',
     					'class' : function(d){
     						var countyData = studentData.returnCountyInfo(d.properties.name);
-      						if(countyData.number<15){
+      						if(countyData['pop-2010']<500){
                      classCall='lowest';
-                  }else if(countyData.number<35){
+                  }else if(countyData['pop-2010']<800){
                      classCall='lower';
-                  }else if(countyData.number<55){
+                  }else if(countyData['pop-2010']<1000){
                      classCall='low';
-                  }else if(countyData.number<65){
+                  }else if(countyData['pop-2010']<3000){
                      classCall='medium';
-                  }else if(countyData.number<75){
+                  }else if(countyData['pop-2010']<5000){
                      classCall='high';
-                  }else if(countyData.number<85){
+                  }else if(countyData['pop-2010']<10000){
                      classCall='higher';
                   }else {
                      classCall='highest';

@@ -251,3 +251,28 @@ text{
     margin-left: 0;
     margin-bottom: -.6em;
 }
+
+
+.ca, .us {fill: #DF4949;}
+.uc, .br, .mx {fill: #E27A3F;}
+.other {fill: #45B29D;}
+
+
+
+circle {
+  stroke: black;
+  stroke-width: 2px;
+  opacity: .8;
+}
+.btn-group {
+  margin-left: 330px;
+}
+.label {
+  fill: black;
+  font-size: 16px;
+}
+
+
+.active{
+  stroke-width: 5px;
+}
