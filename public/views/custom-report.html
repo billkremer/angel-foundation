@@ -24,7 +24,7 @@
 <div class=container>
 
   <div id="dataSetContainer" class="col-xs-3">
-    <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetList | orderBy: category" >
+    <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetList | orderBy: category.title" >
       <div id="categoryTitle">
         {{category.title}}
       </div>
@@ -36,7 +36,7 @@
 
 
   <div id="customReportSelections" class="col-xs-3 col-xs-offset-2">
-    <div id="selectionDiv" ng-repeat="category in customCtrl.dataSetSelections | orderBy: customCtrl.dataSetSelections" >
+    <div id="selectionDiv" ng-repeat="category in customCtrl.dataSetSelections" >
       <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
         {{category.title}}
       </div>
