@@ -1,12 +1,122 @@
 
+/* data upload page*/
+
+/*
+COLORS:
+
+Gray-black:			rgb(68,68,68);		#444444
+Dark blue:			rgb(0,82,156);		#00529c
+Medium blue:		rgb(68,136,187);	#4488bb
+Medium blue 2:		rgb(36,126,176);	#247eb0
+Light blue:			rgb(192,215,234);	#c0d7ea
+Very light blue:	rgb(230,238,242);	#e6eef2
+Green:				rgb(149,193,69);	#95c145
+Yellow-green:		rgb(211,223,115);	#d3df73
+*/
+
+
+/* standard report view */
+
+.standardReportHeader img {
+  height: 50px;
+}
+
+.standardReportHeader div {
+border: 1px solid purple;
+}
+
+#standardReport-reportList {
+  border: 1px solid purple;
+}
+
+#standardReport-reportList li {
+  list-style: none;
+  border: 2px solid rgb(0, 0, 0);
+  margin: 5px;
+}
+
+#standardReport-reportList li:hover {
+  background-color: rgb(84, 84, 84);
+}
+
+#standardReport-reportPreview {
+  border: 1px solid purple;
+}
+
+#standardReport-reportButtons {
+  border: 1px solid purple;
+  font-family: helvetica, sans-serif;
+  font-weight: bold;
+
+}
+
+#standardReport-reportButtons button {
+  background-color: #4488bb;
+  color: white;
+}
+
+#standardReport-reportButtons button.active {
+  background-color: #00529c;
+  color: white;
+}
+
+#standardReport-reportButtons button:hover {
+  background-color: #247eb0;
+  color: white;
+}
+
+#standardReport-reportButtons #standardReport-goButton {
+  background-color: #95c145;
+}
+
+#standardReport-reportButtons #standardReport-goButton:hover {
+  background-color: #d3df73;
+  color: black;
+}
+
+
+/* table styling */
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+#fakeTable{
+  display: inline-block;
+  list-style: none;
+}
+
+/* Data Upload page */
 #inputOptions {
   width: 100%;
   height: 100%;
   margin-top: 20%;
 }
 
-#inputOptions input {
+#uploadSubmit {
   margin-top: 4%;
+
+}
+#uploader{
+  margin-top:4%;
+  padding:0px;
+  max-height:25px;
+
+}
+#uploadCSVInput{
+  border:none;
+  padding:0px;
+  text-align: center;
 }
 
 

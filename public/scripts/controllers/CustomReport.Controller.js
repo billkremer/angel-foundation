@@ -4,6 +4,7 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
 
     var vm=this;
 
+
     vm.dataSetList=[
       {
         title:'gender',
@@ -83,5 +84,6 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
           vm.dataSetSelections=[{title:'no selections'}];
         }console.log(vm.dataSetSelections[0]);
     }
+
 
 }]);
