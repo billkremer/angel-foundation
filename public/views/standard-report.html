@@ -1,68 +1,154 @@
 <div class="container-fluid">
 
+  <div class="standardReportHeader">
+  <div class="row">
 
-  <div class="col-md-3 col-xs-12">
-    <img src="./public/images/angel-foundation-logo.png" alt="Angel Foundation Logo">
-  </div>
-  <div>
-    <!-- title -->
-    <h1>Standard Report</h1>
-  </div>
-  <div class="dropdown">
-    <div class="col-md-2 col-md-offset-7 col-xs-12">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a href="/">Standard Reports</a></li>
-        <li><a href="/custom-report">Custom Reports</a></li>
-        <li><a href="/data-upload">Upload</a></li>
-      </ul>
+
+    <div class="col-xs-11 col-sm-3 col-md-3">
+      <img src="../images/image001.png" alt="Angel Foundation Logo">
+    </div>
+    <div class="col-xs-11 col-sm-6 col-md-6">
+      <!-- title -->
+      <h1>Standard Report</h1>
+    </div>
+    <!-- <div class="col-md-3 col-sm-3 col-xs-12"> -->
+
+    <div class="dropdown col-xs-11 col-sm-2 col-md-2">
+      <div class="">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/">Standard Reports</a></li>
+          <li><a href="/custom-report">Custom Reports</a></li>
+          <li><a href="/data-upload">Upload</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
 
+</div>
+
+<div>
+  <p>
+    <!-- spacing div -->
+  </p>
+</div>
 
 
 
-
-<div class=container>
-
-
-
+<div class=container-fluid>
 
   <div class="row">
 
-  </div>
 
 
 
   <!-- report list div -->
-  <div id="standardReport-reportList" class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+  <div id="standardReport-reportList" class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
 
-
+    <h3>
+      Standard Reports List
+    </h3>
+    <ul ng-repeat="report in standardCtrl.standardReportList">
+      <li ng-model="report" ng-click="standardCtrl.selectStandardReport(report)">{{report.report_name}}</li>
+    </ul>
 
 
   </div>
 
 
 
-  <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" >
+  <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10" >
 
 
 
     <!-- report preview -->
     <div id="standardReport-reportPreview" class="">
+      <!-- <table>
+        <tr ng-repeat="key in standardCtrl.keys">
+          <th>{{key}}</th>
+          <th>{{key}}</th>
+          <th>{{key}}</th>
+          <th>{{key}}</th>
+          <th>{{key}}</th>
+          <th>{{key}}</th>
+          <th>{{key}}</th>
+          <th>{{key}}</th>
+          <th>{{key}}</th>
+          <th>{{key}}</th>
+        </tr>
+        <tr ng-repeat="val in standardCtrl.data">
+          <td>{{val.patient_id}}</td>
+          <td>{{val.angel_patient_id}}</td>
+          <td>{{val.ethnicity}}</td>
+          <td>{{val.martial_status}}</td>
+          <td>{{val.diagnoses}}</td>
+          <td>{{val.grant_used}}</td>
+          <td>{{val.county}}</td>
+          <td>{{val.clinic}}</td>
+          <td>{{val.income}}</td>
+          <td>{{val.gender}}</td>
+        </tr>
+
+      </table> -->
+
+
+      <p>
+        Standard Report Preview
+      </p>
+
 
     </div>
 
-
+    <!-- <th>{{table.angel_patient_id}}</th>
+    <th>{{table.ethnicity}}</th>
+    <th>{{table.martial_status}}</th>
+    <th>{{table.diagnoses}}</th>
+    <th>{{table.grant_used}}</th>
+    <th>{{table.county}}</th>
+    <th>{{table.clinic}}</th>
+    <th>{{table.income}}</th>
+    <th>{{table.gender}}</th> -->
+    <!-- <td>{{val.patient_id}}</td>
+    <td>{{table.angel_patient_id}}</td>
+    <td>{{table.ethnicity}}</td>
+    <td>{{table.martial_status}}</td>
+    <td>{{table.diagnoses}}</td>
+    <td>{{table.grant_used}}</td>
+    <td>{{table.county}}</td>
+    <td>{{table.clinic}}</td>
+    <td>{{table.income}}</td>
+    <td>{{table.gender}}</td> -->
 
     <!-- buttons div -->
-    <div id="standardReport-reportButtons" class="">
+    <div id="standardReport-reportButtons" class="container-fluid">
+      <p>
+        Please Select, then click GO:
+      </p>
+      <div class="row">
 
+
+        <div class="btn-group col-xs-12 col-sm-11" role="group" aria-label="...">
+          <button type="button" class="btn btn-default" ng-model="standardCtrl.csvButton" ng-class="standardCtrl.csvButtonClass"  ng-click="standardCtrl.changeActive(standardCtrl.csvButton)">Save as CSV</button>
+
+          <button type="button" class="btn btn-default"  ng-model="standardCtrl.pdfButton" ng-class="standardCtrl.pdfButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.pdfButton)">Save as PDF</button>
+
+          <button type="button" class="btn btn-default"  ng-model="standardCtrl.dataVisButton" ng-class="standardCtrl.dataVisButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.dataVisButton)">Change Visualization</button>
+        </div>
+        <div class="col-xs-12 col-sm-1">
+          <button type="button" id="standardReport-goButton" class="btn btn-success"  ng-model="standardCtrl.goButton" ng-click="standardCtrl.goNext()">Go</button>
+
+        </div>
+
+
+      </div>
 
     </div>
 
+
   </div>
+
+</div>
 </div>

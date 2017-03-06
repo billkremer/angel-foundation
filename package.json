@@ -25,12 +25,23 @@
   },
   "homepage": "https://github.com/billkremer/angel-foundation#readme",
   "dependencies": {
+    "angular-csv-import": "0.0.27",
     "angular-route": "^1.6.2",
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.16.1",
+
     "d3": "^4.7.1",
     "d3-drag": "^1.0.3",
     "express": "^4.14.1",
     "pg": "^6.1.2",
     "underscore": "^1.8.3"
+
+    "bootstrap": "^3.3.7",
+  
+    "express-session": "^1.15.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+
+
   }
 }

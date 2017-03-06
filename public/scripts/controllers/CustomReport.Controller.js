@@ -4,5 +4,4 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
 
     var vm=this;
 
-
 }]);
