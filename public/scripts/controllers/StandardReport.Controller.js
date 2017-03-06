@@ -16,19 +16,6 @@ app.controller("StandardReportController", function(StandardReportGetService) {
     vm.dataVisButton = "dataVisButton";
     vm.goButtonSelected = "csvButton";
 
-    vm.getAllData = function(){
-      StandardReportGetService.getData().then(function(response){
-        console.log(response);
-        vm.data = response;
-        // vm.dataObject = vm.data[0];
-        // console.log(vm.dataObject);
-          // for (var prop in vm.dataObject) {
-          //   vm.keys.push(prop);
-          // };
-          // console.log(vm.keys);
-      });
-    };//end of getAllData
-
     //queries db for all saved standard reports
     vm.showStandardReports = function () {
       StandardReportGetService.getAllStandardReports().then(function(response){
