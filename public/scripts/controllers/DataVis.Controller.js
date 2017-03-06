@@ -5,8 +5,8 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     var vm=this;
     var lowLimit=null;
     var highLimit=null;
-    var years=["1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010"];
-    d3.select('#slider').call(d3.slider().axis(true).min(1998).max(2010).step(1).value( [ 1998, 2010 ] ).on("slide", function(evt, value) {
+    var years=["2010","2011","2012","2013","2014","2015"];
+    d3.select('#slider').call(d3.slider().axis(true).min(2010).max(2015).step(1).value( [ 2010, 2015 ] ).on("slide", function(evt, value) {
       // d3.select('#slidertextmin').text(value[ 0 ]);
       lowLimit=value[0];
       // console.log(value[0]);
@@ -102,7 +102,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     		countyJson=mn;
     		d3.csv("data/regionData.csv", function(errorC, regionData){
     			allRegionInfo=regionData;
-    			d3.csv("data/testdata.csv", function(errorC, studentData){
+    			d3.csv("data/countypop.csv", function(errorC, studentData){
     				allCountyInfo = studentData;
 
     				//build the county list in a separate variable so we can sort them easily
@@ -124,17 +124,17 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     					stroke: '#000',
     					'class' : function(d){
     						var countyData = studentData.returnCountyInfo(d.properties.name);
-      						if(countyData['pop-2010']<500){
+      						if(countyData['pop-2010']<1500){
                      classCall='lowest';
-                  }else if(countyData['pop-2010']<800){
+                  }else if(countyData['pop-2010']<1800){
                      classCall='lower';
-                  }else if(countyData['pop-2010']<1000){
+                  }else if(countyData['pop-2010']<11000){
                      classCall='low';
-                  }else if(countyData['pop-2010']<3000){
+                  }else if(countyData['pop-2010']<13000){
                      classCall='medium';
-                  }else if(countyData['pop-2010']<5000){
+                  }else if(countyData['pop-2010']<15000){
                      classCall='high';
-                  }else if(countyData['pop-2010']<10000){
+                  }else if(countyData['pop-2010']<110000){
                      classCall='higher';
                   }else {
                      classCall='highest';
@@ -299,7 +299,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     		}
     	});
 
-    	content.append("p").text("Ranks " + countyInfo.rank + "/87 for number of students who plan to go to college or beyond.");
+    	// content.append("p").text("Ranks " + countyInfo.rank + "/87 for number of students who plan to go to college or beyond.");
 
     	var svgChart = d3.select("svg#selectedChart").append("g")
     		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -310,7 +310,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     	var y = d3.scale.linear()
     		.range([thisHeight, 0])
-    		.domain([0, d3.max(chartInfo.populations, function(d,i) {return d; })]);
+    		.domain([d3.min(chartInfo.populations, function(d,i) {return d; }), d3.max(chartInfo.populations, function(d,i) {return d; })]);
 
     	var xAxis = d3.svg.axis()
     		.scale(x)
@@ -326,33 +326,33 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     		.y0(thisHeight)
     		.y1(function(d) {return y(chartInfo.populations[d.getFullYear()]); });
 
-    	var schoolArea = d3.svg.area()
-    		.x(function(d,i) { return x(years[i]); })
-    		.y0(thisHeight)
-    		.y1(function(d) { return y(chartInfo.collegeAmt[d.getFullYear()]); });
-
-    	var stateAvgLine = d3.svg.line()
-    	.x(function(d,i) { return x(years[i]); })
-        .y(function(d) {
-          var population = chartInfo.populations[d.getFullYear()];
-          var stateInfo = _.find(allCountyInfo, function(d){return d.countyName == 'Statewide';});
-          return y((stateInfo['collOrByond-'+d.getFullYear()]/100) * population);
-        });
+    	// var schoolArea = d3.svg.area()
+    	// 	.x(function(d,i) { return x(years[i]); })
+    	// 	.y0(thisHeight)
+    	// 	.y1(function(d) { return y(chartInfo.collegeAmt[d.getFullYear()]); });
+      //
+    	// var stateAvgLine = d3.svg.line()
+    	// .x(function(d,i) { return x(years[i]); })
+      //   .y(function(d) {
+      //     var population = chartInfo.populations[d.getFullYear()];
+      //     var stateInfo = _.find(allCountyInfo, function(d){return d.countyName == 'Statewide';});
+      //     return y((stateInfo['collOrByond-'+d.getFullYear()]/100) * population);
+      //   });
 
     	svgChart.append("path")
     		.datum(years)
     		.attr("class", "popArea")
     		.attr("d", popArea);
-
-    	svgChart.append("path")
-          .datum(years)
-          .attr("class", "schoolArea")
-          .attr("d", schoolArea);
-
-    	svgChart.append("path")
-          .datum(years)
-          .attr("class", "stateLine")
-          .attr("d", stateAvgLine);
+      //
+    	// svgChart.append("path")
+      //     .datum(years)
+      //     .attr("class", "schoolArea")
+      //     .attr("d", schoolArea);
+      //
+    	// svgChart.append("path")
+      //     .datum(years)
+      //     .attr("class", "stateLine")
+      //     .attr("d", stateAvgLine);
 
     	svgChart.append("g")
           .attr("class", "x axis")
@@ -373,35 +373,35 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
           'class': 'popArea'
     	});
 
-    	index.append("rect")
-    	.attr({
-          y: 25,
-          height: 20,
-          width: 20,
-          'class': 'schoolArea'
-    	});
+    	// index.append("rect")
+    	// .attr({
+      //     y: 25,
+      //     height: 20,
+      //     width: 20,
+      //     'class': 'schoolArea'
+    	// });
 
-    	index.append("path")
-    	.attr({
-          d : "M0,50L22,50",
-          "transform": "translate(0," + 11 + ")",
-          'class': 'stateLine'
-    	});
-
-    	index.append("text").attr({
-          x: 25,
-          y: 16
-    	}).text("Students Surveyed");
-
-    	index.append("text").attr({
-          x: 25,
-          y: 41
-    	}).text("Students Planning on Going to College or Beyond");
-
-    	index.append("text").attr({
-          x: 25,
-          y: 66
-    	}).text("State Avg % of Students Planning on Going to College or Beyond");
+    	// index.append("path")
+    	// .attr({
+      //     d : "M0,50L22,50",
+      //     "transform": "translate(0," + 11 + ")",
+      //     'class': 'stateLine'
+    	// });
+      //
+    	// index.append("text").attr({
+      //     x: 25,
+      //     y: 16
+    	// }).text("Students Surveyed");
+      //
+    	// index.append("text").attr({
+      //     x: 25,
+      //     y: 41
+    	// }).text("Students Planning on Going to College or Beyond");
+      //
+    	// index.append("text").attr({
+      //     x: 25,
+      //     y: 66
+    	// }).text("State Avg % of Students Planning on Going to College or Beyond");
     }
 
     function displayMetroRegionData(regionName){
@@ -416,7 +416,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     	var content = d3.select("div#selectedContent");
 
-    	content.append("p").text("This region is ranked " + regionData.regionRank + "/8 for having " + Math.floor(regionData.collOrByond) + "% of students interested in going to college or beyond.");
+    	// content.append("p").text("This region is ranked " + regionData.regionRank + "/8 for having " + Math.floor(regionData.collOrByond) + "% of students interested in going to college or beyond.");
     }
 
     function displayMetroOrRuralData(isMetro){
