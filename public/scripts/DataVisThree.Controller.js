@@ -6,7 +6,7 @@ angular.module("AngelApp").controller("DataVisThreeController", ['$location','$h
 
 
 
-      d3.csv('data/angelsample.csv', function (error, data) {
+      d3.csv('data/AngelFoundation2016.csv', function (error, data) {
 
         var width = 1000, height = 1000;
         var fill = d3.scale.ordinal().range(['rgb(68,68,68);','rgb(0,82,156)','rgb(68,136,187)','rgb(36,126,176)','rgb(192,215,234)','rgb(230,238,242)'])
@@ -15,7 +15,7 @@ angular.module("AngelApp").controller("DataVisThreeController", ['$location','$h
             .attr("height", height);
 
         for (var j = 0; j < data.length; j++) {
-          data[j].radius = 20;
+          data[j].radius = 4;
           data[j].x = Math.random() * width;
           data[j].y = Math.random() * height;
         }
@@ -44,7 +44,7 @@ angular.module("AngelApp").controller("DataVisThreeController", ['$location','$h
           .attr("cx", function (d) { return d.x; })
           .attr("cy", function (d) { return d.y; })
           .attr("r", 2)
-          .style("fill", function (d) { return fill(d.ethnicity); })
+          .style("fill", function (d) { return fill(d.Gender); })
           .on("mouseover", function (d) { showPopover.call(this, d); })
           .on("mouseout", function (d) { removePopovers(); })
           .call(d3.behavior.drag()
@@ -70,7 +70,7 @@ function dragended(d) {
 
         var force = d3.layout.force();
 
-        draw('ethnicity');
+        draw('Ethnic');
 
         $( ".btn" ).click(function() {
           draw(this.id);
@@ -135,7 +135,7 @@ function dragended(d) {
           .attr("class", "label")
           .text(function (d) { return d.name })
           .attr("transform", function (d) {
-            return "translate(" + (d.x - ((d.name.length)*3)) + ", " + (d.y - d.r) + ")";
+            return "translate(" + (d.x  - ((d.name.length)*3))+ ", " + (d.y - d.r) + ")";
           });
         }
 
@@ -152,8 +152,8 @@ function dragended(d) {
             trigger: 'manual',
             html : true,
             content: function() {
-              return "Ethnicity: " + d.ethnicity + "<br/>Income: " + d.income + "<br/>Maritial Status: " + d.maritial +
-                     "<br/>Diagnosis: " + d.diagnoses + "<br/>Age: " + d.age; }
+              return "Ethnicity: " + d.Ethnic + "<br/>Income: " + d.MonthlyIncome + "<br/>Maritial Status: " + d.MaritalStatus +
+                     "<br/>Diagnosis: " + d.Diagnosis + "<br/>Age: " + d.age; }
           });
           $(this).popover('show')
         }

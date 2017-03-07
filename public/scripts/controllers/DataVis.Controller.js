@@ -3,6 +3,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     console.log('datavis controller loaded');
 
     var vm=this;
+    var currentCounty='';
     var lowLimit=null;
     var highLimit=null;
     var years=["2010","2011","2012","2013","2014","2015"];
@@ -108,7 +109,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     				//build the county list in a separate variable so we can sort them easily
     				//remove the last element, which is statewide
     				var countyList = studentData.map(function(d){return d.countyName;}).slice(0, -1).sort();
-    				d3.select("select#countyOptions").selectAll('option').data(countyList).enter()
+    				d3.select("select#countyOptions").selectAll('option').data(countyList).enter()    //appends all counties to div in html
     				.append("option").attr("value", function(d){return d;}).text(function(d){return d;});
 
     				//build the metro area list
@@ -154,7 +155,8 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     					}
     					else { //by county
     						var countyElement = document.getElementById('countyOptions');
-    						countyElement.value = d.properties.name;
+    						// countyElement.value = d.properties.name;
+                currentCounty=d.properties.name;
     						toggleCounty(clickedCounty);
     					}
     				});
@@ -166,7 +168,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     					"d": path
     				});
 
-    				getSelectToggleCounty();
+    				// getSelectToggleCounty();
     			});
     		});
     	});
@@ -174,7 +176,9 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     function getSelectToggleCounty(){
     	var e = document.getElementById("countyOptions");
-    	var county = e.options[e.selectedIndex].text;
+    	var county = currentCounty;
+      // e.options[e.selectedIndex].text;
+      // console.log(e.selectedIndex);
     	toggleCounty(allCountyInfo.returnCountyInfo(county));
     }
 
@@ -290,14 +294,14 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     	d3.select("div#selectedTitle").append("h2").text(countyInfo.countyName);
     	var content = d3.select("div#selectedContent");
 
-    	content.append("p").text(function(d){
-    		if (countyInfo.metro === "") {
-    			return "Not classified as a metropolitan county.";
-    		}
-    		else {
-    			return _.find(statewideOptionList, function(d){ return d.condensedName == countyInfo.metro;}).friendlyName;
-    		}
-    	});
+    	// content.append("p").text(function(d){
+    	// 	if (countyInfo.metro === "") {
+    	// 		return "Not classified as a metropolitan county.";
+    	// 	}
+    	// 	else {
+    	// 		return _.find(statewideOptionList, function(d){ return d.condensedName == countyInfo.metro;}).friendlyName;
+    	// 	}
+    	// });
 
     	// content.append("p").text("Ranks " + countyInfo.rank + "/87 for number of students who plan to go to college or beyond.");
 
@@ -453,11 +457,11 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     	content.append("p").text("Of those students, on average " + Math.floor(avgPct) + "% planned to go to college or beyond.");
     }
 
-    window.setInterval(function(){
-      if(document.getElementById('cycleToggle').checked){
-    	selectRandom();
-      }
-    }, 10000);
+    // window.setInterval(function(){
+    //   if(document.getElementById('cycleToggle').checked){
+    // 	selectRandom();
+    //   }
+    // }, 10000);
 
     function selectRandom(){
     	var displayType = getRadioVal('displayOptions');
@@ -478,12 +482,13 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     }
 
     function getRadioVal (groupName){
-    	var radioElements = document.getElementsByName(groupName);
-    	for(var i = 0; i < radioElements.length; i++){
-    		if(radioElements[i].checked){
-    			return radioElements[i].value;
-    		}
-    	}
+    	// var radioElements = document.getElementsByName(groupName);
+    	// for(var i = 0; i < radioElements.length; i++){
+    		// if(radioElements[i].checked){
+    		// 	return radioElements[i].value;
+    		// }
+      // }
+        return 'county';
     }
 
     function getRandomInt (min, max) {
