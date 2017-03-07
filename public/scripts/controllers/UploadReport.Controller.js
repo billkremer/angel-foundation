@@ -36,7 +36,7 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
                 console.log('error uploading csv', error);
               });
       });
-      alertify.set('notifier','position', 'top-right');
+      alertify.set('notifier','position', 'bottom-right');
       alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
       $route.reload();
     }
