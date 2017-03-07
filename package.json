@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/billkremer/angel-foundation#readme",
   "dependencies": {
+    "angular-animate": "^1.6.2",
     "angular-csv-import": "0.0.27",
     "angular-route": "^1.6.2",
     "bcrypt": "^1.0.2",

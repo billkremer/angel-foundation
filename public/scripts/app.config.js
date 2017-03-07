@@ -1,4 +1,8 @@
-var app=angular.module('AngelApp',['ngRoute','ngCsvImport']);
+// <<<<<<< HEAD
+// var app=angular.module('AngelApp',['ngRoute','ngAnimate']);
+// =======
+var app=angular.module('AngelApp',['ngRoute','ngCsvImport', 'ngAnimate']);
+// >>>>>>> master
 
 
 app.config(function($routeProvider,$locationProvider){
