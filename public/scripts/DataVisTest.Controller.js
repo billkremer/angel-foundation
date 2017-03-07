@@ -3,24 +3,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     console.log('datavis controller loaded');
 
     var vm=this;
-    var currentCounty='';
-    var lowLimit=null;
-    var highLimit=null;
-    var years=["2010","2011","2012","2013","2014","2015"];
-    d3.select('#slider').call(d3.slider().axis(true).min(2010).max(2015).step(1).value( [ 2010, 2015 ] ).on("slide", function(evt, value) {
-      // d3.select('#slidertextmin').text(value[ 0 ]);
-      lowLimit=value[0];
-      // console.log(value[0]);
-      years=[];
-      // d3.select('#slidertextmax').text(value[ 1 ]);
-      highLimit=value[1];
-      // console.log(value[1]);
-      for(var i=0;i<value[1]-value[0]+1;i++){
-        years[i]=(value[0]+i).toString();
-      }
-      years = years.map(function(d){return parseDate.parse(d);});
-      getSelectToggleCounty();
-    }));
+
     //Check if info exists, by school number
     Array.prototype.returnCountyInfo = function(county){
     		for (var i = 0; i < this.length; i++) {
@@ -77,10 +60,9 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     var countyJson = {};
 
     var parseDate = d3.time.format("%Y");
-
-    // var years = ["1998","2001","2004","2007","2010"];
+    var years = ["1998","2001","2004","2007","2010"];
     years = years.map(function(d){return parseDate.parse(d);});
-    console.log(years);
+
     var width = 400,height = 430;
 
     //other functions use the projection/path for highlighting certain sections of the map
@@ -103,20 +85,19 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     		countyJson=mn;
     		d3.csv("data/regionData.csv", function(errorC, regionData){
     			allRegionInfo=regionData;
-    			d3.csv("data/countypop.csv", function(errorC, studentData){
+    			d3.csv("data/countysample.csv", function(errorC, studentData){
     				allCountyInfo = studentData;
 
     				//build the county list in a separate variable so we can sort them easily
     				//remove the last element, which is statewide
     				var countyList = studentData.map(function(d){return d.countyName;}).slice(0, -1).sort();
-    				d3.select("select#countyOptions").selectAll('option').data(countyList).enter()    //appends all counties to div in html
+    				d3.select("select#countyOptions").selectAll('option').data(countyList).enter()
     				.append("option").attr("value", function(d){return d;}).text(function(d){return d;});
 
     				//build the metro area list
     				d3.select("select#statewideOptions").selectAll('option').data(statewideOptionList).enter()
     				.append("option").attr("value", function(d){return d.condensedName;}).text(function(d){return d.friendlyName;});
 
-            //building svg map
     				svg.selectAll(".county")
     				.data(topojson.feature(mn, mn.objects.counties).features).enter().append("path")
     				.attr({
@@ -125,17 +106,17 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     					stroke: '#000',
     					'class' : function(d){
     						var countyData = studentData.returnCountyInfo(d.properties.name);
-      						if(countyData['pop-2010']<1500){
+      						if(countyData.number<15){
                      classCall='lowest';
-                  }else if(countyData['pop-2010']<1800){
+                  }else if(countyData.number<35){
                      classCall='lower';
-                  }else if(countyData['pop-2010']<11000){
+                  }else if(countyData.number<55){
                      classCall='low';
-                  }else if(countyData['pop-2010']<13000){
+                  }else if(countyData.number<65){
                      classCall='medium';
-                  }else if(countyData['pop-2010']<15000){
+                  }else if(countyData.number<75){
                      classCall='high';
-                  }else if(countyData['pop-2010']<110000){
+                  }else if(countyData.number<85){
                      classCall='higher';
                   }else {
                      classCall='highest';
@@ -155,8 +136,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     					}
     					else { //by county
     						var countyElement = document.getElementById('countyOptions');
-    						// countyElement.value = d.properties.name;
-                currentCounty=d.properties.name;
+    						countyElement.value = d.properties.name;
     						toggleCounty(clickedCounty);
     					}
     				});
@@ -168,7 +148,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     					"d": path
     				});
 
-    				// getSelectToggleCounty();
+    				getSelectToggleCounty();
     			});
     		});
     	});
@@ -176,9 +156,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     function getSelectToggleCounty(){
     	var e = document.getElementById("countyOptions");
-    	var county = currentCounty;
-      // e.options[e.selectedIndex].text;
-      // console.log(e.selectedIndex);
+    	var county = e.options[e.selectedIndex].text;
     	toggleCounty(allCountyInfo.returnCountyInfo(county));
     }
 
@@ -294,16 +272,16 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     	d3.select("div#selectedTitle").append("h2").text(countyInfo.countyName);
     	var content = d3.select("div#selectedContent");
 
-    	// content.append("p").text(function(d){
-    	// 	if (countyInfo.metro === "") {
-    	// 		return "Not classified as a metropolitan county.";
-    	// 	}
-    	// 	else {
-    	// 		return _.find(statewideOptionList, function(d){ return d.condensedName == countyInfo.metro;}).friendlyName;
-    	// 	}
-    	// });
+    	content.append("p").text(function(d){
+    		if (countyInfo.metro === "") {
+    			return "Not classified as a metropolitan county.";
+    		}
+    		else {
+    			return _.find(statewideOptionList, function(d){ return d.condensedName == countyInfo.metro;}).friendlyName;
+    		}
+    	});
 
-    	// content.append("p").text("Ranks " + countyInfo.rank + "/87 for number of students who plan to go to college or beyond.");
+    	content.append("p").text("Ranks " + countyInfo.rank + "/87 for number of students who plan to go to college or beyond.");
 
     	var svgChart = d3.select("svg#selectedChart").append("g")
     		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -314,7 +292,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     	var y = d3.scale.linear()
     		.range([thisHeight, 0])
-    		.domain([d3.min(chartInfo.populations, function(d,i) {return d; }), d3.max(chartInfo.populations, function(d,i) {return d; })]);
+    		.domain([0, d3.max(chartInfo.populations, function(d,i) {return d; })]);
 
     	var xAxis = d3.svg.axis()
     		.scale(x)
@@ -330,33 +308,33 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     		.y0(thisHeight)
     		.y1(function(d) {return y(chartInfo.populations[d.getFullYear()]); });
 
-    	// var schoolArea = d3.svg.area()
-    	// 	.x(function(d,i) { return x(years[i]); })
-    	// 	.y0(thisHeight)
-    	// 	.y1(function(d) { return y(chartInfo.collegeAmt[d.getFullYear()]); });
-      //
-    	// var stateAvgLine = d3.svg.line()
-    	// .x(function(d,i) { return x(years[i]); })
-      //   .y(function(d) {
-      //     var population = chartInfo.populations[d.getFullYear()];
-      //     var stateInfo = _.find(allCountyInfo, function(d){return d.countyName == 'Statewide';});
-      //     return y((stateInfo['collOrByond-'+d.getFullYear()]/100) * population);
-      //   });
+    	var schoolArea = d3.svg.area()
+    		.x(function(d,i) { return x(years[i]); })
+    		.y0(thisHeight)
+    		.y1(function(d) { return y(chartInfo.collegeAmt[d.getFullYear()]); });
+
+    	var stateAvgLine = d3.svg.line()
+    	.x(function(d,i) { return x(years[i]); })
+        .y(function(d) {
+          var population = chartInfo.populations[d.getFullYear()];
+          var stateInfo = _.find(allCountyInfo, function(d){return d.countyName == 'Statewide';});
+          return y((stateInfo['collOrByond-'+d.getFullYear()]/100) * population);
+        });
 
     	svgChart.append("path")
     		.datum(years)
     		.attr("class", "popArea")
     		.attr("d", popArea);
-      //
-    	// svgChart.append("path")
-      //     .datum(years)
-      //     .attr("class", "schoolArea")
-      //     .attr("d", schoolArea);
-      //
-    	// svgChart.append("path")
-      //     .datum(years)
-      //     .attr("class", "stateLine")
-      //     .attr("d", stateAvgLine);
+
+    	svgChart.append("path")
+          .datum(years)
+          .attr("class", "schoolArea")
+          .attr("d", schoolArea);
+
+    	svgChart.append("path")
+          .datum(years)
+          .attr("class", "stateLine")
+          .attr("d", stateAvgLine);
 
     	svgChart.append("g")
           .attr("class", "x axis")
@@ -377,35 +355,35 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
           'class': 'popArea'
     	});
 
-    	// index.append("rect")
-    	// .attr({
-      //     y: 25,
-      //     height: 20,
-      //     width: 20,
-      //     'class': 'schoolArea'
-    	// });
+    	index.append("rect")
+    	.attr({
+          y: 25,
+          height: 20,
+          width: 20,
+          'class': 'schoolArea'
+    	});
 
-    	// index.append("path")
-    	// .attr({
-      //     d : "M0,50L22,50",
-      //     "transform": "translate(0," + 11 + ")",
-      //     'class': 'stateLine'
-    	// });
-      //
-    	// index.append("text").attr({
-      //     x: 25,
-      //     y: 16
-    	// }).text("Students Surveyed");
-      //
-    	// index.append("text").attr({
-      //     x: 25,
-      //     y: 41
-    	// }).text("Students Planning on Going to College or Beyond");
-      //
-    	// index.append("text").attr({
-      //     x: 25,
-      //     y: 66
-    	// }).text("State Avg % of Students Planning on Going to College or Beyond");
+    	index.append("path")
+    	.attr({
+          d : "M0,50L22,50",
+          "transform": "translate(0," + 11 + ")",
+          'class': 'stateLine'
+    	});
+
+    	index.append("text").attr({
+          x: 25,
+          y: 16
+    	}).text("Students Surveyed");
+
+    	index.append("text").attr({
+          x: 25,
+          y: 41
+    	}).text("Students Planning on Going to College or Beyond");
+
+    	index.append("text").attr({
+          x: 25,
+          y: 66
+    	}).text("State Avg % of Students Planning on Going to College or Beyond");
     }
 
     function displayMetroRegionData(regionName){
@@ -420,7 +398,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     	var content = d3.select("div#selectedContent");
 
-    	// content.append("p").text("This region is ranked " + regionData.regionRank + "/8 for having " + Math.floor(regionData.collOrByond) + "% of students interested in going to college or beyond.");
+    	content.append("p").text("This region is ranked " + regionData.regionRank + "/8 for having " + Math.floor(regionData.collOrByond) + "% of students interested in going to college or beyond.");
     }
 
     function displayMetroOrRuralData(isMetro){
@@ -457,11 +435,11 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     	content.append("p").text("Of those students, on average " + Math.floor(avgPct) + "% planned to go to college or beyond.");
     }
 
-    // window.setInterval(function(){
-    //   if(document.getElementById('cycleToggle').checked){
-    // 	selectRandom();
-    //   }
-    // }, 10000);
+    window.setInterval(function(){
+      if(document.getElementById('cycleToggle').checked){
+    	selectRandom();
+      }
+    }, 10000);
 
     function selectRandom(){
     	var displayType = getRadioVal('displayOptions');
@@ -482,13 +460,12 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     }
 
     function getRadioVal (groupName){
-    	// var radioElements = document.getElementsByName(groupName);
-    	// for(var i = 0; i < radioElements.length; i++){
-    		// if(radioElements[i].checked){
-    		// 	return radioElements[i].value;
-    		// }
-      // }
-        return 'county';
+    	var radioElements = document.getElementsByName(groupName);
+    	for(var i = 0; i < radioElements.length; i++){
+    		if(radioElements[i].checked){
+    			return radioElements[i].value;
+    		}
+    	}
     }
 
     function getRandomInt (min, max) {

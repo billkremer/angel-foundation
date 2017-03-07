@@ -120,6 +120,275 @@ tr:nth-child(even) {
 }
 
 
+/*-----------test-----------*/
+
+p.chartNav {
+	margin: 3px;
+	font-weight: bold;
+}
+
+select.drgSelect {
+	width: 500px;
+}
+
+.barLabel, .barValueLabel {
+	pointer-events : none;
+}
+
+.footer {
+	background-color: #E8E8E8;
+	margin-left: 3px;
+	margin-top: 10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	font-size: 10px;
+	clear: both;
+}
+
+.footer p {
+	margin-top: 10px;
+}
+
+.strong{
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.d3-tip {
+    font-size: 12px;
+    padding: 9px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+#mapDiv {
+	float: left;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: inline-block;
+}
+
+#countyInfo {
+	margin-left: 400px;
+}
+
+select {
+	margin-left: 25px;
+}
+
+.MinneapolisStPaulBloomingtonMNWI{
+	fill: #5E98E2;
+}
+
+.StCloudMN{
+	fill: #5E98E2;
+}
+
+.MankatoNorthMankatoMN{
+	fill: #5E98E2;
+}
+
+.DuluthMNWI{
+	fill: #5E98E2;
+}
+
+.FargoNDMN{
+	fill: #5E98E2;
+}
+
+.RochesterMN{
+	fill: #5E98E2;
+}
+
+.LaCrosseOnalaskaWIMN{
+	fill: #5E98E2;
+}
+
+.GrandForksNDMN{
+	fill: #5E98E2;
+}
+
+.nonMetro {
+	fill: #9BBAE2;
+}
+
+#highlightPath {
+	fill: none;
+	stroke-width: 4;
+	stroke: #005bcf
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+text{
+	font-size:12px
+}
+
+.popArea {
+  fill: #007AFF;
+}
+
+.schoolArea {
+  fill: #1750CA;
+}
+
+.stateLine {
+  fill: none;
+  stroke: #FFFF00;
+  stroke-width: 3;
+  stroke-dasharray: 5,5;
+}
+
+.lowest{
+  fill:#111;
+}
+.lower{
+  fill:#333;
+}
+.low{
+  fill:#555;
+}
+.medium{
+  fill:#777;
+}
+.high{
+  fill:#999;
+}
+.higher{
+  fill:#bbb;
+}
+.highest{
+  fill:#ddd;
+}
+
+
+
+#slider{
+  width:50%;
+  position:relative;
+  left:50px;
+}
+
+.d3-slider {
+    position: relative;
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1.1em;
+    border: 1px solid #aaaaaa;
+    z-index: 2;
+}
+
+.d3-slider-horizontal {
+    height: .8em;
+}
+
+.d3-slider-range {
+  background:#2980b9;
+  left:0px;
+  right:0px;
+  height: 0.8em;
+  position: absolute;
+}
+
+.d3-slider-range-vertical {
+  background:#2980b9;
+  left:0px;
+  right:0px;
+  position: absolute;
+  top:0;
+}
+
+.d3-slider-vertical {
+    width: .8em;
+    height: 100px;
+}
+
+.d3-slider-handle {
+    position: absolute;
+    width: 1.2em;
+    height: 1.2em;
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    background: #eee;
+    background: linear-gradient(to bottom, #eee 0%, #ddd 100%);
+    z-index: 3;
+}
+
+.d3-slider-handle:hover {
+    border: 1px solid #999999;
+}
+
+.d3-slider-horizontal .d3-slider-handle {
+    top: -.3em;
+    margin-left: -.6em;
+}
+
+.d3-slider-axis {
+    position: relative;
+    z-index: 1;
+}
+
+.d3-slider-axis-bottom {
+    top: .8em;
+}
+
+.d3-slider-axis-right {
+    left: .8em;
+}
+
+.d3-slider-axis path {
+    stroke-width: 0;
+    fill: none;
+}
+
+.d3-slider-axis line {
+    fill: none;
+    stroke: #aaa;
+    shape-rendering: crispEdges;
+}
+
+.d3-slider-axis text {
+    font-size: 11px;
+}
+
+.d3-slider-vertical .d3-slider-handle {
+    left: -.25em;
+    margin-left: 0;
+    margin-bottom: -.6em;
+}
+
+
+.ca, .us {fill: #DF4949;}
+.uc, .br, .mx {fill: #E27A3F;}
+.other {fill: #45B29D;}
+
+
+
+circle {
+  stroke: black;
+  stroke-width: 2px;
+  opacity: .8;
+}
+.btn-group {
+  margin-left: 330px;
+}
+.label {
+  fill: black;
+  font-size: 16px;
+}
+
+
+.active{
+  stroke-width: 5px;
+}
+
+
 /*-----------------------------custom report styles------------------------------*/
 
 #dataSetContainer{
