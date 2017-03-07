@@ -51,8 +51,10 @@
     <h3>
       Standard Reports List
     </h3>
-    <ul ng-repeat="report in standardCtrl.standardReportList">
-      <li ng-model="report" ng-click="standardCtrl.selectStandardReport(report)">{{report.report_name}}</li>
+    <ul>
+      <li ng-repeat="report in standardCtrl.standardReportList track by $index" ng-model="report" ng-click="standardCtrl.selectStandardReport(report,$scope)">
+        {{report.report_name}}
+      </li>
     </ul>
 
 
@@ -66,20 +68,11 @@
 
     <!-- report preview -->
     <div id="standardReport-reportPreview" class="">
-      <!-- <table>
-        <tr ng-repeat="key in standardCtrl.keys">
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
+      <table>
+        <tr>
+          <th ng-repeat="key in standardCtrl.keys">{{key}}</th>
         </tr>
-        <tr ng-repeat="val in standardCtrl.data">
+        <tr ng-repeat="object in standardCtrl.standardReportResponse">
           <td>{{val.patient_id}}</td>
           <td>{{val.angel_patient_id}}</td>
           <td>{{val.ethnicity}}</td>
@@ -92,12 +85,27 @@
           <td>{{val.gender}}</td>
         </tr>
 
-      </table> -->
+      </table>
 
 
       <p>
         Standard Report Preview
       </p>
+      <!-- vm.standardReportResponse
+      <table>
+        <tr>
+
+          <th>
+
+          </th>
+        </tr>
+        <tr>
+          <td>
+
+          </td>
+
+        </tr>
+      </table> -->
 
 
     </div>

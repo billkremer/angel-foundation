@@ -1,5 +1,7 @@
-app.controller("StandardReportController", function(StandardReportGetService) {
+app.controller("StandardReportController",
+  function(StandardReportGetService) {
     console.log('standard controller loaded');
+
 
     var vm=this;
     vm.data = [];
@@ -26,10 +28,14 @@ app.controller("StandardReportController", function(StandardReportGetService) {
     vm.showStandardReports();
 
     //queries db for specific report
-    vm.selectStandardReport = function (report) {
+    vm.selectStandardReport = function (report,$scope) {
+      vm.keys = [];
       StandardReportGetService.selectedStandardReport(report).then(function(response){
         vm.standardReportResponse=response.data;
         console.log('standard report returned', vm.standardReportResponse);
+        for(key in vm.standardReportResponse[0]){
+          vm.keys.push(key);
+        }
       })
     }; // closes selectStandardReport
 
