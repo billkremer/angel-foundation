@@ -119,6 +119,7 @@ tr:nth-child(even) {
   text-align: center;
 }
 
+
 /*-----------test-----------*/
 
 p.chartNav {
@@ -386,3 +387,45 @@ circle {
 .active{
   stroke-width: 5px;
 }
+
+
+/*-----------------------------custom report styles------------------------------*/
+
+#dataSetContainer{
+  background-color:rgb(0,82,156);
+  border:2px solid black;
+  color:white;
+  font-family:  'Helvetica', Arial, sans-serif !important;
+  padding:0px;
+  text-align: center;
+}
+#dataSetContainer ul{
+  list-style: none;
+  padding:0px;
+  font-size:16px;
+  box-shadow:inset 0px 0px 40px 2px rgba(0, 0, 0, 0.47);
+}
+#expanderDiv{
+  max-height:40px;
+  transition: all ease 1.2s;
+  overflow:hidden;
+}
+#expanderDiv:hover{
+  max-height:200px;
+}
+#categoryTitle{
+  font-size:25px;
+  height:40px;
+}
+#customReportSelections{
+  background-color:rgb(0,82,156);
+  border:2px solid black;
+  color:white;
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif !important;
+
+}
+#customReportSelections ul{
+
+  font-size:16px;
+}
+/*-----------------------------custom report styles------------------------------*/
