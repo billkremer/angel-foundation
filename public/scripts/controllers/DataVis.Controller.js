@@ -190,7 +190,10 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     function toggleCounty(countyInfo){
     	d3.select("#highlightPath").remove();
+      if(countyInfo==undefined){
+        countyInfo='';
 
+      }
     	d3.selectAll("svg#mapMain").append("path")
     	.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) { return a.properties.name == countyInfo.countyName || b.properties.name == countyInfo.countyName; }))
     	.attr({
