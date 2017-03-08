@@ -4,7 +4,7 @@ app.controller("StandardReportController",
 
 
     var vm=this;
-    vm.data = [];
+    vm.dataArray = [['hello','goodbye'],['hello','goodbye'],['hello','goodbye']];
     vm.dataObject = {}
     vm.keys = [];
 
@@ -28,25 +28,47 @@ app.controller("StandardReportController",
     vm.showStandardReports();
 
     //queries db for specific report
-    vm.selectStandardReport = function (report,$scope) {
+    vm.selectStandardReport = function (report) {
       vm.keys = [];
       StandardReportGetService.selectedStandardReport(report).then(function(response){
         vm.standardReportResponse=response.data;
+        docDefinition.content[0].table.body=[[]];
         console.log('standard report returned', vm.standardReportResponse);
         for(key in vm.standardReportResponse[0]){
           vm.keys.push(key);
+          docDefinition.content[0].table.body[0].push(key);
         }
-        vm.data=[];
+        vm.dataArray=[];
+
         vm.standardReportResponse.forEach(function(object){
-          var array=[];
+          var arr=[];
           for (category in object){
-            array.push(object[category]);
+            arr.push(object[category]);
           }
-          vm.data.push(array);
+          vm.dataArray.push(arr);
+          console.log('help',arr);
+          docDefinition.content[0].table.body.push(arr);
         });
+
       })
     }; // closes selectStandardReport
 
+    vm.downloadCSV=function() {
+        var csv = '';
+        csv=vm.keys.join(',');
+        csv+='\n';
+        vm.dataArray.forEach(function(row) {
+                csv += row.join(',');
+                csv += "\n";
+        });
+
+        console.log(csv);
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'people.csv';
+        hiddenElement.click();
+    }
 
     vm.changeActive = function (buttonSelected) {
       console.log(buttonSelected);
@@ -67,11 +89,42 @@ app.controller("StandardReportController",
       console.log(vm);
     }; // closes changeActive
 
+    var docDefinition = {
+            content: [
+              {
+                table: {
+                  // headers are automatically repeated if the table spans over multiple pages
+                  // you can declare how many rows should be treated as headers
+                  headerRows: 1,
 
+                  body: [
+                     [{text: 'Header 1', style: 'tableHeader'}, {text: 'Header 2', style: 'tableHeader'}, {text: 'Header 3', style: 'tableHeader'}],
+
+                  ]
+                },
+                layout: {
+                  fillColor: function (i, node) { return (i % 2 === 0) ?  '#CCCCCC' : null; }
+                }
+
+              }
+            ],	styles: {
+              		tableHeader: {
+              			fontSize: 18,
+              			bold: true,
+              			margin: [0, 0, 0, 10]
+              		}
+              	}
+          };
 
     vm.goNext = function () {
       console.log('which selected',vm.goButtonSelected);
-
+      if(vm.goButtonSelected=='csvButton'){
+        vm.downloadCSV();
+      }
+      if(vm.goButtonSelected=='pdfButton'){
+         pdfMake.createPdf(docDefinition).open();
+         console.log(vm.dataArray);
+      }
 
     }; // closes goNext
 

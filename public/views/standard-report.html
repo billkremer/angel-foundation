@@ -52,7 +52,7 @@
       Standard Reports List
     </h3>
     <ul>
-      <li ng-repeat="report in standardCtrl.standardReportList track by $index" ng-model="report" ng-click="standardCtrl.selectStandardReport(report,$scope)">
+      <li ng-repeat="report in standardCtrl.standardReportList track by $index" ng-model="report" ng-click="standardCtrl.selectStandardReport(report)">
         {{report.report_name}}
       </li>
     </ul>
@@ -70,10 +70,10 @@
     <div id="standardReport-reportPreview" class="">
       <table>
         <tr>
-          <th ng-repeat="key in standardCtrl.keys">{{key}}</th>
+          <th ng-repeat="key in standardCtrl.keys track by $index">{{key}}</th>
         </tr>
-        <tr ng-repeat="array in standardCtrl.data" >
-          <td ng-repeat="item in array">{{item}}</td>
+        <tr ng-repeat="array in standardCtrl.dataArray | limitTo: 5 track by $index" >
+          <td ng-repeat="item in array track by $index">{{item}}</td>
 
         </tr>
 
