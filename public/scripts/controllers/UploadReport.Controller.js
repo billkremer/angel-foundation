@@ -1,5 +1,5 @@
-angular.module("AngelApp").controller("UploadReportController", ['$location','$http',
-  function($location,$http) {
+angular.module("AngelApp").controller("UploadReportController", ['$location','$http', '$route',
+  function($location,$http,$route) {
     console.log('upload controller loaded');
 
     var vm=this;
@@ -32,6 +32,7 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
               }, function(error) {
                 console.log('error uploading patient csv', error);
               });
+
       };
 
 
@@ -53,6 +54,13 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
 
 
 
+
+
+      });
+      alertify.set('notifier','position', 'bottom-right');
+      alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
+      $route.reload();
+    }
 
 
 
