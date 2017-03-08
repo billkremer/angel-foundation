@@ -7,7 +7,7 @@ app.controller("StandardReportController",
     vm.data = [];
     vm.dataObject = {}
     vm.keys = [];
-    vm.data.data = [];
+
 
     vm.standardReportList = [];
     vm.standardReportResponse = {};
@@ -36,6 +36,14 @@ app.controller("StandardReportController",
         for(key in vm.standardReportResponse[0]){
           vm.keys.push(key);
         }
+        vm.data=[];
+        vm.standardReportResponse.forEach(function(object){
+          var array=[];
+          for (category in object){
+            array.push(object[category]);
+          }
+          vm.data.push(array);
+        });
       })
     }; // closes selectStandardReport
 
