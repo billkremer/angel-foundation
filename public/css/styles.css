@@ -22,11 +22,11 @@ Yellow-green:		rgb(211,223,115);	#d3df73
 }
 
 .standardReportHeader div {
-border: 1px solid purple;
+/*border: 1px solid purple;*/
 }
 
 #standardReport-reportList {
-  border: 1px solid purple;
+  /*border: 1px solid purple;*/
 }
 
 #standardReport-reportList li {
@@ -40,11 +40,11 @@ border: 1px solid purple;
 }
 
 #standardReport-reportPreview {
-  border: 1px solid purple;
+  /*border: 1px solid purple;*/
 }
 
 #standardReport-reportButtons {
-  border: 1px solid purple;
+  /*border: 1px solid purple;*/
   font-family: helvetica, sans-serif;
   font-weight: bold;
 
