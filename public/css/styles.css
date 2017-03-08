@@ -119,6 +119,19 @@ tr:nth-child(even) {
   text-align: center;
 }
 
+.uploadCSVHeader img {
+  height: 50px;
+}
+
+
+
+
+
+
+
+
+
+
 
 /*-----------------------------custom report styles------------------------------*/
 
@@ -149,6 +162,10 @@ tr:nth-child(even) {
   height:40px;
 }
 #customReportSelections{
+  /*padding-left: 5px;
+  padding-right: 2px;*/
+    padding:0px;
+    text-align: center;
   background-color:rgb(0,82,156);
   border:2px solid black;
   color:white;
@@ -156,7 +173,12 @@ tr:nth-child(even) {
 
 }
 #customReportSelections ul{
-
+  padding: 0px;
   font-size:16px;
 }
+
+.customReportHeader img {
+  height: 50px;
+}
+
 /*-----------------------------custom report styles------------------------------*/
