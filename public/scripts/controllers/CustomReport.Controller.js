@@ -3,6 +3,7 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
     console.log('custom controller loaded');
 
     var vm=this;
+    vm.reportSelection = [];
 
 
     vm.dataSetList=[
@@ -85,5 +86,20 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
         }console.log(vm.dataSetSelections[0]);
     }
 
-
+    vm.runReport = function() {
+      console.log("running report", vm.dataSetSelections);
+      vm.dataSetSelections.forEach(function(element){
+        console.log(element);
+        if (element.options.length > 1) {
+          element.options.forEach(function(subselection){
+            // console.log(subselection);
+            vm.reportSelection.push(subselection);
+          })
+        } else {
+          // console.log(element.options);
+          vm.reportSelection.push(element.options); //adds an array, not a value
+        }
+        console.log(vm.reportSelection); 
+      })
+    }
 }]);
