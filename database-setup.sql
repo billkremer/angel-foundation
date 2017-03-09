@@ -1,21 +1,42 @@
-
-
 CREATE DATABASE angel_data_reporting
 
 
 CREATE TABLE patient (
-  patient_id SERIAL PRIMARY KEY,
-  angel_patient_id int,
-  age int,
-  ethnicity varchar (100),
-  marital_status varchar (50),
-  diagnoses varchar (100),
-  grant_used varchar (50),
-  county varchar (50),
-  clinic varchar (50),
-  income int,
-  gender varchar (10)
+  id SERIAL PRIMARY KEY,
+  application_date DATE,
+  expiration_date DATE,
+  qualify_amount INT,
+  transaction_type TEXT,
+  patient_id INT,
+  diagnosis TEXT,
+  cancer_stage TEXT,
+  date_of_birth DATE,
+  gender TEXT,
+  ethnicity TEXT,
+  marital_status TEXT,
+  veteran BOOLEAN,
+  city TEXT,
+  county TEXT,
+  state VARCHAR(3),
+  zip VARCHAR(10),
+  monthly_income MONEY,
+  fact_family BOOLEAN,
+  reason TEXT,
+  referred_by TEXT,
+  social_worker_id INT,
+  social_worker_clinic TEXT,
+  doctor_id INT,
+  doctor_clinic TEXT,
+  does_not_qualify BOOLEAN,
+  does_not_qualify_reason TEXT
 );
+
+
+-- demo patient data to test table creation
+INSERT INTO patient ("application_date","expiration_date","qualify_amount","transaction_type","patient_id","diagnosis","cancer_stage","date_of_birth","gender","ethnicity","marital_status","veteran","city","county","state","zip","fact_family","monthly_income","reason","referred_by","social_worker_id","social_worker_clinic","doctor_id","doctor_clinic","does_not_qualify","does_not_qualify_reason")
+VALUES
+('2016-07-25','2016-10-23',850,'General',3187,'Appendix','None Specified','1967-11-12','Female','','Single',FALSE,'St Louis Park','Hennepin','MN','55426',TRUE,'$800.00','Increasing exp. due to treatment','Social Worker',39,'U of M - Masonic Cancer Clinic',59,'University of Minnesota-Masonic',FALSE,'');
+
 
 
 CREATE TABLE users (
@@ -25,10 +46,32 @@ CREATE TABLE users (
 );
 
 
-INSERT INTO patient ("patient_id","angel_patient_id","age","ethnicity","marital_status","diagnoses","grant_used","county","clinic","income","gender")
+CREATE TABLE distributions (
+  id SERIAL PRIMARY KEY,
+  patient_id INT,
+  date_of_birth DATE,
+  grant_type TEXT,
+  transaction_type TEXT,
+  application_date DATE,
+  distribution_date DATE,
+  fund_general MONEY,
+  fund_komen MONEY,
+  fund_brain MONEY,
+  fund_park_nicollet MONEY,
+  fund_lung	MONEY,
+  fund_melanoma	MONEY,
+  fund_margies MONEY,
+  fund_colon MONEY,
+  fund_total MONEY,
+  qualify_amount REAL
+);
+
+
+-- demo distribution data to test table creation
+INSERT INTO distributions ("patient_id","date_of_birth","grant_type","transaction_type","application_date","distribution_date","fund_general","fund_komen","fund_brain","fund_park_nicollet","fund_lung","fund_melanoma","fund_margies","fund_colon","fund_total","qualify_amount")
 VALUES
-(1,1,21,E'caucasian',E'single',E'cancer',E'$1000',E'Hennepin',E'HCMC',50000,E'male'),
-(2,2,40,E'hispanic',E'married',E'cancer',E'$700',E'Ramsey',E'The Hospital',70000,E'female');
+(1043,'1970-08-12','Grocery Card','Margie''s Fund','2016-01-06','2016-01-06','$0.00','$0.00','$0.00','$0.00','$0.00','$0.00','$100.00','$0.00','$100.00',200);
+
 
 
 CREATE TABLE standard_reports (
@@ -125,18 +168,4 @@ VALUES ('Report Two', 'SELECT ethnicity, income FROM patient');
 -- scott boolean,
 -- washington boolean,
 -- patient_id int REFERENCES patient
--- );
-
-
-
-
-
-
--- CREATE TABLE achievement_data ( -- the achievements the child has completed.
--- 	id SERIAL PRIMARY KEY,
--- 	userid INT, --or userID?
--- 	achievement_id INT, -- so that it doesn't always show - using a JOIN.
---   achievement_completed_text TEXT,
---   achievement_completed_date DATE,
---   achievement_completed_comment TEXT
 -- );
