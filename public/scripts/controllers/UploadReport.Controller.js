@@ -29,6 +29,9 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
 
             ).then(function(response){
                 console.log(response);
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
+                $route.reload();
               }, function(error) {
                 console.log('error uploading patient csv', error);
               });
@@ -45,7 +48,10 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
 
               $http.post('/upload/distributionData', objectToSend // just pass the object...
               ).then(function(response){
-                  console.log(response);
+                  console.log('response',response);
+                  alertify.set('notifier','position', 'bottom-right');
+                  alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
+                  $route.reload();
                 }, function(error) {
                   console.log('error uploading patient csv', error);
                 });
@@ -55,12 +61,12 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
 
 
 
-
-      });
-      alertify.set('notifier','position', 'bottom-right');
-      alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
-      $route.reload();
-    }
+    //
+    //   });
+    //   alertify.set('notifier','position', 'bottom-right');
+    //   alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
+    //   $route.reload();
+    // }
 
 
 
