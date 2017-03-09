@@ -1,10 +1,10 @@
 app.controller("StandardReportController",
-  function(StandardReportGetService) {
+  function(StandardReportGetService,tableHoldService) {
     console.log('standard controller loaded');
 
 
     var vm=this;
-    vm.dataArray = [['hello','goodbye'],['hello','goodbye'],['hello','goodbye']];
+    vm.dataArray = [];
     vm.dataObject = {}
     vm.keys = [];
 
@@ -30,6 +30,7 @@ app.controller("StandardReportController",
     //queries db for specific report
     vm.selectStandardReport = function (report) {
       vm.keys = [];
+      vm.currentReport=report;
       StandardReportGetService.selectedStandardReport(report).then(function(response){
         vm.standardReportResponse=response.data;
         docDefinition.content[0].table.body=[[]];
@@ -46,7 +47,6 @@ app.controller("StandardReportController",
             arr.push(object[category]);
           }
           vm.dataArray.push(arr);
-          console.log('help',arr);
           docDefinition.content[0].table.body.push(arr);
         });
 
@@ -98,7 +98,7 @@ app.controller("StandardReportController",
                   headerRows: 1,
 
                   body: [
-                     [{text: 'Header 1', style: 'tableHeader'}, {text: 'Header 2', style: 'tableHeader'}, {text: 'Header 3', style: 'tableHeader'}],
+
 
                   ]
                 },
@@ -122,8 +122,11 @@ app.controller("StandardReportController",
         vm.downloadCSV();
       }
       if(vm.goButtonSelected=='pdfButton'){
-         pdfMake.createPdf(docDefinition).open();
-         console.log(vm.dataArray);
+
+         pdfMake.createPdf(docDefinition).open()
+
+         setTimeout(vm.selectStandardReport(vm.currentReport),500);
+
       }
 
     }; // closes goNext
