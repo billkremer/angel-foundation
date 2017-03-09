@@ -2,6 +2,7 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
   function($location,$http,$route) {
     console.log('upload controller loaded');
 
+
     var vm=this;
     vm.csv = {
           content: null,
@@ -36,7 +37,8 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
                 console.log('error uploading csv', error);
               });
       });
-      alertify.set('notifier','position', 'top-right');
+      //Alerts
+      alertify.set('notifier','position', 'bottom-right');
       alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
       $route.reload();
     }
@@ -52,5 +54,17 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
       });
     }
 
-
+    vm.changeActive = function (buttonSelected) {
+      vm.allButtonClass = "";
+      vm.addButtonClass = "";
+      console.log('Button selected: ', buttonSelected);
+      if (buttonSelected == "allButton") {
+        vm.allButtonClass = "active";
+        vm.submitButtonSelected = "allButton";
+      } else if (buttonSelected == "addButton") {
+        vm.addButtonClass = "active";
+        vm.submitButtonSelected = "addButton";
+      };
+      console.log('This: ', vm);
+    }; // closes changeActive
 }]);
