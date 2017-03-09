@@ -1,5 +1,10 @@
 
-/* data upload page*/
+html,body{
+  width:100%;
+  margin:0px;
+    padding:0px;
+    background-color:rgb(36,126,176);
+}
 
 /*
 COLORS:
@@ -14,14 +19,19 @@ Green:				rgb(149,193,69);	#95c145
 Yellow-green:		rgb(211,223,115);	#d3df73
 */
 
+/* ----------------------------data upload page--------------------------------*/
+/* --------------------------end of data upload page---------------------------*/
+/* --------------------------standard report view ------------------------------*/
 
-/* standard report view */
-
+.standardReportHeader,.standardReportBody{
+  background-color: white;
+}
 .standardReportHeader img {
   height: 50px;
 }
 
 .standardReportHeader div {
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
 /*border: 1px solid purple;*/
 }
 
@@ -124,16 +134,24 @@ tr:nth-child(even) {
 }
 
 
+#previewTable{
+
+    table-layout:fixed;
+    width:100%;
+
+}
+#previewTable td,#previewTable th{
+  white-space: nowrap;
+  overflow:hidden;
+}
 
 
 
 
 
 
-
-
-
-/*-----------test-----------*/
+/* --------------------------end of standard report view ------------------------------*/
+/*-------------------------------------data vis---------------------------------*/
 
 p.chartNav {
 	margin: 3px;
@@ -401,7 +419,7 @@ circle {
   stroke-width: 5px;
 }
 
-
+/*-----------------------------end of data vis------------------------------*/
 /*-----------------------------custom report styles------------------------------*/
 
 #dataSetContainer{
@@ -450,4 +468,4 @@ circle {
   height: 50px;
 }
 
-/*-----------------------------custom report styles------------------------------*/
+/*-----------------------------end of custom report styles------------------------------*/

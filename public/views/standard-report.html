@@ -1,35 +1,35 @@
-<div class="container-fluid">
-
-  <div class="standardReportHeader">
-  <div class="row">
+<div class=" standardReportHeader col-xs-12 col-sm-8 col-sm-offset-2">
 
 
-    <div class="col-xs-11 col-sm-3 col-md-3">
-      <img src="../images/image001.png" alt="Angel Foundation Logo">
-    </div>
-    <div class="col-xs-11 col-sm-6 col-md-6">
-      <!-- title -->
-      <h1>Standard Report</h1>
-    </div>
-    <!-- <div class="col-md-3 col-sm-3 col-xs-12"> -->
-
-    <div class=" col-xs-11 col-sm-2 col-md-2">
-      <div class="dropdown">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-          <span class="glyphicon glyphicon-menu-hamburger"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a href="/">Standard Reports</a></li>
-          <li><a href="/custom-report">Custom Reports</a></li>
-          <li><a href="/data-upload">Upload</a></li>
-        </ul>
+    <div class="row">
+      <div class=" col-xs-12 col-sm-2 col-md-2">
+        <div class="dropdown">
+          <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+          </button>
+          <ul class="dropdown-menu ">
+            <li><a href="/">Standard Reports</a></li>
+            <li><a href="/custom-report">Custom Reports</a></li>
+            <li><a href="/data-upload">Upload</a></li>
+          </ul>
+        </div>
       </div>
+
+    <div class="col-xs-12 col-sm-4 col-md-4">
+      <img src="../images/angel-foundation-logo-2.png" alt="Angel Foundation Logo">
     </div>
-  </div>
-</div>
+    <div class="col-xs-12 col-sm-6 col-md-6">
+      <!-- title -->
+      <h2>Standard Report</h2>
+    </div>
 
 
-<button ng-click = "standardCtrl.getAllData()">GIVE ME ALL THE DATA!</button>
+
+    </div>
+
+
+
+
 
 </div>
 
@@ -41,7 +41,7 @@
 
 
 
-<div class=container-fluid>
+<div class=" standardReportBody col-xs-12 col-sm-8 col-sm-offset-2">
 
   <div class="row">
 
@@ -76,7 +76,7 @@
 
     <!-- report preview -->
     <div id="standardReport-reportPreview" class="">
-      <table>
+      <table id="previewTable">
         <tr>
           <th ng-repeat="key in standardCtrl.keys track by $index">{{key}}</th>
         </tr>
@@ -86,51 +86,8 @@
         </tr>
 
       </table>
-
-
-      <p>
-        Standard Report Preview
-      </p>
-      <!-- vm.standardReportResponse
-      <table>
-        <tr>
-
-          <th>
-
-          </th>
-        </tr>
-        <tr>
-          <td>
-
-          </td>
-
-        </tr>
-      </table> -->
-
-
     </div>
 
-    <!-- <th>{{table.angel_patient_id}}</th>
-    <th>{{table.ethnicity}}</th>
-    <th>{{table.martial_status}}</th>
-    <th>{{table.diagnoses}}</th>
-    <th>{{table.grant_used}}</th>
-    <th>{{table.county}}</th>
-    <th>{{table.clinic}}</th>
-    <th>{{table.income}}</th>
-    <th>{{table.gender}}</th> -->
-    <!-- <td>{{val.patient_id}}</td>
-    <td>{{table.angel_patient_id}}</td>
-    <td>{{table.ethnicity}}</td>
-    <td>{{table.martial_status}}</td>
-    <td>{{table.diagnoses}}</td>
-    <td>{{table.grant_used}}</td>
-    <td>{{table.county}}</td>
-    <td>{{table.clinic}}</td>
-    <td>{{table.income}}</td>
-    <td>{{table.gender}}</td> -->
-
-    <!-- buttons div -->
     <div id="standardReport-reportButtons" class="container-fluid">
       <p>
         Please Select, then click GO:
