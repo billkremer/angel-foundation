@@ -1,9 +1,14 @@
 <div class="container-fluid">
-  <div class="col-md-3 col-xs-12">
-    logo
+  <div class="col-xs-11 col-sm-3 col-md-3 uploadCSVHeader">
+    <img src="../images/image001.png" alt="Angel Foundation Logo">
   </div>
+  <div class="col-xs-11 col-sm-6 col-md-6">
+    <!-- title -->
+    <h1>Standard Report</h1>
+  </div>
+
   <div class="dropdown">
-    <div class="col-md-2 col-md-offset-7 col-xs-12">
+    <div class="col-xs-11 col-sm-3 col-md-3">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
         <span class="glyphicon glyphicon-menu-hamburger"></span>
       </button>
@@ -27,6 +32,7 @@
       <!-- <button class = "btn-default col-sm-2 col-sm-offset-3" ng-class="{'button-positive': isActive('All')}" ng-click="setActive('All')">All</button> -->
       <!-- <button class = "btn-default col-sm-2 col-sm-offset-2" ng-class="{'button-positive': isActive('Addendum')}" ng-click="setActive('Addendum')">Addendum</button> -->
       <br />
+      <!-- patient data button -->
       <button id="uploader" class = "col-sm-2 col-sm-offset-3 btn-default">
 
           <ng-csv-import  content="uploadCtrl.csv.content"
@@ -41,8 +47,31 @@
 
       <input id="uploadSubmit" type="submit" value="Submit" ng-click="uploadCtrl.upload($event)" placeholder="Upload" class = "btn-primary col-sm-2 col-sm-offset-2">
       <div class="col-xs-2 col-xs-offset-3">
-        {{uploadCtrl.csv.result.filename}}
+        {{uploadCtrl.csv.result.filename}} Patient Data
       </div>
+      <div class="col-xs-2 col-xs-offset-2">
+submit
+      </div>
+      <br /><br />
+
+      <!-- distribution data buttons -->
+      <button id="uploader" class = "col-sm-2 col-sm-offset-3 btn-default">
+
+          <ng-csv-import  content="uploadCtrl.csv.content"
+          material
+          accept="uploadCtrl.csv.accept"
+          md-button-class="md-icon-button md-raised md-accent"
+          header="uploadCtrl.csv.header"
+          separator="uploadCtrl.csv.separator"
+          result="uploadCtrl.csv.result" value="Submit">
+          </ng-csv-import>
+      </button>
+
+      <input id="uploadSubmit" type="submit" value="Submit" ng-click="uploadCtrl.uploadDistributionData($event)" placeholder="Upload" class = "btn-primary col-sm-2 col-sm-offset-2">
+      <div class="col-xs-2 col-xs-offset-3">
+        {{uploadCtrl.csv.result.filename}} distribution  Data
+      </div>
+
     </div>
   </div>
 

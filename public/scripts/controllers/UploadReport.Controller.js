@@ -18,30 +18,54 @@ angular.module("AngelApp").controller("UploadReportController", ['$location','$h
 
     vm.upload = function($event){
       $event.preventDefault();
-      console.log(vm.csv.result);
-      vm.csv.result.forEach(function(object){
-            $http.post('/upload', {
-                id        :object['angel_patient_id'],
-                age       :object.age,
-                ethnicity :object.ethnicity,
-                status    :object['marital_status'],
-                diagnoses :object.diagnoses,
-                grant     :object['grant_used'],
-                county    :object.county,
-                clinic    :object.clinic,
-                income    :object.income,
-                gender    :object.gender
-              }).then(function(response){
+      // console.log(vm.csv.result); // array of objects.  each row is an object.
+      var objectToSend = {dataArray: vm.csv.result};
+        console.log(objectToSend);
+
+        // put in error checking?
+
+
+      // vm.csv.result.forEach(function(object){
+            $http.post('/upload/patientData', objectToSend // just pass the object...
+
+            ).then(function(response){
                 console.log(response);
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
+                $route.reload();
               }, function(error) {
-                console.log('error uploading csv', error);
+                console.log('error uploading patient csv', error);
               });
-      });
-      //Alerts
-      alertify.set('notifier','position', 'bottom-right');
-      alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
-      $route.reload();
-    }
+      };
+
+      vm.uploadDistributionData = function($event){
+        $event.preventDefault();
+        // console.log(vm.csv.result); // array of objects.  each row is an object.
+        var objectToSend = {dataArray: vm.csv.result};
+          console.log(objectToSend);
+        // put in error checking?
+
+              $http.post('/upload/distributionData', objectToSend // just pass the object...
+              ).then(function(response){
+                  console.log('response',response);
+                  alertify.set('notifier','position', 'bottom-right');
+                  alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
+                  $route.reload();
+                }, function(error) {
+                  console.log('error uploading patient csv', error);
+                });
+        };
+
+
+
+
+
+    //
+    //   });
+    //   alertify.set('notifier','position', 'bottom-right');
+    //   alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
+    //   $route.reload();
+    // }
 
 
     vm.logout = function() {

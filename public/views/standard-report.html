@@ -13,8 +13,8 @@
     </div>
     <!-- <div class="col-md-3 col-sm-3 col-xs-12"> -->
 
-    <div class="dropdown col-xs-11 col-sm-2 col-md-2">
-      <div class="">
+    <div class=" col-xs-11 col-sm-2 col-md-2">
+      <div class="dropdown">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           <span class="glyphicon glyphicon-menu-hamburger"></span>
         </button>
@@ -27,6 +27,9 @@
     </div>
   </div>
 </div>
+
+
+<button ng-click = "standardCtrl.getAllData()">GIVE ME ALL THE DATA!</button>
 
 </div>
 
@@ -48,12 +51,19 @@
   <!-- report list div -->
   <div id="standardReport-reportList" class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
 
-    <h3>
+    <p>
       Standard Reports List
+
+
+    </p>
+
     </h3>
-    <ul ng-repeat="report in standardCtrl.standardReportList">
-      <li ng-model="report" ng-click="standardCtrl.selectStandardReport(report)">{{report.report_name}}</li>
+    <ul>
+      <li ng-repeat="report in standardCtrl.standardReportList track by $index" ng-model="report" ng-click="standardCtrl.selectStandardReport(report)">
+        {{report.report_name}}
+      </li>
     </ul>
+
 
 
   </div>
@@ -66,38 +76,36 @@
 
     <!-- report preview -->
     <div id="standardReport-reportPreview" class="">
-      <!-- <table>
-        <tr ng-repeat="key in standardCtrl.keys">
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
-          <th>{{key}}</th>
+      <table>
+        <tr>
+          <th ng-repeat="key in standardCtrl.keys track by $index">{{key}}</th>
         </tr>
-        <tr ng-repeat="val in standardCtrl.data">
-          <td>{{val.patient_id}}</td>
-          <td>{{val.angel_patient_id}}</td>
-          <td>{{val.ethnicity}}</td>
-          <td>{{val.martial_status}}</td>
-          <td>{{val.diagnoses}}</td>
-          <td>{{val.grant_used}}</td>
-          <td>{{val.county}}</td>
-          <td>{{val.clinic}}</td>
-          <td>{{val.income}}</td>
-          <td>{{val.gender}}</td>
+        <tr ng-repeat="array in standardCtrl.dataArray | limitTo: 5 track by $index" >
+          <td ng-repeat="item in array track by $index">{{item}}</td>
+
         </tr>
 
-      </table> -->
+      </table>
 
 
       <p>
         Standard Report Preview
       </p>
+      <!-- vm.standardReportResponse
+      <table>
+        <tr>
+
+          <th>
+
+          </th>
+        </tr>
+        <tr>
+          <td>
+
+          </td>
+
+        </tr>
+      </table> -->
 
 
     </div>
