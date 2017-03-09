@@ -42,7 +42,7 @@ var sessionConfig = {
 }
 
 app.use(session(sessionConfig));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: 20000000}));
 app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(passport.session());

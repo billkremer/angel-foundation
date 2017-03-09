@@ -3,11 +3,17 @@
 
 <!-- header row -->
 <div class="container-fluid">
-  <div class="col-md-3 col-xs-12">
-    logo
+  <div class="col-xs-11 col-sm-2 col-md-3 customReportHeader">
+    <img src="../images/image001.png" alt="Angel Foundation Logo">
   </div>
+  <div class="col-xs-11 col-sm-7 col-md-6">
+    <!-- title -->
+    <h1>Custom Report Creator</h1>
+  </div>
+
+  <div class="col-xs-11 col-sm-2 col-md-2">
   <div class="dropdown">
-    <div class="col-md-2 col-md-offset-7 col-xs-12">
+
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
         <span class="glyphicon glyphicon-menu-hamburger"></span>
       </button>
@@ -22,32 +28,40 @@
 
 
 <div class=container>
+  <div class="col-xs-3 text-center">
 
-  <div id="dataSetContainer" class="col-xs-3">
-    <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetList | orderBy: category.title" >
-      <div id="categoryTitle">
-        {{category.title}}
+
+    <h3>Select Data Here</h3>
+    <div id="dataSetContainer" >
+
+      <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetList | orderBy: category.title" >
+        <div id="categoryTitle">
+          {{category.title}}
+        </div>
+        <ul>
+          <li ng-repeat="option in category.options | orderBy: option" ng-click="customCtrl.addSelection(category,option)">{{option}}</li>
+        </ul>
       </div>
-      <ul>
-        <li ng-repeat="option in category.options | orderBy: option" ng-click="customCtrl.addSelection(category,option)">{{option}}</li>
-      </ul>
     </div>
   </div>
 
 
-  <div id="customReportSelections" class="col-xs-3 col-xs-offset-2">
-    <div id="selectionDiv" ng-repeat="category in customCtrl.dataSetSelections" >
-      <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
-        {{category.title}}
+  <div class="col-xs-3 col-xs-offset-1 text-center">
+          <h3>Data Selected</h3>
+
+    <div id="customReportSelections" >
+
+      <div id="selectionDiv" ng-repeat="category in customCtrl.dataSetSelections" >
+        <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
+          {{category.title}}
+        </div>
+        <ul>
+          <li ng-repeat="option in category.options | orderBy: option" ng-click="customCtrl.removeOptionSelection(category,option)">{{option}}</li>
+        </ul>
       </div>
-      <ul>
-        <li ng-repeat="option in category.options | orderBy: option" ng-click="customCtrl.removeOptionSelection(category,option)">{{option}}</li>
-      </ul>
+
     </div>
-
   </div>
-
-
 
 </div>
 
