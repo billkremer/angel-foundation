@@ -97,9 +97,9 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
           })
         } else {
           // console.log(element.options);
-          vm.reportSelection.push(element.options); //adds an array, not a value
+          vm.reportSelection.push(element.options[0]); //adds an array, not a value
         }
-        console.log(vm.reportSelection); 
+        console.log(vm.reportSelection);
       })
     }
 }]);
