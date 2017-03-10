@@ -3,7 +3,7 @@ html,body{
   width:100%;
   margin:0px;
     padding:0px;
-    background-color:rgb(36,126,176);
+    /*background-color:rgb(36,126,176);*/
 }
 
 /*
@@ -28,10 +28,10 @@ Yellow-green:		rgb(211,223,115);	#d3df73
 }
 .standardReportHeader{
   background-color:rgb(192,215,234);
-  margin-top:-10px;
+  margin-top:150px;
 }
 .standardReportHeader img {
-  height: 100px;
+  height: 50px;
   margin-left:auto;
 }
 #headerRow{
@@ -64,9 +64,13 @@ Yellow-green:		rgb(211,223,115);	#d3df73
 }
 #standardReport-reportList li {
   list-style: none;
+  text-align: center;
   width:100%;
   border: 2px solid rgb(0, 0, 0);
   margin: 5px;
+  border-radius:3px;
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+
 }
 
 #standardReport-reportList li:hover {
@@ -78,7 +82,7 @@ Yellow-green:		rgb(211,223,115);	#d3df73
   border: 3px solid rgb(84, 84, 84);
 text-align: center;
 font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
-
+border-radius:3px;
 }
 
 #standardReport-reportButtons {
@@ -114,7 +118,7 @@ font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
 }
 
 .dropdown{
-  margin-top:50px;
+  /*margin-top:50px;*/
 }
 /* table styling */
 table {
