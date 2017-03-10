@@ -92,14 +92,13 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
         console.log(element);
         if (element.options.length > 1) {
           element.options.forEach(function(subselection){
-            // console.log(subselection);
             vm.reportSelection.push(subselection);
           })
         } else {
-          // console.log(element.options);
-          vm.reportSelection.push(element.options[0]); //adds an array, not a value
+          vm.reportSelection.push(element.options[0]);
         }
         console.log(vm.reportSelection);
-      })
+      });
+      
     }
 }]);

@@ -6,7 +6,8 @@ var passport = require('passport');
 var pg = require('pg');
 var data = require('./routes/data');
 var index = require('./routes/index');
-var standardReports = require('./routes/standardReports')
+var standardReports = require('./routes/standardReports');
+var customReports = require('.routes/customReports');
 
 
 var connection = require('./db/connection');
@@ -79,6 +80,7 @@ function ensureAuthenticated(req, res, next) {
 
 app.use('/data', data);
 app.use('/standardReports', standardReports);
+app.use('/customReports', customReports);
 app.use('/upload', upload);
 app.use('/', index);
 
