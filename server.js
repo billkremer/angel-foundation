@@ -7,7 +7,7 @@ var pg = require('pg');
 var data = require('./routes/data');
 var index = require('./routes/index');
 var standardReports = require('./routes/standardReports');
-var customReports = require('.routes/customReports');
+var customReports = require('./routes/customReports');
 
 
 var connection = require('./db/connection');
