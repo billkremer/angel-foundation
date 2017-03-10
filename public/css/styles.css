@@ -26,38 +26,67 @@ Yellow-green:		rgb(211,223,115);	#d3df73
 .standardReportHeader,.standardReportBody{
   background-color: white;
 }
+.standardReportHeader{
+  background-color:rgb(192,215,234);
+  margin-top:-10px;
+}
 .standardReportHeader img {
-  height: 50px;
+  height: 100px;
+  margin-left:auto;
+}
+#headerRow{
+  margin-top:20px;
+  padding-bottom:10px;
+}
+#headerRow h2{
+  text-align:right;
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+
+}
+#headerPic{
+  text-align: center;
 }
 
 .standardReportHeader div {
   font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
 /*border: 1px solid purple;*/
 }
+.standardReportBody{
+  padding-top:30px;
+}
 
 #standardReport-reportList {
   /*border: 1px solid purple;*/
 }
-
+#standardReport-reportList ul{
+  width:100%;
+  padding:0px;
+}
 #standardReport-reportList li {
   list-style: none;
+  width:100%;
   border: 2px solid rgb(0, 0, 0);
   margin: 5px;
 }
 
 #standardReport-reportList li:hover {
-  background-color: rgb(84, 84, 84);
+  background-color: rgb(192,215,234);
+  cursor:pointer;
 }
 
 #standardReport-reportPreview {
-  /*border: 1px solid purple;*/
+  border: 3px solid rgb(84, 84, 84);
+text-align: center;
+font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+
 }
 
 #standardReport-reportButtons {
   /*border: 1px solid purple;*/
   font-family: helvetica, sans-serif;
   font-weight: bold;
-
+  padding-top:20px;
+  padding-bottom:20px;
 }
 
 #standardReport-reportButtons button {
@@ -84,7 +113,9 @@ Yellow-green:		rgb(211,223,115);	#d3df73
   color: black;
 }
 
-
+.dropdown{
+  margin-top:50px;
+}
 /* table styling */
 table {
   font-family: arial, sans-serif;
@@ -407,7 +438,7 @@ circle {
   opacity: .8;
 }
 .btn-group {
-  margin-left: 330px;
+
 }
 .label {
   fill: black;

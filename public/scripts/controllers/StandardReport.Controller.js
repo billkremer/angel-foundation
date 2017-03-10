@@ -30,6 +30,7 @@ app.controller("StandardReportController",
     //queries db for specific report
     vm.selectStandardReport = function (report) {
       vm.keys = [];
+      vm.previewShow=false;
       vm.currentReport=report;
       StandardReportGetService.selectedStandardReport(report).then(function(response){
         vm.standardReportResponse=response.data;
