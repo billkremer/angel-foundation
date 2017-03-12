@@ -13,9 +13,16 @@ var connection = require('./db/connection');
 
 var upload = require('./routes/upload');
 var login = require('./routes/login');
-var register = require('./routes/register')
-
-
+var register = require('./routes/register');
+var diagnosis = require('./routes/diagnosis');
+var cities = require('./routes/cities');
+var counties = require('./routes/counties');
+var zipCodes = require('./routes/zipCodes');
+var socialWorkerId = require('./routes/socialWorkerId');
+var socialWorkerClinic = require('./routes/socialWorkerClinic');
+var doctorClinic = require('./routes/doctorClinic');
+var doctorId = require('./routes/doctorId');
+var state = require('./routes/state');
 
 require('./auth/setup');
 
@@ -80,6 +87,15 @@ function ensureAuthenticated(req, res, next) {
 app.use('/data', data);
 app.use('/standardReports', standardReports);
 app.use('/upload', upload);
+app.use('/diagnosis', diagnosis);
+app.use('/cities', cities);
+app.use('/counties', counties);
+app.use('/zipCodes', zipCodes);
+app.use('/socialWorkerId', socialWorkerId);
+app.use('/socialWorkerClinic', socialWorkerClinic);
+app.use('/doctorClinic', doctorClinic);
+app.use('/doctorId', doctorId);
+app.use('/state', state);
 app.use('/', index);
 
 
