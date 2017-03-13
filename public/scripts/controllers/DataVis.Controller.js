@@ -1,8 +1,66 @@
-angular.module("AngelApp").controller("DataVisController", ['$location','$http',
-  function($location,$http) {
+angular.module("AngelApp").controller("DataVisController", ['$location','$http','barChartService',
+  function($location,$http,barChartService) {
     console.log('datavis controller loaded');
 
     var vm=this;
+
+
+    var objectToGet={title:'county'};
+    var arrayOfCounties=[];
+    barChartService.getDistinct(objectToGet).then(function(res){
+      res.data.shift();
+      console.log(res.data);
+
+      var countyCountArray=[];
+      for( var i=0; i<res.data.length;i++){
+        var objectForValues={field:'county',item:res.data[i].county};
+        barChartService.getValues(objectForValues,i).then(function(count){
+          countyCountArray.push(count.data);
+          arrayOfCounties.push({countyName:res.data[count.data[0].i].county+' County',count:count.data[0].count});
+          
+          loadData();
+        });
+
+
+
+      }
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     var currentCounty='';
     var lowLimit=null;
     var highLimit=null;
@@ -124,21 +182,23 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     					id: function(d) {return d.properties.name;},
     					stroke: '#000',
     					'class' : function(d){
-    						var countyData = studentData.returnCountyInfo(d.properties.name);
-      						if(countyData['pop-2010']<1500){
-                     classCall='lowest';
-                  }else if(countyData['pop-2010']<1800){
-                     classCall='lower';
-                  }else if(countyData['pop-2010']<11000){
-                     classCall='low';
-                  }else if(countyData['pop-2010']<13000){
-                     classCall='medium';
-                  }else if(countyData['pop-2010']<15000){
-                     classCall='high';
-                  }else if(countyData['pop-2010']<110000){
-                     classCall='higher';
-                  }else {
+    						var countyData = arrayOfCounties.returnCountyInfo(d.properties.name);
+                  if(countyData==undefined){
+                    classCall='highest';
+                  }else if(countyData['count']<2){
                      classCall='highest';
+                  }else if(countyData['count']<5){
+                     classCall='higher';
+                  }else if(countyData['count']<10){
+                     classCall='high';
+                  }else if(countyData['count']<20){
+                     classCall='medium';
+                  }else if(countyData['count']<40){
+                     classCall='low';
+                  }else if(countyData['count']<75){
+                     classCall='lower';
+                  }else {
+                     classCall='lowest';
                   }
 
     						return classCall}
@@ -497,5 +557,5 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     function getRandomInt (min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    loadData();
+    // loadData();
 }]);
