@@ -32,6 +32,10 @@ app.config(function($routeProvider,$locationProvider){
     templateUrl:'views/register.html',
     controller: 'RegisterController as registerCtrl'
 
+  }).when('/d3barchart',{
+    templateUrl:'views/d3barchart.html',
+    controller: 'd3barchartController as barCtrl'
+
   });
 
   $locationProvider.html5Mode(true);

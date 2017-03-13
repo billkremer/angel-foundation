@@ -1,5 +1,10 @@
 
-/* data upload page*/
+html,body{
+  width:100%;
+  margin:0px;
+    padding:0px;
+    /*background-color:rgb(36,126,176);*/
+}
 
 /*
 COLORS:
@@ -14,40 +19,78 @@ Green:				rgb(149,193,69);	#95c145
 Yellow-green:		rgb(211,223,115);	#d3df73
 */
 
+/* ----------------------------data upload page--------------------------------*/
+/* --------------------------end of data upload page---------------------------*/
+/* --------------------------standard report view ------------------------------*/
 
-/* standard report view */
-
+.standardReportHeader,.standardReportBody{
+  background-color: white;
+}
+.standardReportHeader{
+  background-color:rgb(192,215,234);
+  margin-top:150px;
+}
 .standardReportHeader img {
   height: 50px;
+  margin-left:auto;
+}
+#headerRow{
+  margin-top:20px;
+  padding-bottom:10px;
+}
+#headerRow h2{
+  text-align:right;
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+
+}
+#headerPic{
+  text-align: center;
 }
 
 .standardReportHeader div {
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
 /*border: 1px solid purple;*/
+}
+.standardReportBody{
+  padding-top:30px;
 }
 
 #standardReport-reportList {
   /*border: 1px solid purple;*/
 }
-
+#standardReport-reportList ul{
+  width:100%;
+  padding:0px;
+}
 #standardReport-reportList li {
   list-style: none;
+  text-align: center;
+  width:100%;
   border: 2px solid rgb(0, 0, 0);
   margin: 5px;
+  border-radius:3px;
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+
 }
 
 #standardReport-reportList li:hover {
-  background-color: rgb(84, 84, 84);
+  background-color: rgb(192,215,234);
+  cursor:pointer;
 }
 
 #standardReport-reportPreview {
-  /*border: 1px solid purple;*/
+  border: 3px solid rgb(84, 84, 84);
+text-align: center;
+font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+border-radius:3px;
 }
 
 #standardReport-reportButtons {
   /*border: 1px solid purple;*/
   font-family: helvetica, sans-serif;
   font-weight: bold;
-
+  padding-top:20px;
+  padding-bottom:20px;
 }
 
 #standardReport-reportButtons button {
@@ -74,7 +117,9 @@ Yellow-green:		rgb(211,223,115);	#d3df73
   color: black;
 }
 
-
+.dropdown{
+  /*margin-top:50px;*/
+}
 /* table styling */
 table {
   font-family: arial, sans-serif;
@@ -124,16 +169,24 @@ tr:nth-child(even) {
 }
 
 
+#previewTable{
+
+    table-layout:fixed;
+    width:100%;
+
+}
+#previewTable td,#previewTable th{
+  white-space: nowrap;
+  overflow:hidden;
+}
 
 
 
 
 
 
-
-
-
-/*-----------test-----------*/
+/* --------------------------end of standard report view ------------------------------*/
+/*-------------------------------------data vis---------------------------------*/
 
 p.chartNav {
 	margin: 3px;
@@ -389,7 +442,7 @@ circle {
   opacity: .8;
 }
 .btn-group {
-  margin-left: 330px;
+
 }
 .label {
   fill: black;
@@ -401,7 +454,7 @@ circle {
   stroke-width: 5px;
 }
 
-
+/*-----------------------------end of data vis------------------------------*/
 /*-----------------------------custom report styles------------------------------*/
 
 #dataSetContainer{
@@ -450,4 +503,4 @@ circle {
   height: 50px;
 }
 
-/*-----------------------------custom report styles------------------------------*/
+/*-----------------------------end of custom report styles------------------------------*/
