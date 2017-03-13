@@ -14,8 +14,8 @@ var connection = require('./db/connection');
 var upload = require('./routes/upload');
 var login = require('./routes/login');
 var register = require('./routes/register')
-
-
+var barChart= require('./routes/barChart');
+var barChart2= require('./routes/barChart2');
 
 require('./auth/setup');
 
@@ -60,8 +60,8 @@ app.get('/loginStatus', function(req, res){
 // the following routes require authentication
 app.use('/private', ensureAuthenticated);
 app.use('/upload', upload);
-
-
+app.use('/barChart', barChart);
+app.use('/barChart2', barChart2);
 // app.get('/private/secretInfo', function(req, res){
 //   console.log('Sending secret info');
 //   res.send('This is very secret!');

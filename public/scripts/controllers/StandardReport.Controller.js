@@ -12,7 +12,7 @@ app.controller("StandardReportController",
     vm.standardReportList = [];
     vm.standardReportResponse = {};
 
-    vm.csvButtonClass = "active";
+    // vm.csvButtonClass = "active";
     vm.csvButton = "csvButton";
     vm.pdfButton = "pdfButton";
     vm.dataVisButton = "dataVisButton";
@@ -29,7 +29,11 @@ app.controller("StandardReportController",
 
     //queries db for specific report
     vm.selectStandardReport = function (report) {
+      vm.reportSelected=true;
       vm.keys = [];
+
+      vm.reportTitle=report.report_name;
+      console.log('report title',vm.reportTitle)
       vm.currentReport=report;
       StandardReportGetService.selectedStandardReport(report).then(function(response){
         vm.standardReportResponse=response.data;
@@ -116,12 +120,12 @@ app.controller("StandardReportController",
               	}
           };
 
-    vm.goNext = function () {
+    vm.goNext = function (selection) {
       console.log('which selected',vm.goButtonSelected);
-      if(vm.goButtonSelected=='csvButton'){
+      if(selection=='csvButton'){
         vm.downloadCSV();
       }
-      if(vm.goButtonSelected=='pdfButton'){
+      if(selection=='pdfButton'){
 
          pdfMake.createPdf(docDefinition).open()
 
