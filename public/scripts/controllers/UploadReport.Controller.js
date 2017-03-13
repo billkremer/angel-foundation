@@ -17,40 +17,40 @@ function($location,$http,$route) {
     accept:".csv"
   };
 
-  vm.upload = function($event){
+  vm.uploadAllPatient = function($event){
     $event.preventDefault();
     // console.log(vm.csv.result); // array of objects.  each row is an object.
     var objectToSend = {dataArray: vm.csv.result};
-    console.log(objectToSend);
+    console.log('Updating All Patients', objectToSend);
 
     // put in error checking?
 
 
     // vm.csv.result.forEach(function(object){
-    $http.post('/upload/patientData', objectToSend // just pass the object...
+    $http.post('/upload/allPatientData', objectToSend // just pass the object...
 
   ).then(function(response){
     console.log(response);
     alertify.set('notifier','position', 'bottom-right');
-    alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
+    alertify.success(vm.csv.result.filename + ' Submitted!');
     $route.reload();
   }, function(error) {
     console.log('error uploading patient csv', error);
   });
 };
 
-vm.uploadDistributionData = function($event){
+vm.uploadAllDistributionData = function($event){
   $event.preventDefault();
   // console.log(vm.csv.result); // array of objects.  each row is an object.
   var objectToSend = {dataArray: vm.csv.result};
-  console.log(objectToSend);
+  console.log('Updating All Distributions', objectToSend);
   // put in error checking?
 
-  $http.post('/upload/distributionData', objectToSend // just pass the object...
+  $http.post('/upload/allDistributionData', objectToSend // just pass the object...
 ).then(function(response){
   console.log('response',response);
   alertify.set('notifier','position', 'bottom-right');
-  alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
+  alertify.success(vm.csv.result.filename + ' Submitted!');
   $route.reload();
 }, function(error) {
   console.log('error uploading patient csv', error);
@@ -58,6 +58,46 @@ vm.uploadDistributionData = function($event){
 };
 
 
+
+vm.uploadAddPatient = function($event){
+  $event.preventDefault();
+  // console.log(vm.csv.result); // array of objects.  each row is an object.
+  var objectToSend = {dataArray: vm.csv.result};
+  console.log('Adding to Patients', objectToSend);
+
+  // put in error checking?
+
+
+  // vm.csv.result.forEach(function(object){
+  $http.post('/upload/addPatientData', objectToSend // just pass the object...
+
+).then(function(response){
+  console.log(response);
+  alertify.set('notifier','position', 'bottom-right');
+  alertify.success(vm.csv.result.filename + ' Submitted!');
+  $route.reload();
+}, function(error) {
+  console.log('error uploading patient csv', error);
+});
+};
+
+vm.uploadAddDistributionData = function($event){
+$event.preventDefault();
+// console.log(vm.csv.result); // array of objects.  each row is an object.
+var objectToSend = {dataArray: vm.csv.result};
+console.log('Adding to Distributions', objectToSend);
+// put in error checking?
+
+$http.post('/upload/addDistributionData', objectToSend // just pass the object...
+).then(function(response){
+console.log('response',response);
+alertify.set('notifier','position', 'bottom-right');
+alertify.success(vm.csv.result.filename + ' Submitted!');
+$route.reload();
+}, function(error) {
+console.log('error uploading patient csv', error);
+});
+};
 
 
 
@@ -79,21 +119,25 @@ vm.logout = function() {
   });
 }
 
-vm.allButton = "allButton";
-vm.addButton = "addButton";
 
-vm.changeActive = function (buttonSelected) {
-  vm.allButtonClass = "";
-  vm.addButtonClass = "";
-  console.log('Button selected: ', buttonSelected);
+vm.allTab = "allTab";
+vm.addTab = "addTab";
 
-  if (buttonSelected == "allButton") {
-    vm.allButtonClass = "active";
-    vm.submitButtonSelected = "allButton";
-  } else if (buttonSelected == "addButton") {
-    vm.addButtonClass = "active";
-    vm.submitButtonSelected = "addButton";
+vm.changeActive = function (tabSelected) {
+  vm.allTabClass = "";
+  vm.addTabClass = "";
+  console.log('Tab selected: ', tabSelected);
+
+  if (tabSelected == "addTab") {
+    vm.allTabClass = "active";
+    vm.submitTabSelected = "addTab";
+  } else if (tabSelected == "allTab") {
+    vm.addTabClass = "active";
+    vm.submitTabSelected = "allTab";
   };
   console.log('This: ', vm);
-}; // closes changeActive
+};
+
+
+
 }]);
