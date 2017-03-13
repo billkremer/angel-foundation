@@ -29,8 +29,11 @@ app.controller("StandardReportController",
 
     //queries db for specific report
     vm.selectStandardReport = function (report) {
+      vm.reportSelected=true;
       vm.keys = [];
-      vm.previewShow=false;
+
+      vm.reportTitle=report.report_name;
+      console.log('report title',vm.reportTitle)
       vm.currentReport=report;
       StandardReportGetService.selectedStandardReport(report).then(function(response){
         vm.standardReportResponse=response.data;
