@@ -89,11 +89,11 @@
         <div class="row">
 
           <div id="selectionButtons" class="btn-group col-xs-12" role="group" aria-label="...">
-            <button type="button" class="btn btn-default" ng-model="standardCtrl.csvButton" ng-class="standardCtrl.csvButtonClass"  ng-click="standardCtrl.changeActive(standardCtrl.csvButton)">Save as CSV</button>
+            <button type="button" class="btn btn-default" ng-class="standardCtrl.csvButtonClass"  ng-click="standardCtrl.goNext('csvButton')">Save as CSV</button>
 
-            <button type="button" class="btn btn-default"  ng-model="standardCtrl.pdfButton" ng-class="standardCtrl.pdfButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.pdfButton)">Save as PDF</button>
+            <button type="button" class="btn btn-default"   ng-class="standardCtrl.pdfButtonClass" ng-click="standardCtrl.goNext('pdfButton')">Save as PDF</button>
 
-            <button type="button" class="btn btn-default"  ng-model="standardCtrl.dataVisButton" ng-class="standardCtrl.dataVisButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.dataVisButton)">Change Visualization</button>
+            <button type="button" class="btn btn-default" ng-class="standardCtrl.dataVisButtonClass" ng-click="standardCtrl.goNext('dataVisButton')">Change Visualization</button>
           </div>
           <!-- <div id="selectionButtons" class="btn-group col-xs-12" role="group" aria-label="...">
             <button type="button" class="btn btn-default" ng-model="standardCtrl.csvButton" ng-class="standardCtrl.csvButtonClass"  ng-click="standardCtrl.changeActive(standardCtrl.csvButton)">Save as CSV</button>
