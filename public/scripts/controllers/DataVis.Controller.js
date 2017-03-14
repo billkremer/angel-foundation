@@ -1,5 +1,5 @@
-angular.module("AngelApp").controller("DataVisController", ['$location','$http','barChartService',
-  function($location,$http,barChartService) {
+angular.module("AngelApp").controller("DataVisController", ['$location','$http','dataVisService',
+  function($location,$http,dataVisService) {
     console.log('datavis controller loaded');
 
     var vm=this;
@@ -7,23 +7,21 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     var objectToGet={title:'county'};
     var arrayOfCounties=[];
-    barChartService.getDistinct(objectToGet).then(function(res){
+    dataVisService.getDistinct(objectToGet).then(function(res){
       res.data.shift();
       console.log(res.data);
 
-      var countyCountArray=[];
+      // var countyCountArray=[];
       for( var i=0; i<res.data.length;i++){
         var objectForValues={field:'county',item:res.data[i].county};
-        barChartService.getValues(objectForValues,i).then(function(count){
-          countyCountArray.push(count.data);
-          arrayOfCounties.push({countyName:res.data[count.data[0].i].county+' County',count:count.data[0].count});
-          if(count.data[0].i==res.data.length-1){
-            loadData();
-          }
+        dataVisService.getValues(objectForValues,i).then(function(res){
+          console.log('new stuff from db',res.data);
+          // countyCountArray.push(count.data);
+          // arrayOfCounties.push({countyName:res.data[count.data[0].i].county+' County',count:count.data[0].count});
+          // if(count.data[0].i==res.data.length-1){
+          //   loadData();
+          // }
         });
-
-
-
       }
 
     });
