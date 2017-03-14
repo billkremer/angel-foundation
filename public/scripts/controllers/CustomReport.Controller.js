@@ -112,6 +112,7 @@ function(subcategoryBucketService, $location, $http) {
 
 
     vm.saveReport=function(){
+    // this function builds the SQL query string
       var reportString="SELECT ";
       console.log(reportString);
       if (vm.columnLimitSelections!="no selections") {
@@ -133,6 +134,7 @@ function(subcategoryBucketService, $location, $http) {
         console.log(reportString);
       } else {
         reportString = "SELECT * FROM patient ";
+        // if columnLimitSelections == "no selections"
       }
       console.log(reportString);
       if (vm.dataSetSelections[0].title == "no selections"){
@@ -151,13 +153,14 @@ function(subcategoryBucketService, $location, $http) {
             for(var i=0;i<vm.dataSetSelections[j].options.length-1;i++){
               reportString+="("+vm.dataSetSelections[j].title+"='"+vm.dataSetSelections[j].options[i]+"') OR "
             }
-            reportString+="("+vm.dataSetSelections[j].title+"='"+vm.dataSetSelections[j].options[vm.dataSetSelections[j].options.length-1]+"')";
+              reportString+="("+vm.dataSetSelections[j].title+"='"+vm.dataSetSelections[j].options[vm.dataSetSelections[j].options.length-1]+"')";
           }
           reportString+=" AND ";
         };
         console.log(reportString);
         if(vm.dataSetSelections[vm.dataSetSelections.length-1].title=="age"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="income"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="qualify amount"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="exp date"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="app date"){
-          //write code based on format of these things!!!!
+          //write code based on format of these things!!!! - DONE!
+          // the last filter needs a different end compared to the others.
 
           reportString += subcategoryBucketService.returnString(vm.dataSetSelections[vm.dataSetSelections.length-1]);
 
@@ -167,11 +170,12 @@ function(subcategoryBucketService, $location, $http) {
           }
           reportString+="("+vm.dataSetSelections[vm.dataSetSelections.length-1].title+"='"+vm.dataSetSelections[vm.dataSetSelections.length-1].options[vm.dataSetSelections[vm.dataSetSelections.length-1].options.length-1]+"')";
         }
-      }
+      }; // end of WHERE filters
+      reportString += ";"
       console.log(reportString);
 
 
-    }
+    }; // end of saveReport function
 
 
   }]);
