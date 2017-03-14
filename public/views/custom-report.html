@@ -62,5 +62,36 @@
 
     </div>
   </div>
+<!-- <button ng-click="customCtrl.saveReport();"> GO DO IT</button> -->
+</div>
+<div class=container>
+  <div class="col-xs-3 text-center">
 
+
+    <h3>Select Data Here</h3>
+    <div id="dataSetContainer" >
+
+      <div id="expanderDiv" ng-repeat="category in customCtrl.columnLimitList | orderBy: category" >
+        <div id="categoryTitle" ng-click="customCtrl.addColumnLimitSelection(category)">
+          {{category}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-xs-3 col-xs-offset-1 text-center">
+          <h3>Data Selected</h3>
+
+    <div id="customReportSelections" >
+
+      <div id="selectionDiv" ng-repeat="category in customCtrl.columnLimitSelections" >
+        <div id="categoryTitle" ng-click="customCtrl.removeColumnSelection(category)">
+          {{category}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+<button ng-click="customCtrl.saveReport();"> GO DO IT</button>
 </div>
