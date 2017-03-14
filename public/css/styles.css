@@ -1,5 +1,11 @@
 
-/* data upload page*/
+html,body{
+  width:100%;
+  height:100%;
+  margin:0px;
+    padding:0px;
+    /*background-color:rgb(36,126,176);*/
+}
 
 /*
 COLORS:
@@ -14,45 +20,110 @@ Green:				rgb(149,193,69);	#95c145
 Yellow-green:		rgb(211,223,115);	#d3df73
 */
 
-
-/* standard report view */
-
+/* ----------------------------data upload page--------------------------------*/
+/* --------------------------end of data upload page---------------------------*/
+/* --------------------------standard report view ------------------------------*/
+#flexContainer{
+  position:fixed;
+  height:100%;
+  width:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:column;
+}
+.standardReportHeader,.standardReportBody{
+  background-color: white;
+}
+.standardReportHeader{
+  background-color:rgb(192,215,234);
+margin-bottom:10px;
+}
 .standardReportHeader img {
   height: 50px;
+  margin-left:auto;
+}
+#headerRow{
+  margin-top:20px;
+  padding-bottom:10px;
+}
+#headerRow h2{
+  text-align:right;
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+
+}
+#headerPic{
+  text-align: center;
 }
 
 .standardReportHeader div {
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
 /*border: 1px solid purple;*/
+
+}
+.standardReportBody{
+  padding-top:30px;
+  height:400px;
 }
 
 #standardReport-reportList {
   /*border: 1px solid purple;*/
-}
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  text-align: center;
+  height:360px;
+  overflow-y:scroll;
 
+}
+.zeroWidth{
+  width:0%;
+}
+#standardReport-reportList ul{
+  width:100%;
+  padding:0px;
+}
 #standardReport-reportList li {
   list-style: none;
+  text-align: center;
+  width:100%;
   border: 2px solid rgb(0, 0, 0);
-  margin: 5px;
+  margin-top: 5px;
+  margin-bottom:5px;
+  border-radius:3px;
+  font-size:1.5em;
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+
 }
 
 #standardReport-reportList li:hover {
-  background-color: rgb(84, 84, 84);
+  background-color: rgb(192,215,234);
+  cursor:pointer;
 }
-
+#standardReport-previewContainer{
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
 #standardReport-reportPreview {
-  /*border: 1px solid purple;*/
+  border: 3px solid rgb(84, 84, 84);
+text-align: center;
+font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+border-radius:3px;
 }
 
 #standardReport-reportButtons {
   /*border: 1px solid purple;*/
   font-family: helvetica, sans-serif;
   font-weight: bold;
-
+  padding-top:20px;
+  padding-bottom:20px;
 }
-
+#selectionButtons{
+  display:flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
 #standardReport-reportButtons button {
   background-color: #4488bb;
   color: white;
+
 }
 
 #standardReport-reportButtons button.active {
@@ -74,7 +145,9 @@ Yellow-green:		rgb(211,223,115);	#d3df73
   color: black;
 }
 
-
+.dropdown{
+  /*margin-top:50px;*/
+}
 /* table styling */
 table {
   font-family: arial, sans-serif;
@@ -124,16 +197,24 @@ tr:nth-child(even) {
 }
 
 
+#previewTable{
+
+    table-layout:fixed;
+    width:100%;
+
+}
+#previewTable td,#previewTable th{
+  white-space: nowrap;
+  overflow:hidden;
+}
 
 
 
 
 
 
-
-
-
-/*-----------test-----------*/
+/* --------------------------end of standard report view ------------------------------*/
+/*-------------------------------------data vis---------------------------------*/
 
 p.chartNav {
 	margin: 3px;
@@ -389,7 +470,7 @@ circle {
   opacity: .8;
 }
 .btn-group {
-  margin-left: 330px;
+
 }
 .label {
   fill: black;
@@ -401,7 +482,7 @@ circle {
   stroke-width: 5px;
 }
 
-
+/*-----------------------------end of data vis------------------------------*/
 /*-----------------------------custom report styles------------------------------*/
 
 #dataSetContainer{
@@ -453,4 +534,10 @@ circle {
   height: 50px;
 }
 
-/*-----------------------------custom report styles------------------------------*/
+/*-----------------------------end of custom report styles------------------------------*/
+/*-----------------------------log in styles------------------------------*/
+
+#loginFormContainer{
+  margin-top:20px;
+}
+/*-----------------------------end of log in styles------------------------------*/
