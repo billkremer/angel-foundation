@@ -1,5 +1,9 @@
-angular.module("AngelApp").controller("CustomReportController", ['$location','$http',
-  function($location,$http) {
+// angular.module("AngelApp").controller("CustomReportController", ['$location','$http',
+//   function($location,$http) {
+angular.module("AngelApp").controller("CustomReportController", ['subcategoryBucketService','$location','$http',
+  function(subcategoryBucketService, $location, $http) {
+
+
     console.log('custom controller loaded');
 
     var vm=this;
@@ -68,7 +72,7 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
               options:[option]
             });
       }
-      // console.log(vm);
+       console.log(vm);
     }; // close addSelection
 
 
@@ -111,9 +115,12 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
       var reportString="SELECT ";
       console.log(reportString);
       if(vm.columnLimitSelections!="no selections"){
-        for (var i=0;i<vm.columnLimitSelections.length-1;i++){
-
-          reportString+=(vm.columnLimitSelections[i]+",");
+        for (var i=0;i<vm.columnLimitSelections.length-1;i++) {
+          if (vm.columnLimitSelections[i] == "age") {
+            reportString += "age(date_of_birth),";
+          } else {
+            reportString+=(vm.columnLimitSelections[i]+",");
+          }
         };
         reportString+=(vm.columnLimitSelections[vm.columnLimitSelections.length-1]+" ");
         reportString+="FROM patient ";
@@ -126,10 +133,14 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
         console.log(reportString);
       }else{
         reportString+="WHERE ";
-        for(var j=0;j<vm.dataSetSelections.length-1;j++){
+        for(var j=0; j<vm.dataSetSelections.length-1; j++){
 
-          if(vm.dataSetSelections[j].title=="age"||vm.dataSetSelections[j].title=="income"||vm.dataSetSelections[j].title=="qualify amount"||vm.dataSetSelections[j].title=="exp date"||vm.dataSetSelections[j].title=="app date"){
+          if (vm.dataSetSelections[j].title == "age" || vm.dataSetSelections[j].title == "income" || vm.dataSetSelections[j].title == "qualify amount" || vm.dataSetSelections[j].title == "exp date" || vm.dataSetSelections[j].title == "app date") {
             //write code based on format of these things!!!!
+            // example: vm.dataSetSelections[j] = {title: "age", options:["30+","50+"]}
+
+            reportString += subcategoryBucketService.returnString(vm.dataSetSelections[j]);
+
           }else{
             for(var i=0;i<vm.dataSetSelections[j].options.length-1;i++){
               reportString+="("+vm.dataSetSelections[j].title+"='"+vm.dataSetSelections[j].options[i]+"') OR "
@@ -141,6 +152,9 @@ angular.module("AngelApp").controller("CustomReportController", ['$location','$h
         console.log(reportString);
         if(vm.dataSetSelections[vm.dataSetSelections.length-1].title=="age"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="income"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="qualify amount"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="exp date"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="app date"){
           //write code based on format of these things!!!!
+
+          reportString += subcategoryBucketService.returnString(vm.dataSetSelections[vm.dataSetSelections.length-1]);
+
         }else{
           for(var i=0;i<vm.dataSetSelections[vm.dataSetSelections.length-1].options.length-1;i++){
             reportString+="("+vm.dataSetSelections[vm.dataSetSelections.length-1].title+"='"+vm.dataSetSelections[vm.dataSetSelections.length-1].options[i]+"') OR "
