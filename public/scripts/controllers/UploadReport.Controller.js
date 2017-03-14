@@ -5,6 +5,13 @@ function($location,$http,$route) {
   var vm=this;
 
 
+  //Alertify styling
+  alertify.defaults.glossary.title = 'Angel Foundation';
+  alertify.defaults.transition = "slide";
+  alertify.defaults.theme.ok = "btn btn-danger";
+  alertify.defaults.theme.cancel = "btn btn-primary";
+  alertify.defaults.theme.input = "form-control";
+
   vm.csv = {
     content: null,
     header: true,
@@ -19,15 +26,15 @@ function($location,$http,$route) {
 
 
   vm.uploadAll=function($event){
-    alertify.confirm('Are you Suuuuure?').set('onok', function(closeEvent){
-    $event.preventDefault();
-    if(vm.type=='patient'){
-      vm.uploadAllPatient();
-    }
-    else{
-      vm.uploadAllDistributionData();
-    }
-    });
+    alertify.confirm('Are you suuuuuuure?', 'Clicking OK will replace all the data in your database').set('onok', function(closeEvent){
+      $event.preventDefault();
+      if(vm.type=='patient'){
+        vm.uploadAllPatient();
+      }
+      else{
+        vm.uploadAllDistributionData();
+      }
+    }).set('oncancel', function(closeEvent){ alertify.error('Cancel');} );
   }
 
   vm.uploadAllPatient = function(){
@@ -45,7 +52,7 @@ function($location,$http,$route) {
   }, function(error) {
     console.log('error uploading patient csv', error);
   });
-// });
+  // });
 };
 
 vm.uploadAllDistributionData = function(){
@@ -100,10 +107,10 @@ vm.uploadAddPatient = function(){
 
 vm.uploadAddDistributionData = function(){
 
-// console.log(vm.csv.result); // array of objects.  each row is an object.
-var objectToSend = {dataArray: vm.csv.result};
-console.log('Adding to Distributions', objectToSend);
-// put in error checking?
+  // console.log(vm.csv.result); // array of objects.  each row is an object.
+  var objectToSend = {dataArray: vm.csv.result};
+  console.log('Adding to Distributions', objectToSend);
+  // put in error checking?
   $http.post('/upload/addDistributionData', objectToSend // just pass the object...
 ).then(function(response){
   console.log('response',response);
