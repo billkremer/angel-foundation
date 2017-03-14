@@ -6,13 +6,18 @@ app.service("subcategoryBucketService", function($http){
     // example: dataSetSelectionsObject = vm.dataSetSelections[j] = {title: "age", options:["30+","50+"]}
     // if / else-if tree for age, income,
 
+    console.log("dataSetSelectionsObject",dataSetSelectionsObject);
+
     var whereString = ""; // string to return
 
     if (dataSetSelectionsObject.title.toLowerCase() == "age") {
 
       for (var i = 0; i < dataSetSelectionsObject.options.length; i++) {
 
-        if (dataSetSelectionsObject.options[i].charAt(0) == "<" ) {
+        if ((typeof dataSetSelectionsObject.options[i]) == "number") {
+          whereString += " (CAST (SUBSTRING (CAST (age(date_of_birth) AS varchar(3)), '([0-9]{1,3})') AS INT) < " + dataSetSelectionsObject.options[i] + ")";
+
+        } else if(dataSetSelectionsObject.options[i].charAt(0) == "<" ) {
           whereString += " (CAST (SUBSTRING (CAST (age(date_of_birth) AS varchar(3)), '([0-9]{1,3})') AS INT) < " + (dataSetSelectionsObject.options[i].substring(1)) + ")";
           // for "<18"
 
@@ -41,6 +46,7 @@ app.service("subcategoryBucketService", function($http){
     //dataSetSelectionsObject.title.toLowerCase() == "monthly income" ||
     if ( dataSetSelectionsObject.title.toLowerCase() == "income" || dataSetSelectionsObject.title.toLowerCase() == "yearly income" ) {
 
+      console.log("inside income block", dataSetSelectionsObject.options);
 
       //  title:'Monthly Income', --- Should be yearly!
       //  options:['0','1-15000','15001-30000','300001-45000','45001-60000','60001-75000','75001+']
@@ -51,7 +57,13 @@ app.service("subcategoryBucketService", function($http){
 
       for (var j = 0; j < dataSetSelectionsObject.options.length; j++) {
 
-        if (dataSetSelectionsObject.options[j].charAt(0) == "<" ) {
+        console.log(typeof dataSetSelectionsObject.options[j]);
+        console.log(dataSetSelectionsObject.options[j].toString().charAt(0));
+
+        if ((typeof dataSetSelectionsObject.options[j]) == "number") {
+          whereString += " (monthly_income < CAST (" + dataSetSelectionsObject.options[j] + " AS MONEY))";
+
+        } else if (dataSetSelectionsObject.options[j].charAt(0) == "<" ) {
           whereString += " (monthly_income < CAST (" + (Number.parseInt(dataSetSelectionsObject.options[j].substring(1)) / 12) + " AS MONEY))"; // for "< 1000" (Number.parseInt(dataSetSelectionsObject.options[i]))
 
         } else if (dataSetSelectionsObject.options[j].charAt(0) == ">" ) {
@@ -92,7 +104,10 @@ app.service("subcategoryBucketService", function($http){
 
       for (var k = 0; k < dataSetSelectionsObject.options.length; k++) {
 
-        if (dataSetSelectionsObject.options[k].charAt(0) == "<" ) {
+        if ((typeof dataSetSelectionsObject.options[k]) == "number") {
+          whereString += " (qualify_amount < CAST (" + dataSetSelectionsObject.options[k] + " AS MONEY))";
+
+        } else if (dataSetSelectionsObject.options[k].charAt(0) == "<" ) {
           whereString += " (qualify_amount < CAST (" + (Number.parseInt(dataSetSelectionsObject.options[k].substring(1))) + " AS MONEY))"; // for "< 1000" (Number.parseInt(dataSetSelectionsObject.options[i]))
 
         } else if (dataSetSelectionsObject.options[k].charAt(0) == ">" ) {
@@ -122,9 +137,7 @@ app.service("subcategoryBucketService", function($http){
     }; // end if "qualify amount income"
 
 
-
-
-    /* ---------  qualify amount section ------    */
+    /* ------------ expiration date section ------------    */
 
     if ( dataSetSelectionsObject.title.toLowerCase() == "exp date" ) {
 
@@ -151,6 +164,7 @@ app.service("subcategoryBucketService", function($http){
 
 
 
+    /* ------------ application  date section ------------    */
     if ( dataSetSelectionsObject.title.toLowerCase() == "app date" ) {
 
       // title:'app date',
