@@ -37,7 +37,7 @@ Yellow-green:		rgb(211,223,115);	#d3df73
 }
 .standardReportHeader{
   background-color:rgb(192,215,234);
-
+margin-bottom:10px;
 }
 .standardReportHeader img {
   height: 50px;
@@ -59,6 +59,7 @@ Yellow-green:		rgb(211,223,115);	#d3df73
 .standardReportHeader div {
   font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
 /*border: 1px solid purple;*/
+
 }
 .standardReportBody{
   padding-top:30px;
@@ -71,6 +72,7 @@ Yellow-green:		rgb(211,223,115);	#d3df73
   text-align: center;
   height:360px;
   overflow-y:scroll;
+
 }
 .zeroWidth{
   width:0%;
@@ -84,7 +86,8 @@ Yellow-green:		rgb(211,223,115);	#d3df73
   text-align: center;
   width:100%;
   border: 2px solid rgb(0, 0, 0);
-  margin: 5px;
+  margin-top: 5px;
+  margin-bottom:5px;
   border-radius:3px;
   font-size:1.5em;
   font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
