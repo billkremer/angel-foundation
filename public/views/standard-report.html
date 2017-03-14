@@ -1,6 +1,6 @@
 <div id="flexContainer" class="container">
 
-  <div class=" standardReportHeader col-xs-12 col-md-8 ">
+  <div class="standardReportHeader col-xs-12 col-md-8">
 
 
       <div class="row" id="headerRow">
@@ -35,7 +35,7 @@
 
 
 
-  <div class=" standardReportBody col-xs-12 col-md-8 ">
+  <div class="col-xs-12 col-md-8">
 
     <div class="row">
 
@@ -56,7 +56,9 @@
 
       <ul >
         <li ng-repeat="report in standardCtrl.standardReportList track by $index" ng-model="report" ng-click="standardCtrl.selectStandardReport(report)" >
-          {{report.report_name}}
+
+            {{report.report_name}}
+
         </li>
       </ul>
 

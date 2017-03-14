@@ -17,8 +17,18 @@ function($location,$http,$route) {
     accept:".csv"
   };
 
-  vm.uploadAllPatient = function($event){
+  vm.uploadAll=function($event){
     $event.preventDefault();
+    if(vm.type=='patient'){
+      vm.uploadAllPatient();
+    }
+    else{
+      vm.uploadAllDistributionData();
+    }
+  }
+
+  vm.uploadAllPatient = function(){
+
     // console.log(vm.csv.result); // array of objects.  each row is an object.
     var objectToSend = {dataArray: vm.csv.result};
     console.log('Updating All Patients', objectToSend);
@@ -39,8 +49,8 @@ function($location,$http,$route) {
   });
 };
 
-vm.uploadAllDistributionData = function($event){
-  $event.preventDefault();
+vm.uploadAllDistributionData = function(){
+
   // console.log(vm.csv.result); // array of objects.  each row is an object.
   var objectToSend = {dataArray: vm.csv.result};
   console.log('Updating All Distributions', objectToSend);
@@ -59,8 +69,18 @@ vm.uploadAllDistributionData = function($event){
 
 
 
-vm.uploadAddPatient = function($event){
+vm.uploadAdd=function($event){
   $event.preventDefault();
+  if(vm.type=='patient'){
+    vm.uploadAddPatient();
+  }
+  else{
+    vm.uploadAddDistributionData();
+  }
+}
+
+vm.uploadAddPatient = function(){
+
   // console.log(vm.csv.result); // array of objects.  each row is an object.
   var objectToSend = {dataArray: vm.csv.result};
   console.log('Adding to Patients', objectToSend);
@@ -81,8 +101,8 @@ vm.uploadAddPatient = function($event){
 });
 };
 
-vm.uploadAddDistributionData = function($event){
-$event.preventDefault();
+vm.uploadAddDistributionData = function(){
+
 // console.log(vm.csv.result); // array of objects.  each row is an object.
 var objectToSend = {dataArray: vm.csv.result};
 console.log('Adding to Distributions', objectToSend);
