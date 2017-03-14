@@ -52,3 +52,28 @@ SELECT DISTINCT ON (one.column2) * FROM one RIGHT JOIN two ON one.column2 = two.
 -- 3	    124	  another	something	2	   124	   aa	    bb
 -- 4	    125	  pokee	  smelly	  3	   125	   gg   	ff
 -- null  null   null    null			4	   126	   jj   	kk
+
+SELECT * FROM (
+SELECT DISTINCT ON (one.column2) * FROM one ) as b
+FULL JOIN two ON b.column2 = two.column2;
+
+-- one:
+-- id	column2	column3	column4
+-- 1	123	cats	dogs
+-- 2	123	pets	people
+-- 3	124	another	something
+-- 4	125	pokee	smelly
+--
+-- two:
+-- id	column2	column3	column4
+-- 1	123	cats	dogs
+-- 2	123	pets	people
+-- 3	124	another	something
+-- 4	125	pokee	smelly
+
+-- query response:
+-- 1	123	cats	dogs	  1	123	mm	nn	dogs
+-- 1	123	cats	dogs	  5	123	asdf	asdf	people
+-- 3	124	another	something	2	124	aa	bb	cc
+-- 4	125	pokee	smelly	3	125	gg	ff	gg
+-- 				            4	126	jj	kk	ll
