@@ -22,9 +22,9 @@ app.config(function($routeProvider,$locationProvider){
   }).when('/data-vis-two',{
     templateUrl:'views/data-vis-two.html',
     controller: 'DataVisTwoController as visTwoCtrl'
-  }).when('/d3test',{
-    templateUrl:'views/d3test.html',
-    controller: 'DataVisThreeController as visTwoCtrl'
+  }).when('/data-vis-three',{
+    templateUrl:'views/data-vis-three.html',
+    controller: 'DataVisThreeController as visThreeCtrl'
   }).when('/login',{
     templateUrl:'views/login.html',
     controller: 'LoginController as loginCtrl'
@@ -35,6 +35,10 @@ app.config(function($routeProvider,$locationProvider){
   }).when('/d3barchart',{
     templateUrl:'views/d3barchart.html',
     controller: 'd3barchartController as barCtrl'
+
+  }).when('/data-vis-four',{
+    templateUrl:'views/data-vis-four.html',
+    controller: 'dataVisFourController as visFourCtrl'
 
   });
 

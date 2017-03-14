@@ -1,6 +1,6 @@
 angular.module("AngelApp").controller("DataVisThreeController", ['$location','$http',
   function($location,$http) {
-    console.log('datavis2 controller loaded');
+    console.log('datavis3 controller loaded');
 
     var vm=this;
 
