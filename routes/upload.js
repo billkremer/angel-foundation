@@ -35,15 +35,14 @@ router.post('/allPatientData', function(req, res) {
         patientArray[i].ExpirationDate = new Date(patientArray[i].ExpirationDate);
         patientArray[i].DOB = new Date(patientArray[i].DOB);
 
-<<<<<<< HEAD
-=======
+
       //   console.log(patientArray[i].ApplicationDate, patientArray[i].ExpirationDate, patientArray[i].DOB);
         // console.log(patientArray[i]);
 
-         patientArray[i].ApplicationDate = new Date(patientArray[i].ApplicationDate);
-         patientArray[i].ExpirationDate = new Date(patientArray[i].ExpirationDate);
-         patientArray[i].DOB = new Date(patientArray[i].DOB);
->>>>>>> query-engine
+//          patientArray[i].ApplicationDate = new Date(patientArray[i].ApplicationDate);
+//          patientArray[i].ExpirationDate = new Date(patientArray[i].ExpirationDate);
+//          patientArray[i].DOB = new Date(patientArray[i].DOB);
+// >>>>>>> query-engine
 
 
 //         console.log(patientArray[i].ApplicationDate, patientArray[i].ExpirationDate, patientArray[i].DOB);
