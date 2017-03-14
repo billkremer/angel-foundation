@@ -102,7 +102,9 @@ angular.module("AngelApp").controller("CustomReportController",
     vm.dataSetList=[
       {
         title:'Application Date',
-        options:[]
+        options:[],
+        dateOptions:[2, 1, 3,"3/24/2010"]
+
       },
       {
         title:'Application Expiration Date',
