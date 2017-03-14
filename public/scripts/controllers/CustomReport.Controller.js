@@ -1,5 +1,5 @@
 angular.module("AngelApp").controller("CustomReportController",
-  function(CustomReportService,$location,$http) {
+  function(CustomReportService,subcategoryBucketService,$location,$http) {
     console.log('custom controller loaded');
 
     var vm=this;
@@ -270,40 +270,40 @@ angular.module("AngelApp").controller("CustomReportController",
       console.log(vm.selectedCategory);
     };
 
-    vm.addSelection = function(category,option) {
-      if (vm.dataSetSelections[0].title == 'no selections'){
-        vm.dataSetSelections=[];
-      }
+    // vm.addSelection = function(category,option) {
+    //   if (vm.dataSetSelections[0].title == 'no selections'){
+    //     vm.dataSetSelections=[];
+    //   }
 
 // angular.module("AngelApp").controller("CustomReportController", ['$location','$http',
 //   function($location,$http) {
-angular.module("AngelApp").controller("CustomReportController", ['subcategoryBucketService','$location','$http',
-function(subcategoryBucketService, $location, $http) {
-
-
-  console.log('custom controller loaded');
-
-  var vm=this;
-
-
-  vm.dataSetList=[
-    {
-      title:'gender',
-      options:['female','male']
-    },
-    {
-      title:'age',
-      options:['20+','30+','40+','50+','60+']
-    },
-    {
-      title:'income',
-      options:[40000,50000,60000,70000,80000]
-    },
-    {
-      title:'marital_status',
-      options:['married','single']
-    },
-  ];  // end of dataSetList object
+// angular.module("AngelApp").controller("CustomReportController", ['subcategoryBucketService','$location','$http',
+// function(subcategoryBucketService, $location, $http) {
+  //
+  //
+  // console.log('custom controller loaded');
+  //
+  // var vm=this;
+  //
+  //
+  // vm.dataSetList=[
+  //   {
+  //     title:'gender',
+  //     options:['female','male']
+  //   },
+  //   {
+  //     title:'age',
+  //     options:['20+','30+','40+','50+','60+']
+  //   },
+  //   {
+  //     title:'income',
+  //     options:[40000,50000,60000,70000,80000]
+  //   },
+  //   {
+  //     title:'marital_status',
+  //     options:['married','single']
+  //   },
+  // ];  // end of dataSetList object
   vm.columnLimitList=[];
   for(var i=0;i<vm.dataSetList.length;i++){
     vm.columnLimitList[i]=vm.dataSetList[i].title;
