@@ -17,15 +17,21 @@ function($location,$http,$route) {
     accept:".csv"
   };
 
+
+
+// alertify.confirm('a callback will be invoked on cancel.').set('oncancel', function(closeEvent){ alertify.error('Cancel');} );
+// alertify.confirm('a callback will be invoked on ok.').set('onok', function(closeEvent){ alertify.success('Ok');} );
+
+
+  //Replacing ALL data in patient table
   vm.uploadAllPatient = function($event){
+    alertify.confirm('Are you suuuuure?').set('onok', function(closeEvent){
     $event.preventDefault();
     // console.log(vm.csv.result); // array of objects.  each row is an object.
     var objectToSend = {dataArray: vm.csv.result};
     console.log('Updating All Patients', objectToSend);
 
     // put in error checking?
-
-
     // vm.csv.result.forEach(function(object){
     $http.post('/upload/allPatientData', objectToSend // just pass the object...
 
@@ -37,8 +43,13 @@ function($location,$http,$route) {
   }, function(error) {
     console.log('error uploading patient csv', error);
   });
+});
 };
 
+
+
+
+//Replacing ALL data in distribution table
 vm.uploadAllDistributionData = function($event){
   $event.preventDefault();
   // console.log(vm.csv.result); // array of objects.  each row is an object.
@@ -58,7 +69,7 @@ vm.uploadAllDistributionData = function($event){
 };
 
 
-
+//Adding data to the Patient table
 vm.uploadAddPatient = function($event){
   $event.preventDefault();
   // console.log(vm.csv.result); // array of objects.  each row is an object.
@@ -81,21 +92,23 @@ vm.uploadAddPatient = function($event){
 });
 };
 
-vm.uploadAddDistributionData = function($event){
-$event.preventDefault();
-// console.log(vm.csv.result); // array of objects.  each row is an object.
-var objectToSend = {dataArray: vm.csv.result};
-console.log('Adding to Distributions', objectToSend);
-// put in error checking?
 
-$http.post('/upload/addDistributionData', objectToSend // just pass the object...
+//Adding data to Distribution table
+vm.uploadAddDistributionData = function($event){
+  $event.preventDefault();
+  // console.log(vm.csv.result); // array of objects.  each row is an object.
+  var objectToSend = {dataArray: vm.csv.result};
+  console.log('Adding to Distributions', objectToSend);
+  // put in error checking?
+
+  $http.post('/upload/addDistributionData', objectToSend // just pass the object...
 ).then(function(response){
-console.log('response',response);
-alertify.set('notifier','position', 'bottom-right');
-alertify.success(vm.csv.result.filename + ' Submitted!');
-$route.reload();
+  console.log('response',response);
+  alertify.set('notifier','position', 'bottom-right');
+  alertify.success(vm.csv.result.filename + ' Submitted!');
+  $route.reload();
 }, function(error) {
-console.log('error uploading patient csv', error);
+  console.log('error uploading patient csv', error);
 });
 };
 
@@ -120,6 +133,8 @@ vm.logout = function() {
 }
 
 
+
+//Changing active tabs
 vm.allTab = "allTab";
 vm.addTab = "addTab";
 

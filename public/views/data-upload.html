@@ -73,7 +73,6 @@ submit
     <div class="col-xs-2 col-xs-offset-3">
       {{uploadCtrl.csv.result.filename}} Distribution  Data
     </div>
-
   </div>
 
 
@@ -81,13 +80,7 @@ submit
     <!-- 'All' tab -->
     <div role="tabpanel" class="tab-pane" id="allTab">
     <div id="uploadSelectorButtons" role="group">
-      <!-- <button type="button" class="btn-default col-sm-2 col-sm-offset-3" ng-model="uploadCtrl.allButton" ng-class="uploadCtrl.allButtonClass"  ng-click="uploadCtrl.changeActive(uploadCtrl.allButton)">All</button> -->
-      <!-- <button type="button" class="btn-default col-sm-2 col-sm-offset-3" ng-model="uploadCtrl.addButton" ng-class="uploadCtrl.addButtonClass"  ng-click="uploadCtrl.changeActive(uploadCtrl.addButton)">Addendum</button> -->
-
-      <!-- <button class = "btn-default col-sm-2 col-sm-offset-3" ng-class="{'button-positive': isActive('All')}" ng-click="setActive('All')">All</button> -->
-      <!-- <button class = "btn-default col-sm-2 col-sm-offset-2" ng-class="{'button-positive': isActive('Addendum')}" ng-click="setActive('Addendum')">Addendum</button> -->
-      <br />
-      <!-- patient data button -->
+      <h2 style="color:red; text-align:center;">Warning!  Uploading here will replace ALL data in database</h2>
       <button id="uploader" class = "col-sm-2 col-sm-offset-3 btn-default">
 
           <ng-csv-import  content="uploadCtrl.csv.content"
