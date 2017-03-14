@@ -19,7 +19,9 @@ function($location,$http,$route) {
 
   vm.uploadAll=function($event){
     $event.preventDefault();
+    console.log('vm.type',vm.type);
     if(vm.type=='patient'){
+      console.log('patient');
       vm.uploadAllPatient();
     }
     else{
@@ -71,6 +73,7 @@ vm.uploadAllDistributionData = function(){
 
 vm.uploadAdd=function($event){
   $event.preventDefault();
+  console.log('vm.type',vm.type);
   if(vm.type=='patient'){
     vm.uploadAddPatient();
   }
