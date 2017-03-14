@@ -120,9 +120,15 @@ angular.module("AngelApp").controller("CustomReportController", ['subcategoryBuc
             reportString += "age(date_of_birth),";
           } else {
             reportString+=(vm.columnLimitSelections[i]+",");
-          }
+          };
         };
-        reportString+=(vm.columnLimitSelections[vm.columnLimitSelections.length-1]+" ");
+
+        if (vm.columnLimitSelections[vm.columnLimitSelections.length-1] == "age") {
+          reportString += "age(date_of_birth) ";
+        } else {
+          reportString+=(vm.columnLimitSelections[vm.columnLimitSelections.length-1] + " ");
+        };
+
         reportString+="FROM patient ";
         console.log(reportString);
       }else{
