@@ -174,8 +174,6 @@ function(subcategoryBucketService, $location, $http) {
       reportString += ";"
       console.log(reportString);
 
-
     }; // end of saveReport function
-
 
   }]);

@@ -1,109 +1,121 @@
-<div class=" standardReportHeader col-xs-12 col-md-8 col-md-offset-2">
+<div id="flexContainer" class="container">
+
+  <div class=" standardReportHeader col-xs-12 col-md-8 ">
 
 
-    <div class="row" id="headerRow">
-      <div class=" col-xs-12 col-md-2 ">
-        <div class="dropdown">
-          <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
-            <span class="glyphicon glyphicon-menu-hamburger"></span>
-          </button>
-          <ul class="dropdown-menu ">
-            <li><a href="/">Standard Reports</a></li>
-            <li><a href="/custom-report">Custom Reports</a></li>
-            <li><a href="/data-upload">Upload</a></li>
-          </ul>
+      <div class="row" id="headerRow">
+        <div class=" col-xs-2 ">
+          <div class="dropdown">
+            <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+            <ul class="dropdown-menu ">
+              <li><a href="/">Standard Reports</a></li>
+              <li><a href="/custom-report">Custom Reports</a></li>
+              <li><a href="/data-upload">Upload</a></li>
+            </ul>
+          </div>
         </div>
+
+        <div id="headerPic" class="col-xs-4 col-xs-offset-2 ">
+          <img src="../images/angel-foundation-logo-2.png" alt="Angel Foundation Logo">
+        </div>
+        <div class="col-xs-12 col-md-4 ">
+          <!-- title -->
+          <!-- <h2>Standard Reports</h2> -->
+        </div>
+
+
+
       </div>
-
-    <div id="headerPic" class="col-xs-12 col-md-4 col-md-offset-2 ">
-      <img src="../images/angel-foundation-logo-2.png" alt="Angel Foundation Logo">
-    </div>
-    <div class="col-xs-12 col-md-4 ">
-      <!-- title -->
-      <!-- <h2>Standard Reports</h2> -->
-    </div>
-
-
-
-    </div>
-
-</div>
-
-
-
-
-
-<div class=" standardReportBody col-xs-12 col-md-8 col-md-offset-2">
-
-  <div class="row">
-
-
-
-
-  <!-- report list div -->
-  <div id="standardReport-reportList" class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
-
-    <p>
-      Standard Reports List
-
-
-    </p>
-
-  
-    <ul>
-      <li ng-repeat="report in standardCtrl.standardReportList track by $index" ng-model="report" ng-click="standardCtrl.selectStandardReport(report)">
-        {{report.report_name}}
-      </li>
-    </ul>
-
-
 
   </div>
 
 
 
-  <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10" >
+
+
+  <div class=" standardReportBody col-xs-12 col-md-8 ">
+
+    <div class="row">
 
 
 
-    <!-- report preview -->
-    <div id="standardReport-reportPreview" class="">
-      <h1 ng-show="standardCtrl.previewShow" ng-init="standardCtrl.previewShow='true'">Select a report to preview</h1>
-      <table id="previewTable">
-        <tr>
-          <th ng-repeat="key in standardCtrl.keys track by $index">{{key}}</th>
-        </tr>
-        <tr ng-repeat="array in standardCtrl.dataArray | limitTo: 5 track by $index" >
-          <td ng-repeat="item in array track by $index">{{item}}</td>
 
-        </tr>
+    <!-- report list div -->
+    <div id="standardReport-reportList" ng-class="standardCtrl.reportSelected ? 'col-xs-4 col-sm-3 col-lg-2' : 'col-xs-12' ">
 
-      </table>
+
+
+      <p>
+        Select a report to preview
+
+
+      </p>
+
+
+      <ul >
+        <li ng-repeat="report in standardCtrl.standardReportList track by $index" ng-model="report" ng-click="standardCtrl.selectStandardReport(report)" >
+          {{report.report_name}}
+        </li>
+      </ul>
+
+
+
     </div>
 
-    <div id="standardReport-reportButtons" class="container-fluid">
-      <div class="row">
 
 
-        <div class="btn-group col-xs-12 col-md-11" role="group" aria-label="...">
-          <button type="button" class="btn btn-default" ng-model="standardCtrl.csvButton" ng-class="standardCtrl.csvButtonClass"  ng-click="standardCtrl.changeActive(standardCtrl.csvButton)">Save as CSV</button>
+    <div id="standardReport-previewContainer" ng-show="standardCtrl.reportSelected" ng-class="standardCtrl.reportSelected ? 'col-xs-8 col-sm-9 col-md-9 col-lg-10' : 'zeroWidth' " >
 
-          <button type="button" class="btn btn-default"  ng-model="standardCtrl.pdfButton" ng-class="standardCtrl.pdfButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.pdfButton)">Save as PDF</button>
 
-          <button type="button" class="btn btn-default"  ng-model="standardCtrl.dataVisButton" ng-class="standardCtrl.dataVisButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.dataVisButton)">Change Visualization</button>
+
+      <!-- report preview -->
+      <div id="standardReport-reportPreview" class="">
+        <h1>Preview of {{standardCtrl.reportTitle}}</h1>
+        <table id="previewTable">
+          <tr>
+            <th ng-repeat="key in standardCtrl.keys track by $index">{{key}}</th>
+          </tr>
+          <tr ng-repeat="array in standardCtrl.dataArray | limitTo: 5 track by $index" >
+            <td ng-repeat="item in array track by $index">{{item}}</td>
+
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="standardReport-reportButtons" class="container-fluid">
+        <div class="row">
+
+          <div id="selectionButtons" class="btn-group col-xs-12" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ng-class="standardCtrl.csvButtonClass"  ng-click="standardCtrl.goNext('csvButton')">Save as CSV</button>
+
+            <button type="button" class="btn btn-default"   ng-class="standardCtrl.pdfButtonClass" ng-click="standardCtrl.goNext('pdfButton')">Save as PDF</button>
+
+            <button type="button" class="btn btn-default" ng-class="standardCtrl.dataVisButtonClass" ng-click="standardCtrl.goNext('dataVisButton')">Change Visualization</button>
+          </div>
+          <!-- <div id="selectionButtons" class="btn-group col-xs-12" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ng-model="standardCtrl.csvButton" ng-class="standardCtrl.csvButtonClass"  ng-click="standardCtrl.changeActive(standardCtrl.csvButton)">Save as CSV</button>
+
+            <button type="button" class="btn btn-default"  ng-model="standardCtrl.pdfButton" ng-class="standardCtrl.pdfButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.pdfButton)">Save as PDF</button>
+
+            <button type="button" class="btn btn-default"  ng-model="standardCtrl.dataVisButton" ng-class="standardCtrl.dataVisButtonClass" ng-click="standardCtrl.changeActive(standardCtrl.dataVisButton)">Change Visualization</button>
+          </div> -->
+          <!-- <div class="col-xs-12 col-md-1">
+            <button type="button" id="standardReport-goButton" class="btn btn-success"  ng-model="standardCtrl.goButton" ng-click="standardCtrl.goNext()">Go</button>
+
+          </div> -->
+
+
         </div>
-        <div class="col-xs-12 col-md-1">
-          <button type="button" id="standardReport-goButton" class="btn btn-success"  ng-model="standardCtrl.goButton" ng-click="standardCtrl.goNext()">Go</button>
-
-        </div>
-
 
       </div>
 
+
     </div>
 
-
+  </div>
   </div>
 
-</div>
 </div>

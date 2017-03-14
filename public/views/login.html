@@ -1,43 +1,56 @@
+<div id="flexContainer" class="container">
 
-<div class="container-fluid">
-  <div class="col-md-3 col-xs-12">
-    logo
+  <div class=" standardReportHeader col-xs-12 col-md-8 ">
+
+
+      <div class="row" id="headerRow">
+        <div class=" col-xs-2 ">
+          <div class="dropdown">
+            <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+            <ul class="dropdown-menu ">
+              <li><a href="/">Standard Reports</a></li>
+              <li><a href="/custom-report">Custom Reports</a></li>
+              <li><a href="/data-upload">Upload</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="headerPic" class="col-xs-4 col-xs-offset-2 ">
+          <img src="../images/angel-foundation-logo-2.png" alt="Angel Foundation Logo">
+        </div>
+        <div class="col-xs-12 col-md-4 ">
+          <!-- title -->
+          <!-- <h2>Standard Reports</h2> -->
+        </div>
+
+
+
+      </div>
+
   </div>
-  <div class="dropdown">
-    <div class="col-md-2 col-md-offset-7 col-xs-12">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a href="/">Standard Reports</a></li>
-        <li><a href="/custom-report">Custom Reports</a></li>
-        <li><a href="/data-upload">Upload</a></li>
-      </ul>
-      <!-- ******TEMPORARY******* -->
-    <button ng-click="uploadCtrl.logout()">Sign Out</button>
-    </div>
+
+
+  <div id="loginFormContainer" class=" col-xs-12 col-md-8 ">
+    <form class="form-horizontal col-xs-12 col-md-12 " ng-submit="loginCtrl.login()">
+
+      <div class="form-group row">
+        <label class="control-label col-xs-offset-1 col-xs-2">Username:</label>
+        <div class="col-xs-6">
+          <input class="form-control" type="text" ng-model="loginCtrl.username">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="control-label col-xs-offset-1 col-xs-2">Password:</label>
+        <div class="col-xs-6">
+          <input class="form-control" type="password" ng-model="loginCtrl.password">
+        </div>
+      </div>
+      <div class="col-xs-offset-3 col-lg-6">
+        <button type="submit" class="btn btn-primary" >Login</button>
+      </div>
+    </form>
   </div>
 </div>
-
-
-<form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well" ng-submit="loginCtrl.login()">
-
-  <div class="form-group row">
-    <label class="control-label col-xs-offset-1 col-xs-2">Username:</label>
-    <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="loginCtrl.username">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="control-label col-xs-offset-1 col-xs-2">Password:</label>
-    <div class="col-xs-8">
-      <input class="form-control" type="password" ng-model="loginCtrl.password">
-    </div>
-  </div>
-  <div class="col-xs-offset-3 col-lg-6">
-    <button type="submit" class="btn btn-primary" >Login</button>
-  </div>
-</form>
-
-
-<!-- <a href="/newUser">Register</a> -->
+  <!-- <a href="/newUser">Register</a> -->
