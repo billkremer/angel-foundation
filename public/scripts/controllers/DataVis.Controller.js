@@ -17,8 +17,9 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
         barChartService.getValues(objectForValues,i).then(function(count){
           countyCountArray.push(count.data);
           arrayOfCounties.push({countyName:res.data[count.data[0].i].county+' County',count:count.data[0].count});
-          
-          loadData();
+          if(count.data[0].i==res.data.length-1){
+            loadData();
+          }
         });
 
 
@@ -250,10 +251,10 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     function toggleCounty(countyInfo){
     	d3.select("#highlightPath").remove();
-      if(countyInfo==undefined){
-        countyInfo='';
-
-      }
+      // if(countyInfo==undefined){
+      //   countyInfo='';
+      //
+      // }
     	d3.selectAll("svg#mapMain").append("path")
     	.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) { return a.properties.name == countyInfo.countyName || b.properties.name == countyInfo.countyName; }))
     	.attr({
