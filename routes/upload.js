@@ -5,7 +5,8 @@ var pool = new pg.Pool(config);
 
 router.post('/allPatientData', function(req, res) {
   console.log('posting patient csv to database');
-  // console.log(req.body.dataArray[100]);
+   console.log(req.body.dataArray[100]);
+
 
   var patientArray = req.body.dataArray;
 
@@ -33,6 +34,18 @@ router.post('/allPatientData', function(req, res) {
         patientArray[i].ApplicationDate = new Date(patientArray[i].ApplicationDate);
         patientArray[i].ExpirationDate = new Date(patientArray[i].ExpirationDate);
         patientArray[i].DOB = new Date(patientArray[i].DOB);
+
+
+      //   console.log(patientArray[i].ApplicationDate, patientArray[i].ExpirationDate, patientArray[i].DOB);
+        // console.log(patientArray[i]);
+
+//          patientArray[i].ApplicationDate = new Date(patientArray[i].ApplicationDate);
+//          patientArray[i].ExpirationDate = new Date(patientArray[i].ExpirationDate);
+//          patientArray[i].DOB = new Date(patientArray[i].DOB);
+// >>>>>>> query-engine
+
+
+//         console.log(patientArray[i].ApplicationDate, patientArray[i].ExpirationDate, patientArray[i].DOB);
 
 
         client.query('INSERT INTO patient (application_date, expiration_date, qualify_amount, transaction_type, patient_id, diagnosis, cancer_stage, date_of_birth, gender, ethnicity, marital_status, veteran, city, county, state, zip, fact_family, monthly_income, reason, referred_by, social_worker_id, social_worker_clinic, doctor_id, doctor_clinic, does_not_qualify, does_not_qualify_reason) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)' , [patientArray[i].ApplicationDate, patientArray[i].ExpirationDate, patientArray[i].QualifyAmount, patientArray[i].TransactionType, patientArray[i].PatientID, patientArray[i].Diagnosis, patientArray[i].CancerStage, patientArray[i].DOB, patientArray[i].Gender, patientArray[i].Ethnic, patientArray[i].MaritalStatus, patientArray[i].Veteran, patientArray[i].City, patientArray[i].County, patientArray[i].State, patientArray[i].ZIP, patientArray[i].FaCTFamily, patientArray[i].MonthlyIncome, patientArray[i].Reason, patientArray[i].ReferredBy, patientArray[i].SocialWorkerID, patientArray[i]['SocialWorkers.Clinic'], patientArray[i].DoctorID, patientArray[i]['Doctors.Clinic'], patientArray[i].DoesNotQualify, patientArray[i].DNQReason],

@@ -74,6 +74,7 @@ vm.uploadAllDistributionData = function(){
 
 vm.uploadAdd=function($event){
   $event.preventDefault();
+  console.log('vm.type',vm.type);
   if(vm.type=='patient'){
     vm.uploadAddPatient();
   }
