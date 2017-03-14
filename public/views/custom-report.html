@@ -31,11 +31,11 @@
   <div class="col-xs-3 text-center">
 
 
-    <h3>Select Data Here</h3>
-    <div id="dataSetContainer" >
+    <h3>Data Selected</h3>
+    <div id="customReportSelections" >
 
-      <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetList | orderBy: category.title" >
-        <div id="categoryTitle">
+      <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetSelections | orderBy: category.title" >
+        <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
           {{category.title}}
         </div>
         <ul>
@@ -45,13 +45,49 @@
     </div>
   </div>
 
+  <div class="col-xs-3 text-center">
 
-  <div class="col-xs-3 col-xs-offset-1 text-center">
-          <h3>Data Selected</h3>
 
+    <h3>Select Data Here</h3>
+    <div id="dataSetContainer" >
+
+      <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetList | orderBy: category.title" >
+        <div id="categoryTitle">
+          <button ng-click="customCtrl.addSelection(category,option)">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </button>
+          {{category.title}}
+          <button ng-click="customCtrl.openSubCats(category,option)">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
+        </div>
+        <!-- <ul>
+          <li ng-repeat="option in category.options | orderBy: option">{{option}}</li>
+        </ul> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-3 text-center">
+      <h3>Sub Categories</h3>
+      <div id="customReportSelections" >
+        <div id="selectionDiv" >
+          <div id="categoryTitle">
+            {{customCtrl.selectedCategory.title}}
+          </div>
+          <ul ng-repeat="options in customCtrl.selectedCategory.options" >
+            <li>{{options}}</li>
+            <button ng-click="customCtrl.addToFilters(options)"><span class="glyphicon glyphicon-ok-circle"></span></button>
+          </ul>
+        </div>
+      </div>
+  </div>
+
+  <div class="col-xs-3 text-center">
+    <h3>Filtered By</h3>
     <div id="customReportSelections" >
 
-      <div id="selectionDiv" ng-repeat="category in customCtrl.dataSetSelections" >
+      <div id="selectionDiv" ng-repeat="category in customCtrl.dataFilterSelections" >
         <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
           {{category.title}}
         </div>

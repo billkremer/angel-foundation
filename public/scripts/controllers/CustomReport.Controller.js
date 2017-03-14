@@ -109,6 +109,10 @@ angular.module("AngelApp").controller("CustomReportController",
         options:[]
       },
       {
+        title:'Distribution Date',
+        options:[]
+      },
+      {
         title:'Qualify Amount',
         options:['0','100-300','301-500','501-800','801+']
       },
@@ -130,15 +134,17 @@ angular.module("AngelApp").controller("CustomReportController",
       },
       {
         title:'Gender',
-        options:['female','male']
+        options:['Female','Male']
       },
       {
-        title:'ethncity',
-        options:['female','male']
+        title:'Ethncity',
+        options:['African American or Black', 'American Indian or Alaskan Native',
+                'Asian', 'Asian Indian', 'Caucasian', 'Chinese', 'Hispanic', 'Hmong', 'Japanese',
+                'Korean', 'Middle Eastern', 'Other', 'Unknown', 'Vietnamese']
       },
       {
-        title:'marital status',
-        options:['Married','Single','Not specified']
+        title:'Marital Status',
+        options:['Married','Single', 'Widowed', 'Seperated', 'Not specified']
       },
       {
         title:'Veteran',
@@ -161,11 +167,11 @@ angular.module("AngelApp").controller("CustomReportController",
         options: vm.zipCodes
       },
       {
-        title:'Monthly Income',
+        title:'Yearly Income',
         options:['0','1-15000','15001-30000','300001-45000','45001-60000','60001-75000','75001+']
       },
       {
-        title:'Fact Family',
+        title:'FaCT Family',
         options:['yes','no']
       },
       {
@@ -194,14 +200,75 @@ angular.module("AngelApp").controller("CustomReportController",
       {
         title:'Doctor Clinic',
         options: vm.doctorClinic
-      }
+      },
+      {
+        title:'Does not qualify',
+        options: ['True', 'False']
+      },
+      {
+        title:'Does not qualify reason',
+        options: ["Already received grant", "Applied too soon (2 years)", "Exceeds income guidelines",
+                  "Margie's Fund DNQ", "No cancer diagnosis", "Not in active treatment", "Not in service area"]
+      },
+      {
+        title:'Grant Type',
+        options: ['Adjustment', 'Electric Bill Payment', 'Fuel Card', 'Garbage Bill Payment',
+                  'Gas Bill Payment', 'Grocery Card', 'Mortgage Payment', 'Phone Bill Payment',
+                  'Rent Payment', 'Schwans Food Card', 'Target Card', 'Water Bill Payment', 'Other']
+      },
+      {
+        title:'Fund General',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
+      {
+        title:'Fund Komen',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
+      {
+        title:'Fund Brain',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
+      {
+        title:'Fund Park Nicollet',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
+      {
+        title:'Fund Lung',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
+      {
+        title:'Fund Melanoma',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
+      {
+        title:'Fund Margies',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
+      {
+        title:'Fund Colon',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
+      {
+        title:'Fund Total',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
+      {
+        title:'Fund Qualify Amount',
+        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+      },
     ];  // end of dataSetList object
 
     // vm.dataSetListCategoryOrder = ['gender', 'age', 'income', 'marital'];
     // trying to order the categories on the html page.
 
     vm.dataSetSelections=[{title:'no selections'}];
+    vm.dataFilterSelections=[{title:'no selections'}];
+    vm.selectedCategory={};
 
+    vm.openSubCats=function(category,option) {
+      vm.selectedCategory=category;
+      console.log(vm.selectedCategory);
+    };
 
     vm.addSelection = function(category,option) {
       if (vm.dataSetSelections[0].title == 'no selections'){
@@ -258,25 +325,35 @@ angular.module("AngelApp").controller("CustomReportController",
         }console.log(vm.dataSetSelections[0]);
     }
 
-});
+    vm.addToFilters=function(option){
+      console.log("adding, ", option, " to filters");
+      if (vm.dataFilterSelections[0].title == 'no selections'){
+        vm.dataFilterSelections=[];
+      }
+      var category=vm.selectedCategory.title;
+      console.log('category', category);
+      console.log('option', option);
 
-// 'Adenocarcinoma','Adenoid Cystic Carcinoma','Amyloidosis','Anal','Apocrine','Appendix','Bladder','Bone','Brain - Ependymoma',
-//         'Brain - Meningioma','Brain - Oligoastrocytoma','Brain- Astrocytoma','Brain- Esthesioneuroblastoma','Brain- Glioblastoma',
-//         'Brain- Glioma','Brain- not specified','Brain-Oliodendroglioma','Breast- DCIS','Breast- LCIS','Breast- not specified','Carcinoid tumor',
-//         'Carcinoma','Carcinoma - Myoepithelial','Carcinomatosis',"Castleman's Disease",'Cholangiocarcinoma','Chordoma - lumbar',
-//         'Essential Thrombocytosis','Fallopian Tube','Gastrointestinal - Colon','Gastrointestinal - Colorectal','Gastrointestinal - Duodenum',
-//         'Gastrointestinal - Esophageal','Gastrointestinal - Gallbladder','Gastrointestinal - Liver','Gastrointestinal - Pancreatic',
-//         'Gastrointestinal - Stomach','Gastrointestinal - Stromal','Gastrointestinal - Unspecified','Gynecological - Cervical',
-//         'Gynecological - Uterine','Gynecological - Vaginal','Gynecological -Ovarian','Gynecological -Uterine Endometrial',
-//         'Head & Neck - Hypopharyngeal','Head & Neck - Laryngeal','Head & Neck - Maxillary Sinus','Head & Neck - Oral','Head & Neck - Oropharyngeal',
-//         'Head & Neck - Throat','Head & Neck - Tongue','Head & Neck - Tonsil','Head & Neck- Nasopharyngeal','Head & Neck- not specified',
-//         'Head & Neck-Mandible','Head and Neck - Epiglottis','Kidney','Langerhans Histiocytosis','Leiomyosarcoma','Leukemia - Blast Cell',
-//         'Leukemia- APL','Leukemia- CLL','Leukemia- CML','Leukemia- MDS','Leukemia- not specified','Leukemia-ALL','Leukemia-AML',
-//         'Leukemia-CMML chronic myelomonocytic leukemia','Leukemia-Lymphoproliferative disorder','Lipoma-Spindle cell',"Lung- not specified",
-//         "Lung- NSCLC","Lung- SCLC","Lymphoma - Mantle Cell","Lymphoma - Splenic Marginal Zone","Lymphoma - Waldenstrom's Macroglobulinemia",
-//         "Lymphoma- B-cell","Lymphoma- Burkitts Lymphoma","Lymphoma- Hodgkin","Lymphoma- Non Hodgkins Lymphoma","Lymphoma- not specified",
-//         "Lymphoma- T-cell","Lymphoma-Follicular","Lympoma-MALT","Malignant Neoplasm","Melanoma",'Melanoma - Ocular','Mesotheliaoma',
-//         'Multiple Myeloma','Myeloproliferative neoplasms','Neuroendocrine Carcinoma','Osteosarcoma','Other','Paranasal Sinus','Parotid Gland Cancer',
-//         'Peripheral Nerve Sheath Tumor','Peritoneal Carcinoma','Polycythemia Vera','Prostate','Rectal','Rhabdomyo Sarcoma','Sarcoma - Synovial',
-//         'Sarcoma- Ewing Sarcoma','Sarcoma- Kaposi','Sarcoma- not specified','Sarcoma- Soft Tissue','Skin Cancer- Melanoma','Skin Cancer- Squamous Cell Carcinoma',
-//         'Testicular','Thymoma','Unknown Primary','Urothelial',]
+        function isMatch(element,index,array){
+          return element.title == category;
+        }
+
+      if (vm.dataFilterSelections.some(isMatch)) {
+        for(var i=0; i < vm.dataFilterSelections.length; i++) {
+            if (vm.dataFilterSelections[i].title == category.title){
+              if (vm.dataFilterSelections[i].options.indexOf(option) == -1) {
+                vm.dataFilterSelections[i].options.push(option);
+              };
+            };
+        };
+      } else {
+          vm.dataFilterSelections.push(
+            {
+              title:category.title,
+              options:[option]
+            });
+      }
+      console.log(vm.dataFilterSelections);
+    };//end of addToFilters
+
+});

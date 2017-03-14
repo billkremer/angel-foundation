@@ -411,6 +411,8 @@ circle {
   font-family:  'Helvetica', Arial, sans-serif !important;
   padding:0px;
   text-align: center;
+  overflow: scroll;
+  height: 400px;
 }
 #dataSetContainer ul{
   list-style: none;
@@ -423,11 +425,11 @@ circle {
   transition: all ease 1.2s;
   overflow:hidden;
 }
-#expanderDiv:hover{
-  max-height:200px;
-}
+/*#expanderDiv:hover{
+  max-height: 5000px;
+}*/
 #categoryTitle{
-  font-size:25px;
+  font-size:15px;
   height:40px;
 }
 #customReportSelections{
@@ -439,7 +441,8 @@ circle {
   border:2px solid black;
   color:white;
   font-family: 'proxima-nova', Helvetica, Arial, sans-serif !important;
-
+  overflow: scroll;
+  height: 400px;
 }
 #customReportSelections ul{
   padding: 0px;
