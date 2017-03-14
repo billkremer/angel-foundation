@@ -262,7 +262,8 @@ angular.module("AngelApp").controller("CustomReportController",
     // trying to order the categories on the html page.
 
     vm.dataSetSelections=[{title:'no selections'}];
-    vm.dataFilterSelections=[{title:'no selections'}];
+    vm.dataFilterSelections=[{title:'no selections',
+                              options:'no selections'}];
     vm.selectedCategory={};
 
     vm.openSubCats=function(category,option) {
@@ -308,7 +309,7 @@ angular.module("AngelApp").controller("CustomReportController",
   for(var i=0;i<vm.dataSetList.length;i++){
     vm.columnLimitList[i]=vm.dataSetList[i].title;
   };
-  console.log(vm.columnLimitList);
+  // console.log(vm.columnLimitList);
   // vm.dataSetListCategoryOrder = ['gender', 'age', 'income', 'marital'];
   // trying to order the categories on the html page.
 
@@ -455,34 +456,37 @@ angular.module("AngelApp").controller("CustomReportController",
     }; // end of saveReport function
 
     vm.addToFilters=function(option){
-      console.log("adding, ", option, " to filters");
-      if (vm.dataFilterSelections[0].title == 'no selections'){
+      if (vm.dataFilterSelections[0].options == 'no selections'){
         vm.dataFilterSelections=[];
       }
+
       var category=vm.selectedCategory.title;
       console.log('category', category);
       console.log('option', option);
+      var newItem={
+        title:category,
+        options:option
+        };
 
-        function isMatch(element,index,array){
-          return element.title == category;
+      if (vm.dataFilterSelections.length == 0){
+        vm.dataFilterSelections.push(newItem);
+      } else {
+        var dupe = false;
+        for (var i = 0; i < vm.dataFilterSelections.length; i++) {
+          if (vm.dataFilterSelections[i].options==option){
+            console.log("already added");
+            dupe=true;
+          }
+        }
+        if (dupe==false){
+          vm.dataFilterSelections.push(newItem);
+          console.log("adding", newItem);
         }
 
-      if (vm.dataFilterSelections.some(isMatch)) {
-        for(var i=0; i < vm.dataFilterSelections.length; i++) {
-            if (vm.dataFilterSelections[i].title == category.title){
-              if (vm.dataFilterSelections[i].options.indexOf(option) == -1) {
-                vm.dataFilterSelections[i].options.push(option);
-              };
-            };
-        };
-      } else {
-          vm.dataFilterSelections.push(
-            {
-              title:category.title,
-              options:[option]
-            });
-      }
+      };
+
       console.log(vm.dataFilterSelections);
+
     };//end of addToFilters
 
 });

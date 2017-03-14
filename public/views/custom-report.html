@@ -87,12 +87,12 @@
     <h3>Filtered By</h3>
     <div id="customReportSelections" >
 
-      <div id="selectionDiv" ng-repeat="category in customCtrl.dataFilterSelections" >
-        <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
+      <div id="selectionDiv" >
+        <!-- <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
           {{category.title}}
-        </div>
+        </div> -->
         <ul>
-          <li ng-repeat="option in category.options | orderBy: option" ng-click="customCtrl.removeOptionSelection(category,option)">{{option}}</li>
+          <li ng-repeat="option in customCtrl.dataFilterSelections" ng-click="customCtrl.removeOptionSelection(category,option)">{{option.options}}</li>
         </ul>
       </div>
 
