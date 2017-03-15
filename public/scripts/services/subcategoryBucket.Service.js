@@ -146,6 +146,8 @@ app.service("subcategoryBucketService", function($http){
       //  var whereString = "";
       //  var dataSetSelectionsObject = {options: ['1 Jan 2010','5/12/2016']};
 
+
+
       var expStartDate = (new Date(dataSetSelectionsObject.options[0]).toISOString().substring(0,10));
       var expStopDate = (new Date(dataSetSelectionsObject.options[1]).toISOString().substring(0,10));
 
@@ -165,27 +167,41 @@ app.service("subcategoryBucketService", function($http){
 
 
     /* ------------ application  date section ------------    */
-    if ( dataSetSelectionsObject.title.toLowerCase() == "app date" ) {
+    if ( dataSetSelectionsObject.title.toLowerCase() == "application date" ) {
 
       // title:'app date',
-      // options:['date1', 'date2']
+      // options:['date1 -- date2', 'date3 -- date4']
       //  var whereString = "";
-      //  var dataSetSelectionsObject = {options: ['1 Jan 2010','5/12/2016']};
+      //  var dataSetSelectionsObject = {options: ['1 Jan 2010 -- 5/12/2016']};
+      var appStartDate = new Date();
+      var appStopDate = new Date();
+      var appDateArray = []
 
-      var appStartDate = (new Date(dataSetSelectionsObject.options[0]).toISOString().substring(0,10));
-      var appStopDate = (new Date(dataSetSelectionsObject.options[1]).toISOString().substring(0,10));
+      for (var m = 0; m < dataSetSelectionsObject.options.length; m++) {
 
-      console.log(appStartDate, appStopDate);
+        appDateArray = dataSetSelectionsObject.options[m].split(" -- ");
 
-      if (appStartDate < appStopDate) {
-        whereString = "(application_date >= '" + appStartDate + "' AND application_date <= '" + appStopDate + "')";
-      } else {
-        whereString = "(application_date >= '" + appStopDate + "' AND application_date <= '" + appStartDate + "')";
-      };
+  // 'date3 -- date4'.split(" -- "); // ["date3","date4"]
+
+        appStartDate = (new Date(appDateArray[0]).toISOString().substring(0,10));
+        appStopDate = (new Date(appDateArray[1]).toISOString().substring(0,10));
+
+        console.log(appStartDate, appStopDate);
+
+        if (appStartDate < appStopDate) {
+          whereString = "(application_date >= '" + appStartDate + "' AND application_date <= '" + appStopDate + "')";
+        } else {
+          whereString = "(application_date >= '" + appStopDate + "' AND application_date <= '" + appStartDate + "')";
+        };
 
 
-      console.log(whereString);
+        console.log(whereString);
 
+        if ( m < dataSetSelectionsObject.options.length-1) {
+          whereString += " OR ";
+        }; // connects all the potential strings
+
+      }; // end for loop
     }; // end if "application date"
 
 
