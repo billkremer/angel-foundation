@@ -18,6 +18,8 @@ var barChart= require('./routes/barChart');
 var barChart2= require('./routes/barChart2');
 var dataVis= require('./routes/dataVis');
 var dataVis2= require('./routes/dataVis2');
+var dist= require('./routes/distribution');
+var dist2= require('./routes/distribution2');
 require('./auth/setup');
 
 
@@ -65,6 +67,8 @@ app.use('/barChart', barChart);
 app.use('/barChart2', barChart2);
 app.use('/dataVis', dataVis);
 app.use('/dataVis2', dataVis2);
+app.use('/dist', dist);
+app.use('/dist2', dist2);
 // app.get('/private/secretInfo', function(req, res){
 //   console.log('Sending secret info');
 //   res.send('This is very secret!');
