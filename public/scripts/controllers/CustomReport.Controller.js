@@ -103,16 +103,18 @@ angular.module("AngelApp").controller("CustomReportController",
       {
         title:'Application Date',
         options:[],
-        dateOptions:[2, 1, 3,"3/24/2010"]
-
+        dateOptions:[],
+        dateOptions: {flag:true}
       },
       {
         title:'Application Exp. Date',
-        options:[]
+        options:[],
+        dateOptions: {flag:true}
       },
       {
         title:'Distribution Date',
-        options:[]
+        options:[],
+        dateOptions: {flag:true}
       },
       {
         title:'Qualify Amount',
@@ -379,6 +381,7 @@ angular.module("AngelApp").controller("CustomReportController",
         vm.dataSetSelections=[{title:'no selections'}];
       }console.log(vm.dataSetSelections[0]);
     }
+
     vm.removeColumnSelection=function(category){
       for(var i=0;i<vm.columnLimitSelections.length;i++){
         if (vm.columnLimitSelections[i]==category){
@@ -414,6 +417,7 @@ angular.module("AngelApp").controller("CustomReportController",
         console.log(reportString);
       } else {
         reportString = "SELECT * FROM patient ";
+// TODO need to add in logic whether patient or distributions table
         // if columnLimitSelections == "no selections"
       }
       console.log(reportString);
@@ -423,6 +427,7 @@ angular.module("AngelApp").controller("CustomReportController",
         reportString+="WHERE ";
         for(var j=0; j<vm.dataSetSelections.length-1; j++){
 
+// TODO need to ensure the column titles line up with these names below
           if (vm.dataSetSelections[j].title == "age" || vm.dataSetSelections[j].title == "income" || vm.dataSetSelections[j].title == "qualify amount" || vm.dataSetSelections[j].title == "exp date" || vm.dataSetSelections[j].title == "app date") {
             //write code based on format of these things!!!!
             // example: vm.dataSetSelections[j] = {title: "age", options:["30+","50+"]}
@@ -456,6 +461,29 @@ angular.module("AngelApp").controller("CustomReportController",
 
 
     }; // end of saveReport function
+
+
+    vm.addToDateFilters = function (category, dateObject) {
+      console.log(category, dateObject);
+      // category.title = "Application Date"
+      // dateObject.startDate = date type
+      // dateObject.stopDate = date type --> stopDateString for display and passing  // the subBucket service will do a new Date(stopDateString) & is ok.
+
+      dateObject.startDateString = dateObject.startDate.toString().substring(0,15);
+      console.log(dateObject.startDate);
+
+      dateObject.stopDateString = dateObject.stopDate.toString().substring(0,15);
+
+      console.log(dateObject.stopDate);
+      if (dateObject.startDate < dateObject.stopDate) {
+        vm.addToFilters( dateObject.startDateString + " -- " + dateObject.stopDateString );
+      } else {
+          vm.addToFilters( dateObject.stopDateString + " -- " + dateObject.startDateString );
+      }
+    }; // close addToDateFilters function
+
+
+
 
     vm.addToFilters=function(option){
       if (vm.dataFilterSelections[0].options == 'no selections'){
