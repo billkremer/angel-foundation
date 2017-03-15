@@ -105,7 +105,7 @@ angular.module("AngelApp").controller("CustomReportController",
         options:[]
       },
       {
-        title:'Application Expiration Date',
+        title:'Application Exp. Date',
         options:[]
       },
       {
@@ -206,7 +206,7 @@ angular.module("AngelApp").controller("CustomReportController",
         options: ['True', 'False']
       },
       {
-        title:'Does not qualify reason',
+        title:'Not qualify reason',
         options: ["Already received grant", "Applied too soon (2 years)", "Exceeds income guidelines",
                   "Margie's Fund DNQ", "No cancer diagnosis", "Not in active treatment", "Not in service area"]
       },
@@ -488,5 +488,53 @@ angular.module("AngelApp").controller("CustomReportController",
       console.log(vm.dataFilterSelections);
 
     };//end of addToFilters
+
+
+
+    vm.removeFilter=function(category){
+      console.log("removing,", category, " from filters");
+      for (var i = 0; i < vm.dataFilterSelections.length; i++) {
+        if (vm.dataFilterSelections[i].options==category){
+          vm.dataFilterSelections.splice(i,1);
+        };
+      }
+        if (vm.dataFilterSelections[0]==undefined){
+          vm.dataFilterSelections=[{title:'no selections',
+                                    options:'no selections'}];
+        };
+        console.log(vm.dataFilterSelections);
+    }
+
+    // vm.removeOptionSelection = function(category,option){
+    //   for(var i=0;i<vm.dataSetSelections.length;i++){
+    //     if (vm.dataSetSelections[i].title == category.title){
+    //       var index = vm.dataSetSelections[i].options.indexOf(option);
+    //       vm.dataSetSelections[i].options.splice(index,1);
+    //     }
+    //   } console.log(vm.dataSetSelections[0]);
+    //   if(vm.dataSetSelections[0] == undefined){
+    //     vm.dataSetSelections=[{title:'no selections'}];
+    //   } console.log(vm.dataSetSelections[0]);
+    // }
+    // vm.removeCategorySelection=function(category){
+    //   for(var i=0;i<vm.dataSetSelections.length;i++){
+    //     if (vm.dataSetSelections[i].title==category.title){
+    //       vm.dataSetSelections.splice(i,1);
+    //     }
+    //   }console.log(vm.dataSetSelections[0]);
+    //   if(vm.dataSetSelections[0]==undefined){
+    //     vm.dataSetSelections=[{title:'no selections'}];
+    //   }console.log(vm.dataSetSelections[0]);
+    // }
+    // vm.removeColumnSelection=function(category){
+    //   for(var i=0;i<vm.columnLimitSelections.length;i++){
+    //     if (vm.columnLimitSelections[i]==category){
+    //       vm.columnLimitSelections.splice(i,1);
+    //     }
+    //   }console.log(vm.columnLimitSelections[0]);
+    //   if(vm.columnLimitSelections[0]==undefined){
+    //     vm.columnLimitSelections=['no selections'];
+    //   }console.log(vm.columnLimitSelections[0]);
+    // }
 
 });
