@@ -260,7 +260,7 @@ router.get('/databasePatientTimeStamp', function(req,res){
         res.sendStatus(500);
         done();
     } else {
-        client.query('SELECT to_char(patient_time, \'HH:MI  Day MonthDD, YYYY\') FROM date WHERE id = 1;', function(err, result) {
+        client.query('SELECT to_char(patient_time, \'HH:MIAM  Day MonthDD, YYYY\') FROM date WHERE id = 1;', function(err, result) {
             done();
             if (err) {
                 console.log("Error querying DB", err);
@@ -281,7 +281,7 @@ router.get('/databaseDistTimeStamp', function(req,res){
         res.sendStatus(500);
         done();
     } else {
-        client.query('SELECT to_char(distributions_time, \'HH:MI  Day MonthDD, YYYY\') FROM date WHERE id = 1;', function(err, result) {
+        client.query('SELECT to_char(distributions_time, \'HH:MIAM  Day MonthDD, YYYY\') FROM date WHERE id = 1;', function(err, result) {
             done();
             if (err) {
                 console.log("Error querying DB", err);
