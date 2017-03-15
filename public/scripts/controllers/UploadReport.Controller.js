@@ -25,14 +25,17 @@ function($location,$http,$route) {
   };
 
 
+//Radio buttons on All tab
   vm.uploadAll=function($event){
     alertify.confirm('Are you suuuuuuure?', 'Clicking OK will replace all the data in your database').set('onok', function(closeEvent){
       $event.preventDefault();
       if(vm.type=='patient'){
         vm.uploadAllPatient();
+        vm.databasePatientTimeStamp();
       }
       else{
         vm.uploadAllDistributionData();
+        vm.databaseDistTimeStamp();
       }
     }).set('oncancel', function(closeEvent){ alertify.error('Cancel');} );
   }
@@ -71,30 +74,28 @@ vm.uploadAllDistributionData = function(){
 });
 };
 
-
+//Radio buttons on Addendum tab
 vm.uploadAdd=function($event){
   $event.preventDefault();
   console.log('vm.type',vm.type);
   if(vm.type=='patient'){
     vm.uploadAddPatient();
+    vm.databasePatientTimeStamp();
   }
   else{
     vm.uploadAddDistributionData();
+    vm.databaseDistTimeStamp();
   }
 }
 
-vm.uploadAddPatient = function(){
 
+vm.uploadAddPatient = function(){
   // console.log(vm.csv.result); // array of objects.  each row is an object.
   var objectToSend = {dataArray: vm.csv.result};
   console.log('Adding to Patients', objectToSend);
-
   // put in error checking?
-
-
   // vm.csv.result.forEach(function(object){
   $http.post('/upload/addPatientData', objectToSend // just pass the object...
-
 ).then(function(response){
   console.log(response);
   alertify.set('notifier','position', 'bottom-right');
@@ -107,7 +108,6 @@ vm.uploadAddPatient = function(){
 
 
 vm.uploadAddDistributionData = function(){
-
   // console.log(vm.csv.result); // array of objects.  each row is an object.
   var objectToSend = {dataArray: vm.csv.result};
   console.log('Adding to Distributions', objectToSend);
@@ -125,12 +125,34 @@ vm.uploadAddDistributionData = function(){
 
 
 
-//
-//   });
-//   alertify.set('notifier','position', 'bottom-right');
-//   alertify.success(vm.csv.result.filename + ' Submitted!!!!!!!!!');
-//   $route.reload();
-// }
+//Geting Patient Table timestamp
+vm.patientTimeStamp = {};
+vm.databasePatientTimeStamp = function () {
+  $http.get('/upload/databasePatientTimeStamp')
+  .then(function(response){
+    console.log('Patient Time Stamp: ', response);
+    vm.patientTimeStamp = response.data[0];
+    console.log('Timestamp log: ', vm.timeStamp);
+  }).catch(function(err){
+    console.log('Error grabbing Patient Table Time Stamp', err);
+  })
+}
+vm.databasePatientTimeStamp();
+
+
+//Getting Distributions Table timestamp
+vm.distTimeStamp = {};
+vm.databaseDistTimeStamp = function () {
+  $http.get('/upload/databaseDistTimeStamp')
+  .then(function(response){
+    console.log('Distributions Time Stamp: ', response);
+    vm.distTimeStamp = response.data[0];
+  }).catch(function(err){
+    console.log('Error grabbing Dist Table Time Stamp', err);
+  })
+}
+vm.databaseDistTimeStamp();
+
 
 
 vm.logout = function() {
@@ -142,7 +164,6 @@ vm.logout = function() {
     console.log('Error logging out');
   });
 }
-
 
 
 //Changing active tabs
