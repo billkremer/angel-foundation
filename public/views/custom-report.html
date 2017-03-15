@@ -31,7 +31,7 @@
   <div class="col-xs-3 text-center">
 
 
-    <h3>Data Selected</h3>
+    <h3>Table Headers</h3>
     <div id="customReportSelections" >
 
       <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetSelections | orderBy: category.title" >
@@ -48,18 +48,22 @@
   <div class="col-xs-3 text-center">
 
 
-    <h3>Select Data Here</h3>
-    <div id="dataSetContainer" >
+    <h3>Categories</h3>
+    <div  >
 
-      <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetList | orderBy: category.title" >
-        <div id="categoryTitle">
-          <button ng-click="customCtrl.addSelection(category,option)">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-          </button>
-          {{category.title}}
-          <button ng-click="customCtrl.openSubCats(category,option)">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-          </button>
+      <div >
+        <div class="customReport-categoriesList">
+          <ul ng-repeat="category in customCtrl.dataSetList | orderBy: category.title">
+            <li>
+              <button id="categoryLeftButton" ng-click="customCtrl.addSelection(category,option)">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+              </button>
+                {{category.title}}
+              <button id="categoryRightButton" ng-click="customCtrl.openSubCats(category,option)">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+              </button>
+            </li>
+          </ul>
         </div>
         <!-- <ul>
           <li ng-repeat="option in category.options | orderBy: option">{{option}}</li>
@@ -69,15 +73,14 @@
   </div>
 
   <div class="col-xs-3 text-center">
-      <h3>Sub Categories</h3>
-      <div id="customReportSelections" >
-        <div id="selectionDiv" >
+      <h3>Filtered By</h3>
+      <div >
+        <div class="customReport-categoriesList">
           <div id="categoryTitle">
             {{customCtrl.selectedCategory.title}}
           </div>
           <ul ng-repeat="options in customCtrl.selectedCategory.options" >
-            <li>{{options}}</li>
-            <button ng-click="customCtrl.addToFilters(options)"><span class="glyphicon glyphicon-ok-circle"></span></button>
+            <li>{{options}}<button id="filterButton" ng-click="customCtrl.addToFilters(options)"><span class="glyphicon glyphicon-ok-circle"></span></button></li>
           </ul>
           <ul ng-show="(customCtrl.selectedCategory.options[0] != 'undefined')  ">
             <li><label for="startDate">Start Date:</label> <input type="date" ng-model="startDate" name="startDate" /></li>
@@ -89,15 +92,15 @@
   </div>
 
   <div class="col-xs-3 text-center">
-    <h3>Filtered By</h3>
+    <h3>Selected Filters</h3>
     <div id="customReportSelections" >
 
-      <div id="selectionDiv" ng-repeat="category in customCtrl.dataFilterSelections" >
-        <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
+      <div id="selectionDiv" >
+        <!-- <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
           {{category.title}}
-        </div>
+        </div> -->
         <ul>
-          <li ng-repeat="option in category.options | orderBy: option" ng-click="customCtrl.removeOptionSelection(category,option)">{{option}}</li>
+          <li ng-repeat="option in customCtrl.dataFilterSelections" ng-click="customCtrl.removeFilter(option.options)">{{option.options}}</li>
         </ul>
       </div>
 

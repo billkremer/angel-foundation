@@ -107,7 +107,7 @@ angular.module("AngelApp").controller("CustomReportController",
 
       },
       {
-        title:'Application Expiration Date',
+        title:'Application Exp. Date',
         options:[]
       },
       {
@@ -208,7 +208,7 @@ angular.module("AngelApp").controller("CustomReportController",
         options: ['True', 'False']
       },
       {
-        title:'Does not qualify reason',
+        title:'Not qualify reason',
         options: ["Already received grant", "Applied too soon (2 years)", "Exceeds income guidelines",
                   "Margie's Fund DNQ", "No cancer diagnosis", "Not in active treatment", "Not in service area"]
       },
@@ -264,7 +264,8 @@ angular.module("AngelApp").controller("CustomReportController",
     // trying to order the categories on the html page.
 
     vm.dataSetSelections=[{title:'no selections'}];
-    vm.dataFilterSelections=[{title:'no selections'}];
+    vm.dataFilterSelections=[{title:'no selections',
+                              options:'no selections'}];
     vm.selectedCategory={};
 
     vm.openSubCats=function(category,option) {
@@ -310,7 +311,7 @@ angular.module("AngelApp").controller("CustomReportController",
   for(var i=0;i<vm.dataSetList.length;i++){
     vm.columnLimitList[i]=vm.dataSetList[i].title;
   };
-  console.log(vm.columnLimitList);
+  // console.log(vm.columnLimitList);
   // vm.dataSetListCategoryOrder = ['gender', 'age', 'income', 'marital'];
   // trying to order the categories on the html page.
 
@@ -457,34 +458,85 @@ angular.module("AngelApp").controller("CustomReportController",
     }; // end of saveReport function
 
     vm.addToFilters=function(option){
-      console.log("adding, ", option, " to filters");
-      if (vm.dataFilterSelections[0].title == 'no selections'){
+      if (vm.dataFilterSelections[0].options == 'no selections'){
         vm.dataFilterSelections=[];
       }
+
       var category=vm.selectedCategory.title;
       console.log('category', category);
       console.log('option', option);
+      var newItem={
+        title:category,
+        options:option
+        };
 
-        function isMatch(element,index,array){
-          return element.title == category;
+      if (vm.dataFilterSelections.length == 0){
+        vm.dataFilterSelections.push(newItem);
+      } else {
+        var dupe = false;
+        for (var i = 0; i < vm.dataFilterSelections.length; i++) {
+          if (vm.dataFilterSelections[i].options==option){
+            console.log("already added");
+            dupe=true;
+          }
+        }
+        if (dupe==false){
+          vm.dataFilterSelections.push(newItem);
+          console.log("adding", newItem);
         }
 
-      if (vm.dataFilterSelections.some(isMatch)) {
-        for(var i=0; i < vm.dataFilterSelections.length; i++) {
-            if (vm.dataFilterSelections[i].title == category.title){
-              if (vm.dataFilterSelections[i].options.indexOf(option) == -1) {
-                vm.dataFilterSelections[i].options.push(option);
-              };
-            };
-        };
-      } else {
-          vm.dataFilterSelections.push(
-            {
-              title:category.title,
-              options:[option]
-            });
-      }
+      };
+
       console.log(vm.dataFilterSelections);
+
     };//end of addToFilters
+
+
+
+    vm.removeFilter=function(category){
+      console.log("removing,", category, " from filters");
+      for (var i = 0; i < vm.dataFilterSelections.length; i++) {
+        if (vm.dataFilterSelections[i].options==category){
+          vm.dataFilterSelections.splice(i,1);
+        };
+      }
+        if (vm.dataFilterSelections[0]==undefined){
+          vm.dataFilterSelections=[{title:'no selections',
+                                    options:'no selections'}];
+        };
+        console.log(vm.dataFilterSelections);
+    }
+
+    // vm.removeOptionSelection = function(category,option){
+    //   for(var i=0;i<vm.dataSetSelections.length;i++){
+    //     if (vm.dataSetSelections[i].title == category.title){
+    //       var index = vm.dataSetSelections[i].options.indexOf(option);
+    //       vm.dataSetSelections[i].options.splice(index,1);
+    //     }
+    //   } console.log(vm.dataSetSelections[0]);
+    //   if(vm.dataSetSelections[0] == undefined){
+    //     vm.dataSetSelections=[{title:'no selections'}];
+    //   } console.log(vm.dataSetSelections[0]);
+    // }
+    // vm.removeCategorySelection=function(category){
+    //   for(var i=0;i<vm.dataSetSelections.length;i++){
+    //     if (vm.dataSetSelections[i].title==category.title){
+    //       vm.dataSetSelections.splice(i,1);
+    //     }
+    //   }console.log(vm.dataSetSelections[0]);
+    //   if(vm.dataSetSelections[0]==undefined){
+    //     vm.dataSetSelections=[{title:'no selections'}];
+    //   }console.log(vm.dataSetSelections[0]);
+    // }
+    // vm.removeColumnSelection=function(category){
+    //   for(var i=0;i<vm.columnLimitSelections.length;i++){
+    //     if (vm.columnLimitSelections[i]==category){
+    //       vm.columnLimitSelections.splice(i,1);
+    //     }
+    //   }console.log(vm.columnLimitSelections[0]);
+    //   if(vm.columnLimitSelections[0]==undefined){
+    //     vm.columnLimitSelections=['no selections'];
+    //   }console.log(vm.columnLimitSelections[0]);
+    // }
 
 });
