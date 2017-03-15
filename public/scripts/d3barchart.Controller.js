@@ -1,5 +1,5 @@
-angular.module("AngelApp").controller("d3barchartController", ['$location','$http','barChartService',
-  function($location,$http,barChartService) {
+angular.module("AngelApp").controller("d3barchartController", ['$location','$http','barChartService','distByCountyOrCancerService',
+  function($location,$http,barChartService,distByCountyOrCancerService) {
     console.log('d3bar controller loaded');
 
     var vm=this;
@@ -7,7 +7,92 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
     var data=[];
 
     vm.getBar=function(){
+      data=[];
       vm.responseOne=[];
+      console.log(vm.option);
+      if(vm.option=='Distributions by cancer type'||vm.option=='Distributions by county'){
+        var counties=['Anoka','Carver','Dakota','Hennepin','Ramsey','Scott','Washington'];
+        var cancers=['Multiple Myeloma','Breast- not specified','Lung- not specified','Rectal','Gastrointestinal - Colon'];
+
+        if(vm.option=='Distributions by cancer type'){
+          console.log('cancer');
+          for(var i=0;i<cancers.length;i++){
+            distByCountyOrCancerService.getDistinct("Where diagnosis='"+cancers[i]+"'",i).then(function(res){
+              console.log(res)
+               data.push({cat:cancers[res.data[0].i],val:res.data[0].count});
+
+
+              data.forEach(function(d) {
+                  d.cat = d.cat;
+                  d.val = +d.val;
+              });
+              console.log(data);
+              d3.selectAll("svg").remove();
+              draw();
+
+            });
+          }
+          distByCountyOrCancerService.getDistinct("Where diagnosis!='Multiple Myeloma' AND diagnosis!='Breast- not specified'"+
+                                                    "AND diagnosis!='Lung- not specified' AND diagnosis!='Rectal' AND diagnosis!='Gastrointestinal - Colon'")
+            .then(function(res){
+              data.push({cat:'Other',val:res.data[0].count});
+              data.forEach(function(d) {
+                  d.cat = d.cat;
+                  d.val = +d.val;
+              });
+              console.log(data);
+              d3.selectAll("svg").remove();
+              draw();
+          });
+
+
+        }else{
+
+
+
+          console.log('county');
+          for(var i=0;i<counties.length;i++){
+            distByCountyOrCancerService.getDistinct("Where county='"+counties[i]+"'",i).then(function(res){
+              console.log(res)
+               data.push({cat:counties[res.data[0].i],val:res.data[0].count});
+
+
+              data.forEach(function(d) {
+                  d.cat = d.cat;
+                  d.val = +d.val;
+              });
+              console.log(data);
+              d3.selectAll("svg").remove();
+              draw();
+
+            });
+          }
+          distByCountyOrCancerService.getDistinct("Where county!='Anoka' AND county!='Carver'"+
+                                                    "AND county!='Dakota' AND county!='Hennepin'"+
+                                                    "AND county!='Ramsey' AND county!='Scott'"+
+                                                    "AND county!='Washington'")
+            .then(function(res){
+              data.push({cat:'Other',val:res.data[0].count});
+              data.forEach(function(d) {
+                  d.cat = d.cat;
+                  d.val = +d.val;
+              });
+              console.log(data);
+              d3.selectAll("svg").remove();
+              draw();
+          });
+
+
+
+
+
+        }
+
+
+
+
+      }else{
+
         var objectToGet={title:vm.option};
         barChartService.getDistinct(objectToGet).then(function(res){
           console.log('res.data',res.data);
@@ -38,20 +123,15 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
             }
 
 
-            // data=vm.responseOne;
-            //   data.forEach(function(d) {
-            //       d.cat = d.cat;
-            //       d.val = +d.val;
-            //   });
-
-            // var two=setTimeout(console.log(data),25000);
-            // var three=setTimeout(console.log('one',vm.responseOne),25000);
-            // var four=setTimeout(console.log('two',vm.responseTwo),25000);
-
-
-
         });
+      }
     }
+
+
+
+
+
+
 
     var draw=function(){
         // set the dimensions of the canvas
@@ -126,6 +206,6 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
             .attr("width", x.rangeBand())
             .attr("y", function(d) { return y(d.val); })
             .attr("height", function(d) { return height - y(d.val); });
-      }
+      }//end of draw function
 
 }]);

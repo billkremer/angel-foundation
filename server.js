@@ -20,6 +20,7 @@ var dataVis= require('./routes/dataVis');
 var dataVis2= require('./routes/dataVis2');
 var dist= require('./routes/distribution');
 var dist2= require('./routes/distribution2');
+var distByCountyOrCancer= require('./routes/distByCountyOrCancer');
 require('./auth/setup');
 
 
@@ -69,6 +70,7 @@ app.use('/dataVis', dataVis);
 app.use('/dataVis2', dataVis2);
 app.use('/dist', dist);
 app.use('/dist2', dist2);
+app.use('/distByCountyOrCancer', distByCountyOrCancer);
 // app.get('/private/secretInfo', function(req, res){
 //   console.log('Sending secret info');
 //   res.send('This is very secret!');
