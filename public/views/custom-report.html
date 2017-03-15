@@ -82,10 +82,13 @@
           <ul ng-repeat="options in customCtrl.selectedCategory.options" >
             <li>{{options}}<button id="filterButton" ng-click="customCtrl.addToFilters(options)"><span class="glyphicon glyphicon-ok-circle"></span></button></li>
           </ul>
-          <ul ng-show="(customCtrl.selectedCategory.options[0] != 'undefined')  ">
-            <li><label for="startDate">Start Date:</label> <input type="date" ng-model="startDate" name="startDate" /></li>
-            <li><label for="stopDate">Stop Date:</label> <input type="date" ng-model="stopDate" name="stopDate" /></li>
-            <button ng-click="customCtrl.addToDateFilters(dateOption)"><span class="glyphicon glyphicon-ok-circle"></span></button>
+
+
+
+          <ul ng-show="(customCtrl.selectedCategory.dateOptions.flag == true)  ">
+            <li><label for="startDate">Start Date:</label> <input class="subDate" type="date" ng-model="customCtrl.dateOption.startDate" name="startDate" /></li>
+            <li><label for="stopDate">Stop Date:</label> <input class="subDate" type="date" ng-model="customCtrl.dateOption.stopDate" name="stopDate" /></li>
+            <button ng-click="customCtrl.addToDateFilters(customCtrl.selectedCategory, customCtrl.dateOption)"><span class="glyphicon glyphicon-ok-circle" ></span></button>
           </ul>
         </div>
       </div>
