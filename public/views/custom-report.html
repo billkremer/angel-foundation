@@ -32,9 +32,9 @@
     <div class="customReportSelections" >
       <div>
         <ul>
-          <li ng-repeat="category in customCtrl.dataSetSelections | orderBy: category.title" >
+          <li ng-click="customCtrl.removeCategorySelection(category)" ng-repeat="category in customCtrl.dataSetSelections | orderBy: category.title" >
             {{category.title}}
-            <span ng-click="customCtrl.removeCategorySelection(category)" ng-show="customCtrl.showHeaders" class="removeButton glyphicon glyphicon-remove"></span>
+            <span  ng-show="customCtrl.showHeaders" class="removeButton glyphicon glyphicon-remove"></span>
           </li>
         </ul>
       </div>
@@ -76,7 +76,7 @@
             {{customCtrl.selectedCategory.title}}
           </div> -->
           <ul ng-repeat="options in customCtrl.selectedCategory.options" >
-            <li><span class="col-xs-10">{{options}}</span><button class="col-xs-2" id="filterButton" ng-click="customCtrl.addToFilters(options)"><span class="glyphicon glyphicon-chevron-right"></span></button></li>
+            <li ng-click="customCtrl.addToFilters(options)"><span class="col-xs-10">{{options}}</span><button class="col-xs-2" id="filterButton" ><span class="glyphicon glyphicon-chevron-right"></span></button></li>
           </ul>
 
 
@@ -99,7 +99,7 @@
           {{category.title}}
         </div> -->
         <ul>
-          <li ng-repeat="option in customCtrl.dataFilterSelections">{{option.title}}: {{option.options}} <span ng-click="customCtrl.removeFilter(option.options)" ng-show="customCtrl.showFilters" class="removeButton glyphicon glyphicon-remove"></span></li>
+          <li ng-repeat="option in customCtrl.dataFilterSelections" ng-click="customCtrl.removeFilter(option.options)">{{option.title}}: {{option.options}} <span ng-show="customCtrl.showFilters" class="removeButton glyphicon glyphicon-remove"></span></li>
         </ul>
       </div>
 
