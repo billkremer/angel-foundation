@@ -88,6 +88,14 @@ INSERT INTO standard_reports (report_name, query)
 VALUES ('Report Two', 'SELECT ethnicity, income FROM patient');
 
 
+CREATE TABLE date (
+id SERIAL PRIMARY KEY,
+patient_time TIMESTAMP,
+distributions_time TIMESTAMP
+);
+
+INSERT INTO date (patient_time, distributions_time) VALUES (current_timestamp, current_timestamp);
+
 
 
 
