@@ -91,7 +91,7 @@
           {{category.title}}
         </div> -->
         <ul>
-          <li ng-repeat="option in customCtrl.dataFilterSelections">{{option.title}} {{option.options}} <span ng-click="customCtrl.removeFilter(option.options)" ng-show="customCtrl.showFilters" class="removeButton glyphicon glyphicon-remove"></span></li>
+          <li ng-repeat="option in customCtrl.dataFilterSelections">{{option.title}}: {{option.options}} <span ng-click="customCtrl.removeFilter(option.options)" ng-show="customCtrl.showFilters" class="removeButton glyphicon glyphicon-remove"></span></li>
         </ul>
       </div>
 
