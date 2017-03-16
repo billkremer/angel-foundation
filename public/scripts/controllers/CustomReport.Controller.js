@@ -137,7 +137,7 @@ angular.module("AngelApp").controller("CustomReportController",
         options:['Female','Male']
       },
       {
-        title:'Ethncity',
+        title:'Ethnicity',
         options:['African American or Black', 'American Indian or Alaskan Native',
                 'Asian', 'Asian Indian', 'Caucasian', 'Chinese', 'Hispanic', 'Hmong', 'Japanese',
                 'Korean', 'Middle Eastern', 'Other', 'Unknown', 'Vietnamese']
@@ -261,14 +261,17 @@ angular.module("AngelApp").controller("CustomReportController",
     // vm.dataSetListCategoryOrder = ['gender', 'age', 'income', 'marital'];
     // trying to order the categories on the html page.
 
-    vm.dataSetSelections=[{title:'no selections'}];
-    vm.dataFilterSelections=[{title:'no selections',
-                              options:'no selections'}];
+    vm.dataSetSelections=[{title:'no filters selected'}];
+    vm.dataFilterSelections=[{title:'no filters selected'}];
     vm.selectedCategory={};
 
-    vm.openSubCats=function(category,option) {
+    vm.selected = null;
+
+    vm.openSubCats=function(category,option,$index) {
       vm.selectedCategory=category;
       console.log(vm.selectedCategory);
+      vm.selected = $index;
+      console.log("selected", vm.selected);
     };
 
     // vm.addSelection = function(category,option) {
@@ -313,18 +316,20 @@ angular.module("AngelApp").controller("CustomReportController",
   // vm.dataSetListCategoryOrder = ['gender', 'age', 'income', 'marital'];
   // trying to order the categories on the html page.
 
-  vm.dataSetSelections=[{title:'no selections'}];
-  vm.columnLimitSelections=['no selections'];
+  vm.dataSetSelections=[{title:'no filters selected'}];
+  vm.columnLimitSelections=['no filters selected'];
   vm.addColumnLimitSelection=function(category){
-    if (vm.columnLimitSelections[0] == 'no selections'){
+    if (vm.columnLimitSelections[0] == 'no filters selected'){
       vm.columnLimitSelections=[];
     }
     vm.columnLimitSelections.push(category);
     console.log(vm.columnLimitSelections);
   }
 
+  vm.showHeaders=false;
+
   vm.addSelection = function(category,option) {
-    if (vm.dataSetSelections[0].title == 'no selections'){
+    if (vm.dataSetSelections[0].title == 'no filters selected'){
       vm.dataSetSelections=[];
     }
 
@@ -340,6 +345,7 @@ angular.module("AngelApp").controller("CustomReportController",
         if (vm.dataSetSelections[i].title == category.title){
           if (vm.dataSetSelections[i].options.indexOf(option) == -1) {
             vm.dataSetSelections[i].options.push(option);
+            vm.showHeaders=true;
           };
         };
       };
@@ -349,6 +355,7 @@ angular.module("AngelApp").controller("CustomReportController",
           title:category.title,
           options:[option]
         });
+        vm.showHeaders=true;
       }
       console.log(vm);
     }; // close addSelection
@@ -362,7 +369,7 @@ angular.module("AngelApp").controller("CustomReportController",
         }
       } console.log(vm.dataSetSelections[0]);
       if(vm.dataSetSelections[0] == undefined){
-        vm.dataSetSelections=[{title:'no selections'}];
+        vm.dataSetSelections=[{title:'no filters selected'}];
       } console.log(vm.dataSetSelections[0]);
     }
 
@@ -374,7 +381,8 @@ angular.module("AngelApp").controller("CustomReportController",
         }
       }console.log(vm.dataSetSelections[0]);
       if(vm.dataSetSelections[0]==undefined){
-        vm.dataSetSelections=[{title:'no selections'}];
+        vm.dataSetSelections=[{title:'no filters selected'}];
+        vm.showHeaders=false;
       }console.log(vm.dataSetSelections[0]);
     }
     vm.removeColumnSelection=function(category){
@@ -384,7 +392,8 @@ angular.module("AngelApp").controller("CustomReportController",
         }
       }console.log(vm.columnLimitSelections[0]);
       if(vm.columnLimitSelections[0]==undefined){
-        vm.columnLimitSelections=['no selections'];
+        vm.columnLimitSelections=['no filters selected'];
+        vm.showHeaders=false;
       }console.log(vm.columnLimitSelections[0]);
     }
 
@@ -393,7 +402,7 @@ angular.module("AngelApp").controller("CustomReportController",
     // this function builds the SQL query string
       var reportString="SELECT ";
       console.log(reportString);
-      if (vm.columnLimitSelections!="no selections") {
+      if (vm.columnLimitSelections!="no filters selected") {
         for (var i=0;i<vm.columnLimitSelections.length-1;i++) {
           if (vm.columnLimitSelections[i] == "age") {
             reportString += "age(date_of_birth),";
@@ -415,7 +424,7 @@ angular.module("AngelApp").controller("CustomReportController",
         // if columnLimitSelections == "no selections"
       }
       console.log(reportString);
-      if (vm.dataSetSelections[0].title == "no selections"){
+      if (vm.dataSetSelections[0].title == "no filters selected"){
         console.log(reportString);
       } else {
         reportString+="WHERE ";
@@ -455,8 +464,10 @@ angular.module("AngelApp").controller("CustomReportController",
 
     }; // end of saveReport function
 
+    vm.showFilters=false;
+
     vm.addToFilters=function(option){
-      if (vm.dataFilterSelections[0].options == 'no selections'){
+      if (vm.dataFilterSelections[0].title == 'no filters selected'){
         vm.dataFilterSelections=[];
       }
 
@@ -470,6 +481,7 @@ angular.module("AngelApp").controller("CustomReportController",
 
       if (vm.dataFilterSelections.length == 0){
         vm.dataFilterSelections.push(newItem);
+        vm.showFilters=true;
       } else {
         var dupe = false;
         for (var i = 0; i < vm.dataFilterSelections.length; i++) {
@@ -481,6 +493,7 @@ angular.module("AngelApp").controller("CustomReportController",
         if (dupe==false){
           vm.dataFilterSelections.push(newItem);
           console.log("adding", newItem);
+          vm.showFilters=true;
         }
 
       };
@@ -499,42 +512,10 @@ angular.module("AngelApp").controller("CustomReportController",
         };
       }
         if (vm.dataFilterSelections[0]==undefined){
-          vm.dataFilterSelections=[{title:'no selections',
-                                    options:'no selections'}];
+          vm.dataFilterSelections=[{title:'no filters selected'}];
+          vm.showFilters=false;
         };
         console.log(vm.dataFilterSelections);
     }
-
-    // vm.removeOptionSelection = function(category,option){
-    //   for(var i=0;i<vm.dataSetSelections.length;i++){
-    //     if (vm.dataSetSelections[i].title == category.title){
-    //       var index = vm.dataSetSelections[i].options.indexOf(option);
-    //       vm.dataSetSelections[i].options.splice(index,1);
-    //     }
-    //   } console.log(vm.dataSetSelections[0]);
-    //   if(vm.dataSetSelections[0] == undefined){
-    //     vm.dataSetSelections=[{title:'no selections'}];
-    //   } console.log(vm.dataSetSelections[0]);
-    // }
-    // vm.removeCategorySelection=function(category){
-    //   for(var i=0;i<vm.dataSetSelections.length;i++){
-    //     if (vm.dataSetSelections[i].title==category.title){
-    //       vm.dataSetSelections.splice(i,1);
-    //     }
-    //   }console.log(vm.dataSetSelections[0]);
-    //   if(vm.dataSetSelections[0]==undefined){
-    //     vm.dataSetSelections=[{title:'no selections'}];
-    //   }console.log(vm.dataSetSelections[0]);
-    // }
-    // vm.removeColumnSelection=function(category){
-    //   for(var i=0;i<vm.columnLimitSelections.length;i++){
-    //     if (vm.columnLimitSelections[i]==category){
-    //       vm.columnLimitSelections.splice(i,1);
-    //     }
-    //   }console.log(vm.columnLimitSelections[0]);
-    //   if(vm.columnLimitSelections[0]==undefined){
-    //     vm.columnLimitSelections=['no selections'];
-    //   }console.log(vm.columnLimitSelections[0]);
-    // }
 
 });
