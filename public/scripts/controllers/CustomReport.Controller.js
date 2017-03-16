@@ -191,6 +191,11 @@ angular.module("AngelApp").controller("CustomReportController",
         table: 'patient'
       },
       {
+        title:'Household Count',
+        options: ['0','1-3','4-6','6-8','>8'],
+        table: 'patient'
+      },
+      {
         title:'FaCT Family',
         options:['yes','no'],
         table: 'patient'
