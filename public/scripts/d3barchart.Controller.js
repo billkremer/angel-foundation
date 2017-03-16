@@ -110,7 +110,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
                   console.log(vm.responseOne);
                   data=vm.responseOne;
                     data.forEach(function(d) {
-                        d.cat = d.cat;
+                        d.cat = (d.cat==''?'Not Specified':d.cat);
                         d.val = +d.val;
                     });
                     d3.selectAll("svg").remove();
@@ -130,14 +130,23 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
 
 
 
-
+    var aColor = [
+        'rgb(68,68,68)',
+        'rgb(0,82,156)',
+        'rgb(36,126,176)',
+        'rgb(68,136,187)',
+        'rgb(192,215,234)',
+        'rgb(230,238,242)',
+        'rgb(149,193,69)',
+        'rgb(211,223,115)'
+    ]
 
 
     var draw=function(){
         // set the dimensions of the canvas
-    var margin = {top: 20, right: 20, bottom: 70, left: 40},
+    var margin = {top: 20, right: 20, bottom: 250, left: 40},
         width = 600 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+        height = 500 - margin.top - margin.bottom;
 
 
     // set the ranges
@@ -205,7 +214,8 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
             .attr("x", function(d) { return x(d.cat); })
             .attr("width", x.rangeBand())
             .attr("y", function(d) { return y(d.val); })
-            .attr("height", function(d) { return height - y(d.val); });
+            .attr("height", function(d) { return height - y(d.val); })
+            .style('fill', function(d,i){return aColor[i];})   ;
       }//end of draw function
 
 }]);

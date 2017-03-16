@@ -14,13 +14,21 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
       // var countyCountArray=[];
       for( var i=0; i<res.data.length;i++){
         var objectForValues={field:'county',item:res.data[i].county};
-        dataVisService.getValues(objectForValues,i).then(function(res){
-          console.log('new stuff from db',res.data);
+        dataVisService.getValues(objectForValues,i).then(function(result){
+          console.log('new stuff from db',result.data);
           // countyCountArray.push(count.data);
-          // arrayOfCounties.push({countyName:res.data[count.data[0].i].county+' County',count:count.data[0].count});
-          // if(count.data[0].i==res.data.length-1){
-          //   loadData();
-          // }
+          var applicationDates=[];
+          for (var j=0;j<result.data.length;j++){
+            applicationDates.push(result.data[j].application_date);
+            if(j==result.data.length-1){
+              arrayOfCounties.push({countyName:result.data[0].county+' County',count:result.data.length,dates:applicationDates});
+              if(result.data[0].i==res.data.length-1){
+                loadData();
+                console.log('array of counties',arrayOfCounties);
+              }
+
+            }
+          }
         });
       }
 
