@@ -103,8 +103,7 @@ angular.module("AngelApp").controller("CustomReportController",
       {
         title:'Application Date',
         options:[],
-        dateOptions:[],
-        dateOptions: {flag:true}
+        dateOptions: {flag:true},
       },
       {
         title:'Application Exp. Date',
@@ -242,7 +241,7 @@ angular.module("AngelApp").controller("CustomReportController",
       },
       {
         title:'Fund Melanoma',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< -800', '-800 -- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201 -- 400', '401-600', '600-800', '>800']
       },
       {
         title:'Fund Margies',
