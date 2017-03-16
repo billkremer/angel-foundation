@@ -1,30 +1,27 @@
+<div  class="container">
+
+  <div class="standardReportHeader col-xs-12">
 
 
+      <div class="row" id="headerRow">
+        <div class=" col-xs-2 ">
+          <div class="dropdown">
+            <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+            <ul class="dropdown-menu ">
+              <li><a href="/">Standard Reports</a></li>
+              <li><a href="/custom-report">Custom Reports</a></li>
+              <li><a href="/data-upload">Upload</a></li>
+            </ul>
+          </div>
+        </div>
 
-<!-- header row -->
-<div class="container-fluid">
-  <div class="col-xs-11 col-sm-2 col-md-3 customReportHeader">
-    <img src="../images/image001.png" alt="Angel Foundation Logo">
-  </div>
-  <div class="col-xs-11 col-sm-7 col-md-6">
-    <!-- title -->
-    <h1>Custom Report Creator</h1>
-  </div>
-
-  <div class="col-xs-11 col-sm-2 col-md-2">
-  <div class="dropdown">
-
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a href="/">Standard Reports</a></li>
-        <li><a href="/custom-report">Custom Reports</a></li>
-        <li><a href="/data-upload">Upload</a></li>
-      </ul>
+        <div id="headerPic" class="col-xs-4 col-xs-offset-2 ">
+          <img src="../images/angel-foundation-logo-2.png" alt="Angel Foundation Logo">
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
 
 <div class=container>
@@ -32,14 +29,13 @@
 
 
     <h3>Table Headers</h3>
-    <div id="customReportSelections" >
-
-      <div id="expanderDiv" ng-repeat="category in customCtrl.dataSetSelections | orderBy: category.title" >
-        <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
-          {{category.title}}
-        </div>
+    <div class="customReportSelections" >
+      <div>
         <ul>
-          <li ng-repeat="option in category.options | orderBy: option" ng-click="customCtrl.addSelection(category,option)">{{option}}</li>
+          <li ng-repeat="category in customCtrl.dataSetSelections | orderBy: category.title" >
+            {{category.title}}
+            <span ng-click="customCtrl.removeCategorySelection(category)" ng-show="customCtrl.showHeaders" class="removeButton glyphicon glyphicon-remove"></span>
+          </li>
         </ul>
       </div>
     </div>
@@ -49,17 +45,17 @@
 
 
     <h3>Categories</h3>
-    <div  >
+    <div>
 
-      <div >
+      <div>
         <div class="customReport-categoriesList">
-          <ul ng-repeat="category in customCtrl.dataSetList | orderBy: category.title">
-            <li>
-              <button id="categoryLeftButton" ng-click="customCtrl.addSelection(category,option)">
+          <ul>
+            <li ng-repeat="category in customCtrl.dataSetList | orderBy: category.title" ng-class="{selectedCategory: $index == customCtrl.selected}">
+              <button class="col-xs-2" id="categoryLeftButton" ng-click="customCtrl.addSelection(category,option)">
                 <span class="glyphicon glyphicon-chevron-left"></span>
               </button>
-                {{category.title}}
-              <button id="categoryRightButton" ng-click="customCtrl.openSubCats(category,option)">
+                <span class="col-xs-8">{{category.title}}</span>
+              <button class="col-xs-2" id="categoryRightButton" ng-click="customCtrl.openSubCats(category,option,$index)">
                 <span class="glyphicon glyphicon-chevron-right"></span>
               </button>
             </li>
@@ -75,12 +71,12 @@
   <div class="col-xs-3 text-center">
       <h3>Filtered By</h3>
       <div >
-        <div class="customReport-categoriesList">
-          <div id="categoryTitle">
+        <div class="customReport-subcategoriesList">
+          <!-- <div id="categoryTitle">
             {{customCtrl.selectedCategory.title}}
-          </div>
+          </div> -->
           <ul ng-repeat="options in customCtrl.selectedCategory.options" >
-            <li>{{options}}<button id="filterButton" ng-click="customCtrl.addToFilters(options)"><span class="glyphicon glyphicon-ok-circle"></span></button></li>
+            <li><span class="col-xs-10">{{options}}</span><button class="col-xs-2" id="filterButton" ng-click="customCtrl.addToFilters(options)"><span class="glyphicon glyphicon-chevron-right"></span></button></li>
           </ul>
 
 
@@ -96,14 +92,14 @@
 
   <div class="col-xs-3 text-center">
     <h3>Selected Filters</h3>
-    <div id="customReportSelections" >
+    <div class="customReportSelections" >
 
-      <div id="selectionDiv" >
+      <div>
         <!-- <div id="categoryTitle" ng-click="customCtrl.removeCategorySelection(category)">
           {{category.title}}
         </div> -->
         <ul>
-          <li ng-repeat="option in customCtrl.dataFilterSelections" ng-click="customCtrl.removeFilter(option.options)">{{option.options}}</li>
+          <li ng-repeat="option in customCtrl.dataFilterSelections">{{option.title}}: {{option.options}} <span ng-click="customCtrl.removeFilter(option.options)" ng-show="customCtrl.showFilters" class="removeButton glyphicon glyphicon-remove"></span></li>
         </ul>
       </div>
 
@@ -139,6 +135,13 @@
       </div>
 
     </div>
-  </div>
-<button ng-click="customCtrl.saveReport();"> GO DO IT</button>
-</div> -->
+  </div> -->
+<button class="runReportButton btn-primary col-xs-3 col-xs-offset-4" ng-click="customCtrl.saveReport();"> GO DO IT</button>
+
+<form class="col-xs-8 col-xs-offset-3">
+  Want to save this report? <input id="saveReportName" type="text" placeholder="Name of report" />
+</form>
+
+<button class="runReportButton btn-primary col-xs-3 col-xs-offset-4" ng-click="customCtrl.saveReport();">Save and run</button>
+
+<!-- </div> -->

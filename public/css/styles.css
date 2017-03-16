@@ -484,17 +484,27 @@ circle {
 
 /*-----------------------------end of data vis------------------------------*/
 /*-----------------------------custom report styles------------------------------*/
+.selectedCategory {
+  background-color: rgb(192,215,234);
+}
+
 #filterButton{
-  margin: 2px;
+  /*margin-top: 3px;*/
   float: right;
+  background-color: Transparent;
+  border: none;
 }
 #categoryRightButton {
-  margin: 2px;
+  /*margin-top: 7px;*/
   float: right;
+  background-color: Transparent;
+  border: none;
 }
 #categoryLeftButton {
-  margin: 2px;
+  /*margin-top: 7px;*/
   float: left;
+  background-color: Transparent;
+  border: none;
 }
 .customReport-categoriesList {
   /*border: 1px solid purple;*/
@@ -512,16 +522,21 @@ circle {
   list-style: none;
   text-align: center;
   width:100%;
-  height: 35px;
+  height: 40px;
   border: 2px solid rgb(0, 0, 0);
   margin-top: 5px;
   margin-bottom:5px;
   border-radius:3px;
   /*font-size:1.5em;*/
   font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
-  /*display: flex;
-  justify-content:center;*/
+  display: flex;
+  justify-content:center;
   align-items:center;
+}
+.customReport-categoriesList li span {
+  /*display: flex;
+  justify-content:center;
+  align-items:center;*/
 }
 .customReport-categoriesList li:hover {
   background-color: rgb(192,215,234);
@@ -543,16 +558,16 @@ circle {
   list-style: none;
   text-align: center;
   width:100%;
-  height: 35px;
+  height: 40px;
   border: 2px solid rgb(0, 0, 0);
   margin-top: 5px;
   margin-bottom:5px;
   border-radius:3px;
-  /*font-size:1.5em;*/
+  /*font-size: 10px;*/
   font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
-  /*display: flex;
+  display: flex;
   justify-content:center;
-  align-items:center;*/
+  align-items:center;
 }
 .customReport-subcategoriesList li:hover {
   background-color: rgb(192,215,234);
@@ -566,7 +581,7 @@ circle {
   padding:0px;
   text-align: center;
   overflow: scroll;
-  height: 400px;
+  height: 460px;
 }
 #dataSetContainer ul{
   list-style: none;
@@ -586,7 +601,7 @@ circle {
   font-size:15px;
   height:40px;
 }
-#customReportSelections{
+.customReportSelections{
   /*padding-left: 5px;
   padding-right: 2px;*/
     padding:0px;
@@ -596,9 +611,9 @@ circle {
   color:white;
   font-family: 'proxima-nova', Helvetica, Arial, sans-serif !important;
   overflow: scroll;
-  height: 400px;
+  height: 80%;
 }
-#customReportSelections ul{
+.customReportSelections ul{
   padding: 0px;
   font-size:16px;
 }
@@ -607,14 +622,34 @@ circle {
   height: 50px;
 }
 
+
 .subDate {
-  color: black; 
+  color: black;
 }
 
-/*-----------------------------end of custom report styles------------------------------*/
-/*-----------------------------log in styles------------------------------*/
+.runReportButton {
+  width: 30%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+#saveReportName{
+  width: 50%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.removeButton {
+  color: #bd4949;
+  /*#d3df73 #bd4949*/
+}
+.removeButton:hover {
+  cursor:pointer;
+}
+/*------ end of custom report styles------------------------------*/
+
+/*-----------------------------log in styles-----------------*/
 
 #loginFormContainer{
   margin-top:20px;
 }
-/*-----------------------------end of log in styles------------------------------*/
+/*-----------------------------end of log in styles-----------*/
