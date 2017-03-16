@@ -202,7 +202,7 @@ angular.module("AngelApp").controller("CustomReportController",
       },
       {
         title:'Reason',
-        options:['Cannot work die to treatment','Extreme Circumstances', 'Forced to move/homeless',
+        options:['Cannot work due to treatment','Extreme Circumstances', 'Forced to move/homeless',
                 'Has young children', 'High medical costs', 'In school/recently finished', 'Increasing exp. due to treatment',
                 'Lost job', 'Other', 'Terminal', 'Waiting for other funds'],
         table: 'patient'
