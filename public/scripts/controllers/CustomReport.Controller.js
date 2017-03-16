@@ -104,160 +104,197 @@ angular.module("AngelApp").controller("CustomReportController",
         title:'Application Date',
         options:[],
         dateOptions: {flag:true},
+        table: patient
       },
       {
         title:'Application Exp. Date',
         options:[],
-        dateOptions: {flag:true}
+        dateOptions: {flag:true},
+        table: patient
       },
       {
         title:'Distribution Date',
         options:[],
-        dateOptions: {flag:true}
+        dateOptions: {flag:true},
+        table: patient
       },
       {
         title:'Qualify Amount',
-        options:['0-100','101-300','301-500','501-800','801+']
+        options:['0-100','101-300','301-500','501-800','> 801'],
+        table: patient
       },
       {
         title:'Transaction Type',
-        options:["General", "Margie's Fund"]
+        options:["General", "Margie's Fund"],
+        table: patient
       },
       {
         title:'Diagnosis',
-        options: vm.diagnosis
+        options: vm.diagnosis,
+        table: patient
       },
       {
         title:'Cancer Stage',
-        options:["Remission","None Specified","IV","III","II","I"]
+        options:["Remission","None Specified","IV","III","II","I"],
+        table: patient
       },
       {
         title:'Age',
-        options:['<18','19-29','30-39','40-49','50-59','60-69','70+']
+        options:['< 18','19-29','30-39','40-49','50-59','60-69','> 70'],
+        table: patient
       },
       {
         title:'Gender',
-        options:['Female','Male']
+        options:['Female','Male'],
+        table: patient
       },
       {
         title:'Ethnicity',
         options:['African American or Black', 'American Indian or Alaskan Native',
                 'Asian', 'Asian Indian', 'Caucasian', 'Chinese', 'Hispanic', 'Hmong', 'Japanese',
-                'Korean', 'Middle Eastern', 'Other', 'Unknown', 'Vietnamese']
+                'Korean', 'Middle Eastern', 'Other', 'Unknown', 'Vietnamese'],
+        table: patient
       },
       {
         title:'Marital Status',
-        options:['Married','Single', 'Widowed', 'Seperated', 'Not specified']
+        options:['Married','Single', 'Widowed', 'Seperated', 'Not specified'],
+        table: patient
       },
       {
         title:'Veteran',
-        options:['Yes','No']
+        options:['Yes','No'],
+        table: patient
       },
       {
         title:'City',
-        options: vm.cities
+        options: vm.cities,
+        table: patient
       },
       {
         title:'County',
-        options: vm.counties
+        options: vm.counties,
+        table: patient
       },
       {
         title:'State',
-        options: vm.states
+        options: vm.states,
+        table: patient
       },
       {
         title:'Zip Code',
-        options: vm.zipCodes
+        options: vm.zipCodes,
+        table: patient
       },
       {
         title:'Yearly Income',
-        options:['0','1-15000','15001-30000','30001-45000','45001-60000','60001-75000','75001+']
+        options:['0','1-15000','15001-30000','30001-45000','45001-60000','60001-75000','> 75001'],
+        table: patient
       },
       {
         title:'FaCT Family',
-        options:['yes','no']
+        options:['yes','no'],
+        table: patient
       },
       {
         title:'Reason',
         options:['Cannot work die to treatment','Extreme Circumstances', 'Forced to move/homeless',
                 'Has young children', 'High medical costs', 'In school/recently finished', 'Increasing exp. due to treatment',
-                'Lost job', 'Other', 'Terminal', 'Waiting for other funds']
+                'Lost job', 'Other', 'Terminal', 'Waiting for other funds'],
+        table: patient
       },
       {
         title:'Referred by',
         options:['Brochure', 'Family', 'Friend', 'Internet', 'Nurse', 'Nurse Navigator', 'Oncologist', 'Other', 'Patient Financial Counselor',
-                'Patient Navigator', 'Social Worker', 'United Way 211']
+                'Patient Navigator', 'Social Worker', 'United Way 211'],
+        table: patient
       },
       {
         title:'Social Worker ID',
-        options: vm.socialWorkerId
+        options: vm.socialWorkerId,
+        table: patient
       },
       {
         title:'Social Worker Clinic',
-        options: vm.socialWorkerClinic
+        options: vm.socialWorkerClinic,
+        table: patient
       },
       {
         title:'Doctor ID',
-        options: vm.doctorIds
+        options: vm.doctorIds,
+        table: patient
       },
       {
         title:'Doctor Clinic',
-        options: vm.doctorClinic
+        options: vm.doctorClinic,
+        table: patient
       },
       {
         title:'Does not qualify',
-        options: ['True', 'False']
+        options: ['True', 'False'],
+        table: patient
       },
       {
         title:'Not qualify reason',
         options: ["Already received grant", "Applied too soon (2 years)", "Exceeds income guidelines",
-                  "Margie's Fund DNQ", "No cancer diagnosis", "Not in active treatment", "Not in service area"]
+                  "Margie's Fund DNQ", "No cancer diagnosis", "Not in active treatment", "Not in service area"],
+        table: patient
       },
       {
         title:'Grant Type',
         options: ['Adjustment', 'Electric Bill Payment', 'Fuel Card', 'Garbage Bill Payment',
                   'Gas Bill Payment', 'Grocery Card', 'Mortgage Payment', 'Phone Bill Payment',
-                  'Rent Payment', 'Schwans Food Card', 'Target Card', 'Water Bill Payment', 'Other']
+                  'Rent Payment', 'Schwans Food Card', 'Target Card', 'Water Bill Payment', 'Other'],
+        table: distributions
       },
       {
         title:'Fund General',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
       {
         title:'Fund Komen',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
       {
         title:'Fund Brain',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
       {
         title:'Fund Park Nicollet',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
       {
         title:'Fund Lung',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
       {
         title:'Fund Melanoma',
-        options: ['< -800', '-800 -- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201 -- 400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201 -- 400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
       {
         title:'Fund Margies',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
       {
         title:'Fund Colon',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
       {
         title:'Fund Total',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
       {
         title:'Fund Qualify Amount',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: distributions
       },
     ];  // end of dataSetList object
 
