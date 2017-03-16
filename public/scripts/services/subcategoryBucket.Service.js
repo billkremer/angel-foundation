@@ -7,11 +7,11 @@ app.service("subcategoryBucketService", function($http){
     // example: dataSetSelectionsObject = vm.dataSetSelections[j] = {title: "age", options:["30+","50+"]}
     // if / else-if tree for age, income,
 
-    console.log("dataSetSelectionsObject",dataSetSelectionsObject);
+    if (verbose) console.log("dataSetSelectionsObject",dataSetSelectionsObject);
 
     var whereString = ""; // string to return
 
-
+console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
     /* ------------ age section ------------    */
     if (dataSetSelectionsObject.title.toLowerCase() == "age") {
 
@@ -99,7 +99,11 @@ app.service("subcategoryBucketService", function($http){
 
     /* ---------  qualify amount section ------    */
 
-    if ( dataSetSelectionsObject.title.toLowerCase() == "qualify amount" || dataSetSelectionsObject.title.toLowerCase() == "fund qualify amount") {
+    // if ( dataSetSelectionsObject.title.toLowerCase() == "qualify amount" || dataSetSelectionsObject.title.toLowerCase() == "fund qualify amount") {
+
+      if (["fund qualify amount" , "qualify amount" , "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(dataSetSelectionsObject.title.toLowerCase()) != -1) {
+
+      var titleForQ = dataSetSelectionsObject.title.toLowerCase().split(" ").join("_");
 
       // title:'Qualify Amount', // or "fund qualify amount"
       // options:['0','100-300','301-500','501-800','801+']
@@ -109,28 +113,28 @@ app.service("subcategoryBucketService", function($http){
       for (var k = 0; k < dataSetSelectionsObject.options.length; k++) {
 
         if ((typeof dataSetSelectionsObject.options[k]) == "number") {
-          whereString += " (qualify_amount < CAST (" + dataSetSelectionsObject.options[k] + " AS MONEY))";
+          whereString += " (" + titleForQ + " < CAST (" + dataSetSelectionsObject.options[k] + " AS MONEY))";
 
         } else if (dataSetSelectionsObject.options[k].charAt(0) == "<" ) {
-          whereString += " (qualify_amount < CAST (" + (Number.parseInt(dataSetSelectionsObject.options[k].substring(1))) + " AS MONEY))"; // for "< 1000" (Number.parseInt(dataSetSelectionsObject.options[i]))
+          whereString += " (" + titleForQ + " < CAST (" + (Number.parseInt(dataSetSelectionsObject.options[k].substring(1))) + " AS MONEY))"; // for "< 1000" (Number.parseInt(dataSetSelectionsObject.options[i]))
 
         } else if (dataSetSelectionsObject.options[k].charAt(0) == ">" ) {
-          whereString += " (qualify_amount > CAST (" + (Number.parseInt(dataSetSelectionsObject.options[k].substring(1))) + " AS MONEY))";
+          whereString += " (" + titleForQ + " > CAST (" + (Number.parseInt(dataSetSelectionsObject.options[k].substring(1))) + " AS MONEY))";
           // for "> 100000"
 
         } else if ( dataSetSelectionsObject.options[k].indexOf("+") != -1) {
-          whereString += " (qualify_amount > CAST (" + (Number.parseInt(dataSetSelectionsObject.options[k])) + " AS MONEY))";
+          whereString += " (" + titleForQ + " > CAST (" + (Number.parseInt(dataSetSelectionsObject.options[k])) + " AS MONEY))";
           // for "100000+"
 
         } else if ( dataSetSelectionsObject.options[k] == "0" || dataSetSelectionsObject.options[k] == "") {
-          whereString = " qualify_amount = CAST(0 AS MONEY)";
+          whereString += " (" + titleForQ + " = CAST(0 AS MONEY))";
           // for "O" or ""
 
         } else {
-          var qualArrayForString = dataSetSelectionsObject.options[k].split("-");
+          var arrayForString = dataSetSelectionsObject.options[k].split("-");
           // "45001-60000" -> ["45001","60000"]
 
-          whereString +=" (qualify_amount > CAST(" + qualArrayForString[0] + " AS MONEY) AND qualify_amount <= CAST(" + qualArrayForString[1] + " as MONEY))";
+          whereString +=" (" + titleForQ + " > CAST(" + arrayForString[0] + " AS MONEY) AND " + titleForQ + " <= CAST(" + arrayForString[1] + " as MONEY))";
         };
 
         if (k < dataSetSelectionsObject.options.length - 1) {
@@ -154,10 +158,13 @@ app.service("subcategoryBucketService", function($http){
       var expStopDate = new Date();
       var expDateArray = []
 
+      console.log(dataSetSelectionsObject,"obj");
+// .options is a string, not an array. so no for loop
+
       for (var p = 0; p < dataSetSelectionsObject.options.length; p++) {
-
-        expDateArray = dataSetSelectionsObject.options[p].split(" -- ");
-
+// console.log(dataSetSelectionsObject.options[p]);
+        expDateArray = dataSetSelectionsObject.options[p].split("--");
+console.log(expDateArray);
   // 'date3 -- date4'.split(" -- "); // ["date3","date4"]
 
         expStartDate = (new Date(expDateArray[0]).toISOString().substring(0,10));
@@ -166,9 +173,9 @@ app.service("subcategoryBucketService", function($http){
         if (verbose) console.log(expStartDate, expStopDate);
 
         if (expStartDate < expStopDate) {
-          whereString = "(expiration_date >= '" + expStartDate + "' AND expiration_date <= '" + expStopDate + "')";
+          whereString += "(expiration_date >= '" + expStartDate + "' AND expiration_date <= '" + expStopDate + "')";
         } else {
-          whereString = "(expiration_date >= '" + expStopDate + "' AND expiration_date <= '" + expStartDate + "')";
+          whereString += "(expiration_date >= '" + expStopDate + "' AND expiration_date <= '" + expStartDate + "')";
         };
 
         if (verbose) console.log(whereString);
@@ -205,9 +212,9 @@ app.service("subcategoryBucketService", function($http){
         if (verbose) console.log(appStartDate, appStopDate);
 
         if (appStartDate < appStopDate) {
-          whereString = "(application_date >= '" + appStartDate + "' AND application_date <= '" + appStopDate + "')";
+          whereString += "(application_date >= '" + appStartDate + "' AND application_date <= '" + appStopDate + "')";
         } else {
-          whereString = "(application_date >= '" + appStopDate + "' AND application_date <= '" + appStartDate + "')";
+          whereString += "(application_date >= '" + appStopDate + "' AND application_date <= '" + appStartDate + "')";
         };
 
 
@@ -240,15 +247,17 @@ app.service("subcategoryBucketService", function($http){
 
       // 'date3 -- date4'.split(" -- "); // ["date3","date4"]
 
-        distStartDate = (new Date(distDateArray[0]).toISOString().substring(0,10));
-        distStopDate = (new Date(distDateArray[1]).toISOString().substring(0,10));
+var distStartDateString = (new Date(distDateArray[0])).toISOString().substring(0,10);
+        var distStopDateString = (new Date(distDateArray[1])).toISOString().substring(0,10);
 
-        if (verbose) console.log(distStartDate, distStopDate);
+        console.log(distStopDateString);
 
-        if (distStartDate < distStopDate) {
-          whereString = "(application_date >= '" + distStartDate + "' AND application_date <= '" + distStopDate + "')";
+        if (verbose) console.log(distStartDate, distStopDateString);
+
+        if (distStartDateString < distStopDateString) {
+          whereString += "(application_date >= '" + distStartDateString + "' AND application_date <= '" + distStopDateString + "')";
         } else {
-          whereString = "(application_date >= '" + distStopDate + "' AND application_date <= '" + distStartDate + "')";
+          whereString += "(application_date >= '" + distStopDateString + "' AND application_date <= '" + distStartDateString + "')";
         };
 
         if (verbose) console.log(whereString);

@@ -106,7 +106,7 @@ angular.module("AngelApp").controller("CustomReportController",
         dateOptions: {flag:true},
       },
       {
-        title:'Application Exp. Date',
+        title:'App. Expiration Date',
         options:[],
         dateOptions: {flag:true}
       },
@@ -321,6 +321,7 @@ angular.module("AngelApp").controller("CustomReportController",
 
   vm.dataSetSelections=[{title:'no filters selected'}];
   vm.columnLimitSelections=['no filters selected'];
+
   vm.addColumnLimitSelection=function(category){
     if (vm.columnLimitSelections[0] == 'no filters selected'){
       vm.columnLimitSelections=[];
@@ -429,41 +430,49 @@ angular.module("AngelApp").controller("CustomReportController",
         // if columnLimitSelections == "no selections"
       }
       console.log(reportString);
-      if (vm.dataSetSelections[0].title == "no filters selected"){
+      if (vm.dataFilterSelections[0].title == "no filters selected"){
         console.log(reportString);
       } else {
         reportString+="WHERE ";
-        for(var j=0; j<vm.dataSetSelections.length-1; j++){
+        for(var j=0; j<vm.dataFilterSelections.length-1; j++){
 
 
-          if (vm.dataSetSelections[j].title.toLowerCase() == "age" || vm.dataSetSelections[j].title.toLowerCase() == "yearly income" ||  vm.dataSetSelections[j].title.toLowerCase() == "fund qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "app. expiration date" || vm.dataSetSelections[j].title.toLowerCase() == "application date" || vm.dataSetSelections[j].title.toLowerCase() == "distribution date")
+          // if (vm.dataSetSelections[j].title.toLowerCase() == "age" || vm.dataSetSelections[j].title.toLowerCase() == "yearly income" ||  vm.dataSetSelections[j].title.toLowerCase() == "fund qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "app. expiration date" || vm.dataSetSelections[j].title.toLowerCase() == "application date" || vm.dataSetSelections[j].title.toLowerCase() == "distribution date")
 
+          console.log((["age",  "yearly income" , "fund qualify amount" , "qualify amount" , "app. expiration date" , "application date" , "distribution date", "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(vm.dataFilterSelections[j].title.toLowerCase()) != -1));
+
+          if (["age",  "yearly income" , "fund qualify amount" , "qualify amount" , "app. expiration date" , "application date" , "distribution date", "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(vm.dataFilterSelections[j].title.toLowerCase()) != -1)
+          // if it's in the list, send to the bucketservice.
           {
             //write code based on format of these things!!!!
             // example: vm.dataSetSelections[j] = {title: "age", options:["30+","50+"]}
 
-            reportString += subcategoryBucketService.returnString(vm.dataSetSelections[j]);
+            reportString += subcategoryBucketService.returnString(vm.dataFilterSelections[j]);
 
           }else{
-            for(var i=0;i<vm.dataSetSelections[j].options.length-1;i++){
-              reportString+="("+vm.dataSetSelections[j].title+"='"+vm.dataSetSelections[j].options[i]+"') OR "
+            for(var i=0;i<vm.dataFilterSelections[j].options.length-1;i++){
+              reportString+="("+vm.dataFilterSelections[j].title+"='"+vm.dataFilterSelections[j].options[i]+"') OR "
             }
-              reportString+="("+vm.dataSetSelections[j].title+"='"+vm.dataSetSelections[j].options[vm.dataSetSelections[j].options.length-1]+"')";
+              reportString+="("+vm.dataFilterSelections[j].title+"='"+vm.dataFilterSelections[j].options[vm.dataFilterSelections[j].options.length-1]+"')";
           }
-          reportString+=" AND ";
+          reportString+=" AND "; // or OR?
         };
         console.log(reportString);
-        if ( vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "age" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "yearly income" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "qualify amount" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "fund qualify amount" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "app. expiration date" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "application date" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "distribution date") {
+
+        if (["age",  "yearly income" , "fund qualify amount" , "qualify amount" , "app. expiration date" , "application date" , "distribution date", "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase()) != -1) {
+
+        console.log("asdf",(vm.dataFilterSelections[vm.dataFilterSelections.length-1]));
+        // if ( vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "age" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "yearly income" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "qualify amount" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "fund qualify amount" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "app. expiration date" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "application date" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "distribution date") {
           //write code based on format of these things!!!! - DONE!
           // the last filter needs a different end compared to the others.
 
-          reportString += subcategoryBucketService.returnString(vm.dataSetSelections[vm.dataSetSelections.length-1]);
+          reportString += subcategoryBucketService.returnString(vm.dataFilterSelections[vm.dataFilterSelections.length-1]);
 
         }else{
-          for(var i=0;i<vm.dataSetSelections[vm.dataSetSelections.length-1].options.length-1;i++){
-            reportString+="("+vm.dataSetSelections[vm.dataSetSelections.length-1].title+"='"+vm.dataSetSelections[vm.dataSetSelections.length-1].options[i]+"') OR "
+          for(var i=0;i<vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1;i++){
+            reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[i]+"') OR "
           }
-          reportString+="("+vm.dataSetSelections[vm.dataSetSelections.length-1].title+"='"+vm.dataSetSelections[vm.dataSetSelections.length-1].options[vm.dataSetSelections[vm.dataSetSelections.length-1].options.length-1]+"')";
+          reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1]+"')";
         }
       }; // end of WHERE filters
       reportString += ";"
@@ -511,30 +520,54 @@ angular.module("AngelApp").controller("CustomReportController",
       var category=vm.selectedCategory.title;
       console.log('category', category);
       console.log('option', option);
-      var newItem={
-        title:category,
-        options:option
+      // var newItem={
+      //   title:category,
+      //   options:option
+      //   };
+      //
+      // if (vm.dataFilterSelections.length == 0){
+      //   vm.dataFilterSelections.push(newItem);
+      //   vm.showFilters=true;
+      // } else {
+      //   var dupe = false;
+      //   for (var i = 0; i < vm.dataFilterSelections.length; i++) {
+      //     if (vm.dataFilterSelections[i].options == option && vm.dataFilterSelections[i].title == category){
+      //
+      //       console.log("already added");
+      //       dupe=true;
+      //     }
+      //   }
+      //   if (dupe==false){
+      //     vm.dataFilterSelections.push(newItem);
+      //     console.log("adding", newItem);
+      //     vm.showFilters=true;
+      //   }
+      //
+      // };
+
+      function isMatch(element,index,array){
+        return element.title == category;
+      }
+
+      if (vm.dataFilterSelections.some(isMatch)) {
+            console.log("here1");
+        for(var i=0; i < vm.dataFilterSelections.length; i++) {
+          if (vm.dataFilterSelections[i].title == category){
+            if (vm.dataFilterSelections[i].options.indexOf(option) == -1) {
+              vm.dataFilterSelections[i].options.push(option);
+              vm.showHeaders=true;
+            };
+          };
         };
-
-      if (vm.dataFilterSelections.length == 0){
-        vm.dataFilterSelections.push(newItem);
-        vm.showFilters=true;
       } else {
-        var dupe = false;
-        for (var i = 0; i < vm.dataFilterSelections.length; i++) {
-          if (vm.dataFilterSelections[i].options == option && vm.dataFilterSelections[i].title == category){
-
-            console.log("already added");
-            dupe=true;
-          }
+        console.log("here2");
+        vm.dataFilterSelections.push(
+          {
+            title:category,
+            options:[option]
+          });
+          vm.showHeaders=true;
         }
-        if (dupe==false){
-          vm.dataFilterSelections.push(newItem);
-          console.log("adding", newItem);
-          vm.showFilters=true;
-        }
-
-      };
 
       console.log(vm.dataFilterSelections);
 
@@ -542,18 +575,31 @@ angular.module("AngelApp").controller("CustomReportController",
 
 
 
-    vm.removeFilter=function(category){
-      console.log("removing,", category, " from filters");
+    vm.removeFilter=function(optionToRemove){
+      console.log("removing,", optionToRemove, " from filters");
+      console.log(vm.dataFilterSelections,"filter");
+
       for (var i = 0; i < vm.dataFilterSelections.length; i++) {
-        if (vm.dataFilterSelections[i].options==category){
-          vm.dataFilterSelections.splice(i,1);
-        };
-      }
+
+        for (var k = 0; k < vm.dataFilterSelections[i].options.length; k++) {
+
+          console.log(vm.dataFilterSelections[i].options[k],"options");
+          if (vm.dataFilterSelections[i].options[k] == optionToRemove){
+            vm.dataFilterSelections[i].options.splice(k,1);
+          };
+        }; // close for k
+
+        if (vm.dataFilterSelections[i].options[0] == undefined) {
+          vm.dataFilterSelections.splice(i,1)
+        }
+
+      }; // close for i
+
         if (vm.dataFilterSelections[0]==undefined){
           vm.dataFilterSelections=[{title:'no filters selected'}];
           vm.showFilters=false;
         };
         console.log(vm.dataFilterSelections);
-    }
+    };
 
 });
