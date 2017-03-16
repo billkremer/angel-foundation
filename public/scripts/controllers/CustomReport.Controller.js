@@ -191,13 +191,18 @@ angular.module("AngelApp").controller("CustomReportController",
         table: 'patient'
       },
       {
+        title:'Household Count',
+        options: ['0','1-3','4-6','6-8','>8'],
+        table: 'patient'
+      },
+      {
         title:'FaCT Family',
         options:['yes','no'],
         table: 'patient'
       },
       {
         title:'Reason',
-        options:['Cannot work die to treatment','Extreme Circumstances', 'Forced to move/homeless',
+        options:['Cannot work due to treatment','Extreme Circumstances', 'Forced to move/homeless',
                 'Has young children', 'High medical costs', 'In school/recently finished', 'Increasing exp. due to treatment',
                 'Lost job', 'Other', 'Terminal', 'Waiting for other funds'],
         table: 'patient'
