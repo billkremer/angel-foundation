@@ -1,5 +1,6 @@
 app.service("subcategoryBucketService", function($http){
   var vm = this;
+  var verbose = true;
   // functions and data interact primarily with CustomReportController.js
 
   vm.returnString = function (dataSetSelectionsObject) {
@@ -10,6 +11,8 @@ app.service("subcategoryBucketService", function($http){
 
     var whereString = ""; // string to return
 
+
+    /* ------------ age section ------------    */
     if (dataSetSelectionsObject.title.toLowerCase() == "age") {
 
       for (var i = 0; i < dataSetSelectionsObject.options.length; i++) {
@@ -38,15 +41,16 @@ app.service("subcategoryBucketService", function($http){
         if (i < dataSetSelectionsObject.options.length - 1) {
           whereString += " OR "
         };
-        console.log(whereString);
+        if (verbose) console.log(whereString);
       }; // for loop end
     }; // end "age" if
+    /* ------------ end age section ------------    */
 
-    /* ---------  monthly income section ------    */
+    /* ---------  start monthly or yearly income section ------    */
     //dataSetSelectionsObject.title.toLowerCase() == "monthly income" ||
     if ( dataSetSelectionsObject.title.toLowerCase() == "income" || dataSetSelectionsObject.title.toLowerCase() == "yearly income" ) {
 
-      console.log("inside income block", dataSetSelectionsObject.options);
+      if (verbose) console.log("inside income block", dataSetSelectionsObject.options);
 
       //  title:'Monthly Income', --- Should be yearly!
       //  options:['0','1-15000','15001-30000','300001-45000','45001-60000','60001-75000','75001+']
@@ -57,8 +61,8 @@ app.service("subcategoryBucketService", function($http){
 
       for (var j = 0; j < dataSetSelectionsObject.options.length; j++) {
 
-        console.log(typeof dataSetSelectionsObject.options[j]);
-        console.log(dataSetSelectionsObject.options[j].toString().charAt(0));
+        if (verbose) console.log(typeof dataSetSelectionsObject.options[j]);
+        if (verbose) console.log(dataSetSelectionsObject.options[j].toString().charAt(0));
 
         if ((typeof dataSetSelectionsObject.options[j]) == "number") {
           whereString += " (monthly_income < CAST (" + dataSetSelectionsObject.options[j] + " AS MONEY))";
@@ -88,16 +92,16 @@ app.service("subcategoryBucketService", function($http){
         if (j < dataSetSelectionsObject.options.length - 1) {
           whereString += " OR ";
         };
-        console.log(whereString);
+        if (verbose) console.log(whereString);
       }; // for loop end
     }; // end if "monthly income"
 
 
     /* ---------  qualify amount section ------    */
 
-    if ( dataSetSelectionsObject.title.toLowerCase() == "qualify amount" ) {
+    if ( dataSetSelectionsObject.title.toLowerCase() == "qualify amount" || dataSetSelectionsObject.title.toLowerCase() == "fund qualify amount") {
 
-      // title:'Qualify Amount',
+      // title:'Qualify Amount', // or "fund qualify amount"
       // options:['0','100-300','301-500','501-800','801+']
       // var whereString = "";
       // var dataSetSelectionsObject = {options: ['< 100','501-800','801+']};
@@ -132,36 +136,48 @@ app.service("subcategoryBucketService", function($http){
         if (k < dataSetSelectionsObject.options.length - 1) {
           whereString += " OR ";
         };
-        console.log(whereString);
+        if (verbose) console.log(whereString);
       }; // for loop end
-    }; // end if "qualify amount income"
+    }; // end if "qualify amount"
 
 
     /* ------------ expiration date section ------------    */
 
-    if ( dataSetSelectionsObject.title.toLowerCase() == "exp date" ) {
+    if ( dataSetSelectionsObject.title.toLowerCase() == "app. expiration date" ) {
 
       // title:'exp date',
-      // options:['date1', 'date2']
+      // options:['date1 -- date2', 'date3 -- date4']
       //  var whereString = "";
       //  var dataSetSelectionsObject = {options: ['1 Jan 2010','5/12/2016']};
 
+      var expStartDate = new Date();
+      var expStopDate = new Date();
+      var expDateArray = []
 
+      for (var p = 0; p < dataSetSelectionsObject.options.length; p++) {
 
-      var expStartDate = (new Date(dataSetSelectionsObject.options[0]).toISOString().substring(0,10));
-      var expStopDate = (new Date(dataSetSelectionsObject.options[1]).toISOString().substring(0,10));
+        expDateArray = dataSetSelectionsObject.options[p].split(" -- ");
 
-      console.log(expStartDate, expStopDate);
+  // 'date3 -- date4'.split(" -- "); // ["date3","date4"]
 
-      if (expStartDate < expStopDate) {
-        whereString = "(expiration_date >= '" + expStartDate + "' AND expiration_date <= '" + expStopDate + "')";
-      } else {
-        whereString = "(expiration_date >= '" + expStopDate + "' AND expiration_date <= '" + expStartDate + "')";
-      };
+        expStartDate = (new Date(expDateArray[0]).toISOString().substring(0,10));
+        expStopDate = (new Date(expDateArray[1]).toISOString().substring(0,10));
 
+        if (verbose) console.log(expStartDate, expStopDate);
 
-      console.log(whereString);
+        if (expStartDate < expStopDate) {
+          whereString = "(expiration_date >= '" + expStartDate + "' AND expiration_date <= '" + expStopDate + "')";
+        } else {
+          whereString = "(expiration_date >= '" + expStopDate + "' AND expiration_date <= '" + expStartDate + "')";
+        };
 
+        if (verbose) console.log(whereString);
+
+        if ( p < dataSetSelectionsObject.options.length-1) {
+          whereString += " OR ";
+        }; // connects all the potential strings
+
+      }; // end for loop
     }; // end if "expiration date"
 
 
@@ -186,7 +202,7 @@ app.service("subcategoryBucketService", function($http){
         appStartDate = (new Date(appDateArray[0]).toISOString().substring(0,10));
         appStopDate = (new Date(appDateArray[1]).toISOString().substring(0,10));
 
-        console.log(appStartDate, appStopDate);
+        if (verbose) console.log(appStartDate, appStopDate);
 
         if (appStartDate < appStopDate) {
           whereString = "(application_date >= '" + appStartDate + "' AND application_date <= '" + appStopDate + "')";
@@ -195,7 +211,7 @@ app.service("subcategoryBucketService", function($http){
         };
 
 
-        console.log(whereString);
+        if (verbose) console.log(whereString);
 
         if ( m < dataSetSelectionsObject.options.length-1) {
           whereString += " OR ";
@@ -203,6 +219,47 @@ app.service("subcategoryBucketService", function($http){
 
       }; // end for loop
     }; // end if "application date"
+
+
+
+    /* ------------ distribution date section ------------ */
+    if ( dataSetSelectionsObject.title.toLowerCase() == "distribution date" ) {
+
+    // title:'exp date',
+    // options:['date1 -- date2']
+    // var whereString = "";
+    // var dataSetSelectionsObject = {options: ['1 Jan 2010','5/12/2016']};
+
+      var distStartDate = new Date();
+      var distStopDate = new Date();
+      var distDateArray = []
+
+      for (var n = 0; n < dataSetSelectionsObject.options.length; n++) {
+
+        distDateArray = dataSetSelectionsObject.options[n].split(" -- ");
+
+      // 'date3 -- date4'.split(" -- "); // ["date3","date4"]
+
+        distStartDate = (new Date(distDateArray[0]).toISOString().substring(0,10));
+        distStopDate = (new Date(distDateArray[1]).toISOString().substring(0,10));
+
+        if (verbose) console.log(distStartDate, distStopDate);
+
+        if (distStartDate < distStopDate) {
+          whereString = "(application_date >= '" + distStartDate + "' AND application_date <= '" + distStopDate + "')";
+        } else {
+          whereString = "(application_date >= '" + distStopDate + "' AND application_date <= '" + distStartDate + "')";
+        };
+
+        if (verbose) console.log(whereString);
+
+        if ( n < dataSetSelectionsObject.options.length-1) {
+          whereString += " OR ";
+        }; // connects all the potential strings
+
+      }; // end for loop
+    }; // end if "distribution date"
+
 
 
     return whereString;

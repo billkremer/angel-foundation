@@ -118,7 +118,7 @@ angular.module("AngelApp").controller("CustomReportController",
       },
       {
         title:'Qualify Amount',
-        options:['0','100-300','301-500','501-800','801+']
+        options:['0-100','101-300','301-500','501-800','801+']
       },
       {
         title:'Transaction Type',
@@ -172,7 +172,7 @@ angular.module("AngelApp").controller("CustomReportController",
       },
       {
         title:'Yearly Income',
-        options:['0','1-15000','15001-30000','300001-45000','45001-60000','60001-75000','75001+']
+        options:['0','1-15000','15001-30000','30001-45000','45001-60000','60001-75000','75001+']
       },
       {
         title:'FaCT Family',
@@ -427,8 +427,10 @@ angular.module("AngelApp").controller("CustomReportController",
         reportString+="WHERE ";
         for(var j=0; j<vm.dataSetSelections.length-1; j++){
 
-// TODO need to ensure the column titles line up with these names below
-          if (vm.dataSetSelections[j].title == "age" || vm.dataSetSelections[j].title == "income" || vm.dataSetSelections[j].title == "qualify amount" || vm.dataSetSelections[j].title == "exp date" || vm.dataSetSelections[j].title == "app date") {
+
+          if (vm.dataSetSelections[j].title.toLowerCase() == "age" || vm.dataSetSelections[j].title.toLowerCase() == "yearly income" ||  vm.dataSetSelections[j].title.toLowerCase() == "fund qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "app. expiration date" || vm.dataSetSelections[j].title.toLowerCase() == "application date" || vm.dataSetSelections[j].title.toLowerCase() == "distribution date")
+
+          {
             //write code based on format of these things!!!!
             // example: vm.dataSetSelections[j] = {title: "age", options:["30+","50+"]}
 
@@ -443,7 +445,7 @@ angular.module("AngelApp").controller("CustomReportController",
           reportString+=" AND ";
         };
         console.log(reportString);
-        if(vm.dataSetSelections[vm.dataSetSelections.length-1].title=="age"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="income"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="qualify amount"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="exp date"||vm.dataSetSelections[vm.dataSetSelections.length-1].title=="app date"){
+        if ( vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "age" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "yearly income" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "qualify amount" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "fund qualify amount" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "app. expiration date" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "application date" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "distribution date") {
           //write code based on format of these things!!!! - DONE!
           // the last filter needs a different end compared to the others.
 
@@ -469,17 +471,21 @@ angular.module("AngelApp").controller("CustomReportController",
       // dateObject.startDate = date type
       // dateObject.stopDate = date type --> stopDateString for display and passing  // the subBucket service will do a new Date(stopDateString) & is ok.
 
-      dateObject.startDateString = dateObject.startDate.toString().substring(0,15);
-      console.log(dateObject.startDate);
+      if (!(dateObject == undefined || dateObject.startDate == undefined || dateObject.stopDate == undefined )) {
+        // prevents error if there is no dates picked.
 
-      dateObject.stopDateString = dateObject.stopDate.toString().substring(0,15);
+        dateObject.startDateString = dateObject.startDate.toString().substring(0,15);
+        console.log(dateObject.startDate);
 
-      console.log(dateObject.stopDate);
-      if (dateObject.startDate < dateObject.stopDate) {
-        vm.addToFilters( dateObject.startDateString + " -- " + dateObject.stopDateString );
-      } else {
-          vm.addToFilters( dateObject.stopDateString + " -- " + dateObject.startDateString );
-      }
+        dateObject.stopDateString = dateObject.stopDate.toString().substring(0,15);
+
+        console.log(dateObject.stopDate);
+        if (dateObject.startDate < dateObject.stopDate) {
+          vm.addToFilters( dateObject.startDateString + " -- " + dateObject.stopDateString );
+        } else {
+            vm.addToFilters( dateObject.stopDateString + " -- " + dateObject.startDateString );
+        }
+      };
     }; // close addToDateFilters function
 
 
@@ -503,7 +509,8 @@ angular.module("AngelApp").controller("CustomReportController",
       } else {
         var dupe = false;
         for (var i = 0; i < vm.dataFilterSelections.length; i++) {
-          if (vm.dataFilterSelections[i].options==option){
+          if (vm.dataFilterSelections[i].options == option && vm.dataFilterSelections[i].title == category){
+
             console.log("already added");
             dupe=true;
           }
