@@ -51,7 +51,7 @@
         <div class="customReport-categoriesList">
           <ul>
             <li ng-repeat="category in customCtrl.dataSetList | orderBy: category.title" ng-class="{selectedCategory: $index == customCtrl.selected}">
-              <button class="col-xs-2" id="categoryLeftButton" ng-click="customCtrl.addSelection(category,option)">
+              <button class="col-xs-2" id="categoryLeftButton" ng-click="customCtrl.addSelection(category,option,table)">
                 <span class="glyphicon glyphicon-chevron-left"></span>
               </button>
                 <span class="col-xs-8">{{category.title}}</span>
