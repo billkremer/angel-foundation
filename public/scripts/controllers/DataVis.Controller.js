@@ -3,7 +3,16 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     console.log('datavis controller loaded');
 
     var vm=this;
-
+    var now=new Date()
+    var currentDate=d3.time.format("%m-%Y")(now);
+    var months=[];
+    var old=new Date(2012,0);
+    var dif=((((((now.getTime()-old.getTime())/1000)/60)/60)/24)/365)*12;
+    for(var i=0;i<dif;i++){
+      now=new Date()
+      now.setMonth(now.getMonth()-i);
+      months.push(d3.time.format("%m-%Y")(now));
+    }
 
     var objectToGet={title:'county'};
     var arrayOfCounties=[];
@@ -17,11 +26,18 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
         dataVisService.getValues(objectForValues,i).then(function(result){
           console.log('new stuff from db',result.data);
           // countyCountArray.push(count.data);
-          var applicationDates=[];
-          for (var j=0;j<result.data.length;j++){
-            applicationDates.push(result.data[j].application_date);
-            if(j==result.data.length-1){
-              arrayOfCounties.push({countyName:result.data[0].county+' County',count:result.data.length,dates:applicationDates});
+          var currentCountyObject={countyName:result.data[0].county+' County',count:result.data.length};
+
+          for (var j=0;j<dif;j++){
+            currentCountyObject['pop-'+d3.time.format("%m-%Y")(months[j])]=0;
+          }
+          for(var k=0;k<result.data.length;k++){
+
+            var timetrial=d3.time.format("%m-%Y")(new Date(result.data[k].application_date));
+            currentCountyObject['pop-'+timetrial]++;
+
+            if(k==result.data.length-1){
+              arrayOfCounties.push(currentCountyObject);
               if(result.data[0].i==res.data.length-1){
                 loadData();
                 console.log('array of counties',arrayOfCounties);
@@ -67,25 +83,43 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
 
 
-
+    dif=Number.parseInt(dif);
     var currentCounty='';
     var lowLimit=null;
-    var highLimit=null;
-    var years=["2010","2011","2012","2013","2014","2015"];
-    d3.select('#slider').call(d3.slider().axis(true).min(2010).max(2015).step(1).value( [ 2010, 2015 ] ).on("slide", function(evt, value) {
+    var highLimit=dif;
+    // var months=["01-2016","02-2016","03-2016","04-2016","05-2016","06-2016","07-2016","08-2016","09-2016","10-2016","11-2016","12-2016"];
+    d3.select('#slider').call(d3.slider().axis(true).min(1).max(dif).step(1).value( [ 1, dif ] ).on("slide", function(evt, value) {
       // d3.select('#slidertextmin').text(value[ 0 ]);
       lowLimit=value[0];
       // console.log(value[0]);
-      years=[];
+      months=[];
       // d3.select('#slidertextmax').text(value[ 1 ]);
       highLimit=value[1];
       // console.log(value[1]);
-      for(var i=0;i<value[1]-value[0]+1;i++){
-        years[i]=(value[0]+i).toString();
+      // for(var i=0;i<value[1]-value[0]+1;i++){
+      //   months[i]=(value[0]+i).toString();
+      // }
+
+      for(var i=(dif-highLimit);i<dif-lowLimit;i++){
+        now=new Date()
+        now.setMonth(now.getMonth()-i);
+        months.push(d3.time.format("%m-%Y")(now));
+        if(i==((dif-lowLimit)-1)){
+          months = months.map(function(d){return parseDate.parse(d);});
+          // console.log('months',months);
+          console.log(months);
+          getSelectToggleCounty();
+        }
       }
-      years = years.map(function(d){return parseDate.parse(d);});
-      getSelectToggleCounty();
+
+
+
+      // months = months.map(function(d){return parseDate.parse(d);});
+      // // console.log('months',months);
+      // getSelectToggleCounty();
+
     }));
+    console.log('months',months);
     //Check if info exists, by school number
     Array.prototype.returnCountyInfo = function(county){
     		for (var i = 0; i < this.length; i++) {
@@ -97,29 +131,47 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     };
 
     function countyObj(countyInfo){
+      console.log('object passed into countyobj',countyInfo)
       var outArr = [];
       var popArr = [];
       var collArr = [];
 
-      for(var prop in countyInfo){
-        if (typeof countyInfo[prop] === 'string'){
-          if (prop == 'countyName'){
-            outArr.countyName = countyInfo[prop];
+      // Object.keys(countyInfo).forEach(function(prop){
+      var prop=Object.keys(countyInfo);
+      for(var m=0;m<prop.length;m++){
+        // console.log('keys are',prop[m]);
+      // for(var prop in countyInfo){
+        if (prop[m] == 'countyName'){
+            outArr.countyName = countyInfo[prop[m]];
+        }else if(prop[m]=='count'){
+          outArr.count=countyInfo[prop[m]];
+        }else{
+          var thing=prop[m].substring(4).split('-');
+          // console.log('thing',thing);
+          var date=new Date(thing[1],thing[0]);
+          var newNow=new Date();
+          var newDif=(((((((newNow.getTime()-date.getTime())/1000)/60)/60)/24)/365)*12)+1;
+          // console.log('new dif',newDif);
+
+          var difInt=Number.parseInt(newDif);
+          popArr[difInt]=Number(countyInfo[prop[m]]);
+        }
+        if(m==prop.length-1){
+          popArr.push(0);
+          for(var n=0;n<(dif-highLimit);n++){
+            popArr.shift();
+            popArr.push(0);
           }
-          else if (prop == 'metro'){
-            outArr.metro = countyInfo[prop];
-          }
-          else if (prop.substring(0,3) == 'pop'){
-            popArr[prop.substring(4)] = Number(countyInfo[prop]);
-          }
-          else if (prop.substring(0,11) == 'collOrByond'){
-            collArr[prop.substring(12)] = (Number(countyInfo[prop]) / 100) * popArr[prop.substring(12)];
-          }
+              outArr.populations = popArr;
+              console.log('populations',popArr,popArr.length);
+              outArr.collegeAmt = collArr;
+              console.log('outARR',outArr);
+
         }
       }
 
-      outArr.populations = popArr;
-      outArr.collegeAmt = collArr;
+      // popArr.push(0);
+
       return outArr;
     }
 
@@ -141,11 +193,11 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     var allRegionInfo = [];
     var countyJson = {};
 
-    var parseDate = d3.time.format("%Y");
+    var parseDate = d3.time.format("%m-%Y");
 
-    // var years = ["1998","2001","2004","2007","2010"];
-    years = years.map(function(d){return parseDate.parse(d);});
-    console.log(years);
+    // var months = ["1998","2001","2004","2007","2010"];
+    months = months.map(function(d){return parseDate.parse(d);});
+    console.log(months);
     var width = 400,height = 430;
 
     //other functions use the projection/path for highlighting certain sections of the map
@@ -169,7 +221,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     		d3.csv("data/regionData.csv", function(errorC, regionData){
     			allRegionInfo=regionData;
     			d3.csv("data/countypop.csv", function(errorC, studentData){
-    				allCountyInfo = studentData;
+    				allCountyInfo = arrayOfCounties;
 
     				//build the county list in a separate variable so we can sort them easily
     				//remove the last element, which is statewide
@@ -211,7 +263,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     						return classCall}
     				})
     				.on('click', function(d){
-    					var clickedCounty = studentData.returnCountyInfo(d.properties.name);
+    					var clickedCounty = arrayOfCounties.returnCountyInfo(d.properties.name);
     					//what happens when clicked depends on the selection option
     					var displayOption = getRadioVal('displayOptions');
     					if (displayOption == 'state'){
@@ -224,6 +276,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     						var countyElement = document.getElementById('countyOptions');
     						// countyElement.value = d.properties.name;
                 currentCounty=d.properties.name;
+                console.log('clicked county',clickedCounty);
     						toggleCounty(clickedCounty);
     					}
     				});
@@ -352,7 +405,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     function displayCountyData(countyInfo){
     	var margin = {top: 20, right: 20, bottom: 30, left: 78},
-        thisWidth = 348 - margin.left - margin.right,
+        thisWidth = 748 - margin.left - margin.right,
         thisHeight = 204 - margin.top - margin.bottom;
 
     	var chartInfo = countyObj(countyInfo);
@@ -380,15 +433,18 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     	var x = d3.time.scale()
     		.range([0, thisWidth])
-    		.domain(d3.extent(years));
+    		.domain(d3.extent(months));
 
     	var y = d3.scale.linear()
     		.range([thisHeight, 0])
     		.domain([d3.min(chartInfo.populations, function(d,i) {return d; }), d3.max(chartInfo.populations, function(d,i) {return d; })]);
 
+      // var ticks=months.map(function(d){return d.getMonths()});
+
+      // console.log(ticks);
     	var xAxis = d3.svg.axis()
     		.scale(x)
-    		.tickValues(years)
+    		.tickValues(months)
     		.orient("bottom");
 
     	var yAxis = d3.svg.axis()
@@ -396,17 +452,17 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     		.orient("left");
 
     	var popArea = d3.svg.area()
-    		.x(function(d,i) { return x(years[i]); })
+    		.x(function(d,i) {return x(months[i]); })
     		.y0(thisHeight)
-    		.y1(function(d) {return y(chartInfo.populations[d.getFullYear()]); });
+    		.y1(function(d,i) {return y(chartInfo.populations[i]); });
 
     	// var schoolArea = d3.svg.area()
-    	// 	.x(function(d,i) { return x(years[i]); })
+    	// 	.x(function(d,i) { return x(months[i]); })
     	// 	.y0(thisHeight)
     	// 	.y1(function(d) { return y(chartInfo.collegeAmt[d.getFullYear()]); });
       //
     	// var stateAvgLine = d3.svg.line()
-    	// .x(function(d,i) { return x(years[i]); })
+    	// .x(function(d,i) { return x(months[i]); })
       //   .y(function(d) {
       //     var population = chartInfo.populations[d.getFullYear()];
       //     var stateInfo = _.find(allCountyInfo, function(d){return d.countyName == 'Statewide';});
@@ -414,31 +470,36 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
       //   });
 
     	svgChart.append("path")
-    		.datum(years)
+    		.datum(months)
     		.attr("class", "popArea")
     		.attr("d", popArea);
       //
     	// svgChart.append("path")
-      //     .datum(years)
+      //     .datum(months)
       //     .attr("class", "schoolArea")
       //     .attr("d", schoolArea);
       //
     	// svgChart.append("path")
-      //     .datum(years)
+      //     .datum(months)
       //     .attr("class", "stateLine")
       //     .attr("d", stateAvgLine);
 
     	svgChart.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + thisHeight + ")")
-          .call(xAxis);
+          .call(xAxis)
+          .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", "-.55em")
+            .attr("transform", "rotate(-90)" );
 
     	svgChart.append("g")
           .attr("class", "y axis")
           .call(yAxis);
 
     	var index = svgChart.append("g")
-    	.attr("transform", "translate(0," + 179 + ")");
+    	.attr("transform", "translate(0," + 239 + ")");
 
     	index.append("rect")
     	.attr({
@@ -462,10 +523,10 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
       //     'class': 'stateLine'
     	// });
       //
-    	// index.append("text").attr({
-      //     x: 25,
-      //     y: 16
-    	// }).text("Students Surveyed");
+    	index.append("text").attr({
+          x: 25,
+          y: 16
+    	}).text("Number of Applicants");
       //
     	// index.append("text").attr({
       //     x: 25,
