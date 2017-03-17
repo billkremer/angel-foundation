@@ -457,20 +457,44 @@ angular.module("AngelApp").controller("CustomReportController",
       var reportString="SELECT ";
       console.log(reportString);
       console.log(vm.dataSetSelections);
-      if (vm.dataSetSelections.title!="no filters selected") {
+      if (vm.dataSetSelections[0].title != "no filters selected") {
         for (var i=0;i<vm.dataSetSelections.length-1;i++) {
-          if (vm.dataSetSelections[i] == "age") {
-            reportString += "age(date_of_birth),";
+          if (vm.dataSetSelections[i].title.toLowerCase() == "app. expiration date") {
+            reportString += " expiration_date, ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "fund qualify amount") {
+            reportString += " qualify_amount, ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "zip code") {
+            reportString += " zip, ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "yearly income") {
+            reportString += " monthly_income, ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "not qualify reason") {
+            reportString += " does_not_qualify_reason, ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "age") {
+            reportString += " age(date_of_birth), ";
           } else {
-            reportString+=(vm.dataSetSelections[i].title+",");
-          };
+            reportString+=(vm.dataSetSelections[i].title.toLowerCase().split(" ").join("_")+", ");
+          }; // last else
+        }; // end of for
+
+        if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "app. expiration date") {
+          reportString += " expiration_date ";
+        } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "fund qualify amount") {
+          reportString += " qualify_amount ";
+        } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "zip code") {
+          reportString += " zip ";
+        } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "yearly income") {
+          reportString += " monthly_income ";
+        } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "not qualify reason") {
+          reportString += " does_not_qualify_reason ";
+        } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "age") {
+          reportString += " age(date_of_birth) ";
+        } else {
+          reportString+=(vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase().split(" ").join("_") + " ");
         };
 
-        if (vm.dataSetSelections[vm.dataSetSelections.length-1] == "age") {
-          reportString += "age(date_of_birth) ";
-        } else {
-          reportString+=(vm.dataSetSelections[vm.dataSetSelections.length-1].title + " ");
-        };
+//
+// var titleForQ = dataSetSelectionsObject.title.toLowerCase().split(" ").join("_");
+
 
         var bothTables=false;
         var table=[];
@@ -492,10 +516,10 @@ angular.module("AngelApp").controller("CustomReportController",
         }
 
         if (bothTables==true) {
-          reportString+='FROM (SELECT DISTINCT ON (patient.patient_id) * FROM patient ) as p FULL JOIN distributions ON p.patient_id = distributions.patient_id;';
+          reportString+=' FROM (SELECT DISTINCT ON (patient.patient_id) * FROM patient ) as p FULL JOIN distributions ON p.patient_id = distributions.patient_id ';
         } else {
           dbTable=table[0];
-          reportString+='FROM '+dbTable;
+          reportString+=' FROM '+dbTable;
         }
 
           // if (vm.dataSetSelections[i].table!='patient'){
@@ -520,7 +544,7 @@ angular.module("AngelApp").controller("CustomReportController",
       if (vm.dataFilterSelections[0].title == "no filters selected"){
         console.log(reportString);
       } else {
-        reportString+="WHERE ";
+        reportString+=" WHERE ";
         for(var j=0; j<vm.dataFilterSelections.length-1; j++){
 
 
@@ -538,9 +562,9 @@ angular.module("AngelApp").controller("CustomReportController",
 
           }else{
             for(var i=0;i<vm.dataFilterSelections[j].options.length-1;i++){
-              reportString+="("+vm.dataFilterSelections[j].title+"='"+vm.dataFilterSelections[j].options[i]+"') OR "
+              reportString+="("+vm.dataFilterSelections[j].title.toLowerCase().split(" ").join("_") +" = '" + vm.dataFilterSelections[j].options[i] + "') OR "
             }
-              reportString+="("+vm.dataFilterSelections[j].title+"='"+vm.dataFilterSelections[j].options[vm.dataFilterSelections[j].options.length-1]+"')";
+              reportString+="("+vm.dataFilterSelections[j].title.toLowerCase().split(" ").join("_") + "='"+vm.dataFilterSelections[j].options[vm.dataFilterSelections[j].options.length-1]+"')";
           }
           reportString+=" AND "; // or OR?
         };
@@ -557,9 +581,9 @@ angular.module("AngelApp").controller("CustomReportController",
 
         }else{
           for(var i=0;i<vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1;i++){
-            reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[i]+"') OR "
+            reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[i]+"') OR "
           }
-          reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1]+"')";
+          reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1]+"')";
         }
       }; // end of WHERE filters
       reportString += ";"
