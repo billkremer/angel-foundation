@@ -52,8 +52,9 @@ function($location,$http,$route) {
     alertify.set('notifier','position', 'bottom-right');
     alertify.success(vm.csv.result.filename + ' Submitted!');
     $route.reload();
-  }, function(error) {
+  }).catch( function(error) {
     console.log('error uploading patient csv', error);
+
   });
   // });
 };
@@ -69,8 +70,9 @@ vm.uploadAllDistributionData = function(){
   alertify.set('notifier','position', 'bottom-right');
   alertify.success(vm.csv.result.filename + ' Submitted!');
   $route.reload();
-}, function(error) {
+}).catch( function(error) {
   console.log('error uploading patient csv', error);
+
 });
 };
 

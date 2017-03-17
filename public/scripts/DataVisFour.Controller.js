@@ -173,7 +173,7 @@ vm.distribution=function(){
                 data[i].value+=res.data.length;
               }
             }
-          }else if(res.data[0].grant_type=="Shwan's Food Card"||res.data[0].grant_type=='Target Card'||res.data[0].grant_type=='Grocery Card'){
+          }else if(res.data[0].grant_type=="Schwan's Food Card"||res.data[0].grant_type=='Target Card'||res.data[0].grant_type=='Grocery Card'){
             for(var i=0;i<data.length;i++){
               if(data[i].label=='Food'){
                 data[i].value+=res.data.length;
