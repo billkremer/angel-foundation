@@ -457,7 +457,7 @@ angular.module("AngelApp").controller("CustomReportController",
       var reportString="SELECT ";
       console.log(reportString);
       console.log(vm.dataSetSelections);
-      if (vm.dataSetSelections.title != "no filters selected") {
+      if (vm.dataSetSelections[0].title != "no filters selected") {
         for (var i=0;i<vm.dataSetSelections.length-1;i++) {
           if (vm.dataSetSelections[i].title.toLowerCase() == "app. expiration date") {
             reportString += " expiration_date, ";
@@ -473,8 +473,8 @@ angular.module("AngelApp").controller("CustomReportController",
             reportString += " age(date_of_birth), ";
           } else {
             reportString+=(vm.dataSetSelections[i].title.toLowerCase().split(" ").join("_")+", ");
-          };
-        };
+          }; // last else
+        }; // end of for
 
         if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "app. expiration date") {
           reportString += " expiration_date ";
