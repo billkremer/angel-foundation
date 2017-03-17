@@ -19,6 +19,7 @@ function LoginController($http, $location) {
       console.log(response);
       $location.path('/data-upload');
     }, function(error) {
+      alertify.alert('Angel Foundation', 'Username or Password incorrect.  Please try again.', function(){});
       console.log('error logging in', error);
     });
   };

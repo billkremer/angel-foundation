@@ -641,6 +641,7 @@ circle {
   width: 30%;
   margin-top: 5px;
   margin-bottom: 5px;
+  margin-right: 5px;
   border-radius: 5px;
 }
 #saveReportName{
