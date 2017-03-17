@@ -1,6 +1,9 @@
 angular.module("AngelApp").controller("CustomReportController",
   function(CustomReportService,subcategoryBucketService,$location,$http) {
-    console.log('custom controller loaded');
+
+    var verbose = true;
+
+    if (verbose) console.log('custom controller loaded');
 
     var vm=this;
 
@@ -314,9 +317,9 @@ angular.module("AngelApp").controller("CustomReportController",
 
     vm.openSubCats=function(category,option,$index) {
       vm.selectedCategory=category;
-      console.log(vm.selectedCategory);
+      if (verbose) console.log(vm.selectedCategory);
       vm.selected = $index;
-      console.log("selected", vm.selected);
+      if (verbose) console.log("selected", vm.selected);
     };
 
     // vm.addSelection = function(category,option) {
@@ -369,7 +372,7 @@ angular.module("AngelApp").controller("CustomReportController",
       vm.columnLimitSelections=[];
     }
     vm.columnLimitSelections.push(category);
-    console.log(vm.columnLimitSelections);
+    if (verbose) console.log(vm.columnLimitSelections);
   }
 
   vm.showHeaders=false;
@@ -379,9 +382,9 @@ angular.module("AngelApp").controller("CustomReportController",
       vm.dataSetSelections=[];
     }
 
-    console.log('category', category);
-    console.log('option', option);
-    console.log('table', category.table);
+    if (verbose) console.log('category', category);
+    if (verbose) console.log('option', option);
+    if (verbose) console.log('table', category.table);
 
     function isMatch(element,index,array){
       return element.title == category.title;
@@ -410,7 +413,7 @@ angular.module("AngelApp").controller("CustomReportController",
         });
         vm.showHeaders=true;
       }
-      console.log(vm.dataSetSelections);
+      if (verbose) console.log(vm.dataSetSelections);
     }; // close addSelection
 
 
@@ -420,10 +423,10 @@ angular.module("AngelApp").controller("CustomReportController",
           var index = vm.dataSetSelections[i].options.indexOf(option);
           vm.dataSetSelections[i].options.splice(index,1);
         }
-      } console.log(vm.dataSetSelections[0]);
+      } if (verbose) console.log(vm.dataSetSelections[0]);
       if(vm.dataSetSelections[0] == undefined){
         vm.dataSetSelections=[{title:'no filters selected'}];
-      } console.log(vm.dataSetSelections[0]);
+      } if (verbose) console.log(vm.dataSetSelections[0]);
     }
 
 
@@ -432,11 +435,11 @@ angular.module("AngelApp").controller("CustomReportController",
         if (vm.dataSetSelections[i].title==category.title){
           vm.dataSetSelections.splice(i,1);
         }
-      }console.log(vm.dataSetSelections[0]);
+      }if (verbose) console.log(vm.dataSetSelections[0]);
       if(vm.dataSetSelections[0]==undefined){
         vm.dataSetSelections=[{title:'no filters selected'}];
         vm.showHeaders=false;
-      }console.log(vm.dataSetSelections[0]);
+      }if (verbose) console.log(vm.dataSetSelections[0]);
     }
 
     vm.removeColumnSelection=function(category){
@@ -444,19 +447,20 @@ angular.module("AngelApp").controller("CustomReportController",
         if (vm.columnLimitSelections[i]==category){
           vm.columnLimitSelections.splice(i,1);
         }
-      }console.log(vm.columnLimitSelections[0]);
+      }if (verbose) console.log(vm.columnLimitSelections[0]);
       if(vm.columnLimitSelections[0]==undefined){
         vm.columnLimitSelections=['no filters selected'];
         vm.showHeaders=false;
-      }console.log(vm.columnLimitSelections[0]);
+      }if (verbose) console.log(vm.columnLimitSelections[0]);
     }
 
+    var table=[]; // this variable is used in saveReport when choosing the database tables.
 
     vm.saveReport=function(reportNameForSaving){
     // this function builds the SQL query string
       var reportString="SELECT ";
-      console.log(reportString);
-      console.log(vm.dataSetSelections);
+      if (verbose) console.log(reportString);
+      if (verbose) console.log(vm.dataSetSelections);
       if (vm.dataSetSelections[0].title != "no filters selected") {
         for (var i=0;i<vm.dataSetSelections.length-1;i++) {
           if (vm.dataSetSelections[i].title.toLowerCase() == "app. expiration date") {
@@ -495,23 +499,30 @@ angular.module("AngelApp").controller("CustomReportController",
 //
 // var titleForQ = dataSetSelectionsObject.title.toLowerCase().split(" ").join("_");
 
+      if (verbose) console.log(vm.dataSetSelections, vm.dataFilterSelections);
 
-        var bothTables=false;
         var table=[];
+        var bothTables=false;
         var dbTable='';
         for (var i = 0; i < vm.dataSetSelections.length; i++) {
           table.push(vm.dataSetSelections[i].table);
+                  if (verbose) console.log("table1", table);
         }
-        console.log("table", table);
+        for (var j = 0; j < vm.dataFilterSelections.length; j++) {
+          table.push(vm.dataFilterSelections[j].table);
+                  if (verbose) console.log("table2", table);
+        }
+
+        if (verbose) console.log("table", table);
 
         if (table.includes('patient')){
-          console.log("it has patient");
+          if (verbose) console.log("it has patient");
         }
         if (table.includes('distributions')) {
-          console.log("it has distributions");
+          if (verbose) console.log("it has distributions");
         }
         if (table.includes('distributions') && table.includes('patient')){
-          console.log("it has both!!!!");
+          if (verbose) console.log("it has both!!!!");
           bothTables=true;
         }
 
@@ -533,25 +544,32 @@ angular.module("AngelApp").controller("CustomReportController",
 
 
 
-        console.log(reportString);
-
+        if (verbose) console.log(reportString);
+// table selecting section end
       } else {
 
         reportString = "SELECT * FROM patient ";
 
       }
-      console.log(reportString);
+      if (verbose) console.log(reportString);
+
+
       if (vm.dataFilterSelections[0].title == "no filters selected"){
-        console.log(reportString);
+        if (verbose) console.log(reportString);
       } else {
+
+
+        // this builds the string where filters are added
         reportString+=" WHERE ";
         for(var j=0; j<vm.dataFilterSelections.length-1; j++){
 
 
           // if (vm.dataSetSelections[j].title.toLowerCase() == "age" || vm.dataSetSelections[j].title.toLowerCase() == "yearly income" ||  vm.dataSetSelections[j].title.toLowerCase() == "fund qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "app. expiration date" || vm.dataSetSelections[j].title.toLowerCase() == "application date" || vm.dataSetSelections[j].title.toLowerCase() == "distribution date")
 
-          console.log((["age",  "yearly income" , "fund qualify amount" , "qualify amount" , "app. expiration date" , "application date" , "distribution date", "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(vm.dataFilterSelections[j].title.toLowerCase()) != -1));
+          if (verbose) console.log((["age",  "yearly income" , "fund qualify amount" , "qualify amount" , "app. expiration date" , "application date" , "distribution date", "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(vm.dataFilterSelections[j].title.toLowerCase()) != -1));
 
+
+// if the filter needs special fixing - spaces in name, different name between table and column, age is not in the table -- it is a function within postgres.
           if (["age",  "yearly income" , "fund qualify amount" , "qualify amount" , "app. expiration date" , "application date" , "distribution date", "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(vm.dataFilterSelections[j].title.toLowerCase()) != -1)
           // if it's in the list, send to the bucketservice.
           {
@@ -561,6 +579,7 @@ angular.module("AngelApp").controller("CustomReportController",
             reportString += subcategoryBucketService.returnString(vm.dataFilterSelections[j]);
 
           }else{
+            // no special handling, put OR between all the filters
             for(var i=0;i<vm.dataFilterSelections[j].options.length-1;i++){
               reportString+="("+vm.dataFilterSelections[j].title.toLowerCase().split(" ").join("_") +" = '" + vm.dataFilterSelections[j].options[i] + "') OR "
             }
@@ -568,11 +587,12 @@ angular.module("AngelApp").controller("CustomReportController",
           }
           reportString+=" AND "; // or OR?
         };
-        console.log(reportString);
+        if (verbose) console.log(reportString);
 
+        // if it's the last filter in the category, no AND
         if (["age",  "yearly income" , "fund qualify amount" , "qualify amount" , "app. expiration date" , "application date" , "distribution date", "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase()) != -1) {
 
-        console.log("asdf",(vm.dataFilterSelections[vm.dataFilterSelections.length-1]));
+        if (verbose) console.log("filters",(vm.dataFilterSelections[vm.dataFilterSelections.length-1]));
         // if ( vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "age" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "yearly income" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "qualify amount" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "fund qualify amount" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "app. expiration date" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "application date" || vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "distribution date") {
           //write code based on format of these things!!!! - DONE!
           // the last filter needs a different end compared to the others.
@@ -580,14 +600,19 @@ angular.module("AngelApp").controller("CustomReportController",
           reportString += subcategoryBucketService.returnString(vm.dataFilterSelections[vm.dataFilterSelections.length-1]);
 
         }else{
+
+          reportString += " ( "
+
+          // ORs between the filters per category
           for(var i=0;i<vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1;i++){
             reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[i]+"') OR "
           }
-          reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1]+"')";
+          // the last filter doesn't take an OR
+          reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1]+"') )";
         }
       }; // end of WHERE filters
       reportString += ";"
-      console.log(reportString);
+      if (verbose) console.log(reportString);
 
 // TODO insert code to actually save the reportString to the database
 
@@ -600,14 +625,12 @@ angular.module("AngelApp").controller("CustomReportController",
 
 
 
-
-
     }; // end of saveReport function
 
 
 
     vm.addToDateFilters = function (category, dateObject) {
-      console.log(category, dateObject);
+      if (verbose) console.log(category, dateObject);
       // category.title = "Application Date"
       // dateObject.startDate = date type
       // dateObject.stopDate = date type --> stopDateString for display and passing  // the subBucket service will do a new Date(stopDateString) & is ok.
@@ -616,11 +639,11 @@ angular.module("AngelApp").controller("CustomReportController",
         // prevents error if there is no dates picked.
 
         dateObject.startDateString = dateObject.startDate.toString().substring(0,15);
-        console.log(dateObject.startDate);
+        if (verbose) console.log(dateObject.startDate);
 
         dateObject.stopDateString = dateObject.stopDate.toString().substring(0,15);
 
-        console.log(dateObject.stopDate);
+        if (verbose) console.log(dateObject.stopDate);
         if (dateObject.startDate < dateObject.stopDate) {
           vm.addToFilters( dateObject.startDateString + " -- " + dateObject.stopDateString );
         } else {
@@ -642,8 +665,8 @@ angular.module("AngelApp").controller("CustomReportController",
 
       var category=vm.selectedCategory.title;
       var table=vm.selectedCategory.table;
-      console.log('category', category);
-      console.log('option', option);
+      if (verbose) console.log('category', category);
+      if (verbose) console.log('option', option);
 
       // var newItem={
       //   title:category,
@@ -694,26 +717,27 @@ angular.module("AngelApp").controller("CustomReportController",
         vm.dataFilterSelections.push(
           {
             title:category,
-            options:[option]
+            options:[option],
+            table: table
           });
           vm.showHeaders=true;
         }
 
-      console.log(vm.dataFilterSelections);
+      if (verbose) console.log(vm.dataFilterSelections);
 
     };//end of addToFilters
 
 
 
     vm.removeFilter=function(optionToRemove){
-      console.log("removing,", optionToRemove, " from filters");
-      console.log(vm.dataFilterSelections,"filter selections");
+      if (verbose) console.log("removing,", optionToRemove, " from filters");
+      if (verbose) console.log(vm.dataFilterSelections,"filter selections");
 
       for (var i = 0; i < vm.dataFilterSelections.length; i++) {
 
         for (var k = 0; k < vm.dataFilterSelections[i].options.length; k++) {
 
-          console.log(vm.dataFilterSelections[i].options[k],"options");
+          if (verbose) console.log(vm.dataFilterSelections[i].options[k],"options");
           if (vm.dataFilterSelections[i].options[k] == optionToRemove){
             vm.dataFilterSelections[i].options.splice(k,1);
           };
@@ -729,7 +753,7 @@ angular.module("AngelApp").controller("CustomReportController",
           vm.dataFilterSelections=[{title:'no filters selected'}];
           vm.showFilters=false;
         };
-        console.log(vm.dataFilterSelections);
+        if (verbose) console.log(vm.dataFilterSelections);
     };
 
 });
