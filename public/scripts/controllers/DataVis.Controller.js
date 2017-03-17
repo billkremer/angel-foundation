@@ -526,7 +526,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     	index.append("text").attr({
           x: 25,
           y: 16
-    	}).text("Number of Applicants");
+    	}).text("Number of Approved Applicants");
       //
     	// index.append("text").attr({
       //     x: 25,
