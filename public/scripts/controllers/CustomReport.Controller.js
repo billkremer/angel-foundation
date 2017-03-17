@@ -550,7 +550,6 @@ angular.module("AngelApp").controller("CustomReportController",
       }
 
       if (vm.dataFilterSelections.some(isMatch)) {
-            console.log("here1");
         for(var i=0; i < vm.dataFilterSelections.length; i++) {
           if (vm.dataFilterSelections[i].title == category){
             if (vm.dataFilterSelections[i].options.indexOf(option) == -1) {
@@ -560,7 +559,6 @@ angular.module("AngelApp").controller("CustomReportController",
           };
         };
       } else {
-        console.log("here2");
         vm.dataFilterSelections.push(
           {
             title:category,
@@ -577,7 +575,7 @@ angular.module("AngelApp").controller("CustomReportController",
 
     vm.removeFilter=function(optionToRemove){
       console.log("removing,", optionToRemove, " from filters");
-      console.log(vm.dataFilterSelections,"filter");
+      console.log(vm.dataFilterSelections,"filter selections");
 
       for (var i = 0; i < vm.dataFilterSelections.length; i++) {
 
