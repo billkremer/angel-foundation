@@ -116,7 +116,7 @@ angular.module("AngelApp").controller("CustomReportController",
         title:'Distribution Date',
         options:[],
         dateOptions: {flag:true},
-        table: 'patient'
+        table: 'distributions'
       },
       {
         title:'Qualify Amount',
@@ -452,7 +452,7 @@ angular.module("AngelApp").controller("CustomReportController",
     }
 
 
-    vm.saveReport=function(){
+    vm.saveReport=function(reportNameForSaving){
     // this function builds the SQL query string
       var reportString="SELECT ";
       console.log(reportString);
@@ -588,6 +588,18 @@ angular.module("AngelApp").controller("CustomReportController",
       }; // end of WHERE filters
       reportString += ";"
       console.log(reportString);
+
+// TODO insert code to actually save the reportString to the database
+
+  var objectToPost = {reportQuery: reportString, reportName: reportNameForSaving}
+
+  $http.post('/data',objectToPost).then(function(response) {
+    alertify.success("Saved to Standard Reports")
+  });
+
+
+
+
 
 
     }; // end of saveReport function
