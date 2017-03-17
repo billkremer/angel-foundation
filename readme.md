@@ -1,4 +1,4 @@
-#Angel Foundation H.A.R.P.
+# Angel Foundation H.A.R.P.
 ##  Highly Accurate Reporting Program
 
 H.A.R.P. is a time-saving application, designed for the Angel Foundation.  Due to HIPAA patient privacy, only a couple people control and manage the Foundation's Emergency Financial Assistance database.
@@ -9,16 +9,16 @@ Using H.A.R.P., the database manager uploads data monthly to the application whi
 
 
 
-###Authors:
+### Authors:
 Bob Hinkley https://github.com/Bob-Hinkley
 Jake Jacobs-Smith https://github.com/jacobjv25/
 Erik Nelson https://github.com/ejnelson
 Bill Kremer https://github.com/billkremer
 
-###Technology Used:
+### Technology Used:
 SEAN Stack: PostgreSQL, Express, Angular, and Node, D3, Bootstrap, Alertify, PDFmake
 
-###Publication Date:
+### Publication Date:
 March 21, 2017
 
-###URL: (coming soon...)
+### URL: (coming soon...)

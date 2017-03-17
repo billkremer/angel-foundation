@@ -184,7 +184,7 @@ tr:nth-child(even) {
   margin-top:4%;
   padding:0px;
   max-height:25px;
-
+  width: 25%;
 }
 #uploadCSVInput{
   border:none;
@@ -207,6 +207,16 @@ tr:nth-child(even) {
   white-space: nowrap;
   overflow:hidden;
 }
+
+.tab-content {
+  border-style: solid;
+  border-width: thin;
+  border-color: lightgrey;
+  border-radius: 4px;
+  height: 400px;
+}
+
+
 
 
 
@@ -484,7 +494,95 @@ circle {
 
 /*-----------------------------end of data vis------------------------------*/
 /*-----------------------------custom report styles------------------------------*/
+.selectedCategory {
+  background-color: rgb(192,215,234);
+}
 
+#filterButton{
+  /*margin-top: 3px;*/
+  float: right;
+  background-color: Transparent;
+  border: none;
+}
+#categoryRightButton {
+  /*margin-top: 7px;*/
+  float: right;
+  background-color: Transparent;
+  border: none;
+}
+#categoryLeftButton {
+  /*margin-top: 7px;*/
+  float: left;
+  background-color: Transparent;
+  border: none;
+}
+.customReport-categoriesList {
+  /*border: 1px solid purple;*/
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  text-align: center;
+  height:360px;
+  overflow-y:scroll;
+
+}
+.customReport-categoriesList ul {
+  width:100%;
+  padding:0px;
+}
+.customReport-categoriesList li {
+  list-style: none;
+  text-align: center;
+  width:100%;
+  height: 40px;
+  border: 2px solid rgb(0, 0, 0);
+  margin-top: 5px;
+  margin-bottom:5px;
+  border-radius:3px;
+  /*font-size:1.5em;*/
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+.customReport-categoriesList li span {
+  /*display: flex;
+  justify-content:center;
+  align-items:center;*/
+}
+.customReport-categoriesList li:hover {
+  background-color: rgb(192,215,234);
+  cursor:pointer;
+}
+.customReport-subcategoriesList {
+  /*border: 1px solid purple;*/
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  text-align: center;
+  height:360px;
+  overflow-y:scroll;
+
+}
+.customReport-subcategoriesList ul {
+  width:100%;
+  padding:0px;
+}
+.customReport-subcategoriesList li {
+  list-style: none;
+  text-align: center;
+  width:100%;
+  height: 40px;
+  border: 2px solid rgb(0, 0, 0);
+  margin-top: 5px;
+  margin-bottom:5px;
+  border-radius:3px;
+  /*font-size: 10px;*/
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+.customReport-subcategoriesList li:hover {
+  background-color: rgb(192,215,234);
+  cursor:pointer;
+}
 #dataSetContainer{
   background-color:rgb(0,82,156);
   border:2px solid black;
@@ -492,6 +590,8 @@ circle {
   font-family:  'Helvetica', Arial, sans-serif !important;
   padding:0px;
   text-align: center;
+  overflow: scroll;
+  height: 460px;
 }
 #dataSetContainer ul{
   list-style: none;
@@ -504,14 +604,14 @@ circle {
   transition: all ease 1.2s;
   overflow:hidden;
 }
-#expanderDiv:hover{
-  max-height:200px;
-}
+/*#expanderDiv:hover{
+  max-height: 5000px;
+}*/
 #categoryTitle{
-  font-size:25px;
+  font-size:15px;
   height:40px;
 }
-#customReportSelections{
+.customReportSelections{
   /*padding-left: 5px;
   padding-right: 2px;*/
     padding:0px;
@@ -520,9 +620,10 @@ circle {
   border:2px solid black;
   color:white;
   font-family: 'proxima-nova', Helvetica, Arial, sans-serif !important;
-
+  overflow: scroll;
+  height: 80%;
 }
-#customReportSelections ul{
+.customReportSelections ul{
   padding: 0px;
   font-size:16px;
 }
@@ -531,12 +632,37 @@ circle {
   height: 50px;
 }
 
-/*-----------------------------end of custom report styles------------------------------*/
-/*-----------------------------log in styles------------------------------*/
+
+.subDate {
+  color: black;
+}
+
+.runReportButton {
+  width: 30%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+#saveReportName{
+  width: 50%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.removeButton {
+  color: #bd4949;
+  /*#d3df73 #bd4949*/
+}
+.removeButton:hover {
+  cursor:pointer;
+}
+/*------ end of custom report styles------------------------------*/
+
+/*-----------------------------log in styles-----------------*/
 
 #loginFormContainer{
   margin-top:20px;
 }
+
 /*-----------------------------end of log in styles------------------------------*/
 /*-----------------------------data vis 4 styles------------------------------*/
 #chart {
@@ -574,3 +700,5 @@ circle {
         text-align: center;                                           /* NEW */
       }
 /*-----------------------------data vis 4  styles------------------------------*/
+
+/*-----------------------------end of log in styles-----------*/

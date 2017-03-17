@@ -3,6 +3,7 @@
   <div class="standardReportHeader col-xs-12 col-md-8">
 
 
+
       <div class="row" id="headerRow">
         <div class=" col-xs-2 ">
           <div class="dropdown">
@@ -31,9 +32,10 @@
 
 
 
-
-
   <div class="col-xs-12 col-md-8">
+    <p><b>Patient Table last updated:</b>  {{uploadCtrl.patientTimeStamp.to_char}}</p>
+    <p><b>Distributions Table last updated:</b> {{uploadCtrl.distTimeStamp.to_char}}</p>
+
 
     <!-- Setting up the tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -45,7 +47,7 @@
 
     <!-- Addendum Tab -->
     <div role="tabpanel" class="tab-pane active" id="addTab">
-      <h3 class = "col-xs-6 col-xs-offset-3">You are uploading an ADDENDUM</h3>
+      <h3 class = "col-xs-6 col-xs-offset-4">You are uploading an ADDENDUM</h3>
       <button id="uploader" class = "col-xs-2 col-xs-offset-5 btn-default">
 
           <ng-csv-import  content="uploadCtrl.csv.content"
@@ -83,7 +85,7 @@
 
       <!-- 'All' tab -->
       <div role="tabpanel" class="tab-pane" id="allTab">
-          <h3 class = "col-xs-6 col-xs-offset-3">You are OVERWRITING ALL</h3>
+          <h3 class = "col-xs-6 col-xs-offset-4">You are OVERWRITING ALL</h3>
           <button id="uploader" class = "col-xs-2 col-xs-offset-5 btn-default">
 
               <ng-csv-import  content="uploadCtrl.csv.content"
@@ -116,8 +118,8 @@
       </div>
     </div>
 
-    </div>
 
+    </div>
   </div>
 
 </div>
