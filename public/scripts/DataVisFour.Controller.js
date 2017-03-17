@@ -3,6 +3,9 @@ angular.module("AngelApp").controller("dataVisFourController", ['$location','$ht
     console.log('datavis4 controller loaded');
 
     var vm=this;
+    Number.prototype.round = function(decimals) {
+        return Number((Math.round(this + "e" + decimals)  + "e-" + decimals));
+    }
 
 vm.ethnicity=function(){
     var data=[{'label':'Other','value':0}];
@@ -144,7 +147,7 @@ vm.ethnicity=function(){
 
 
 vm.distribution=function(){
-    var data=[{'label':'Utilities','value':0},{'label':'Housing','value':0},{'label':'Food','value':0},];
+    var data=[{'label':'Utilities','value':0},{'label':'Housing','value':0},{'label':'Food','value':0},{'label':'Other/Adjustment','value':0}];
     var objectToGet={title:'grant_type'};
     // var arrayOfCounties=[];
     distributionService.getDistinct(objectToGet).then(function(res){
@@ -158,32 +161,66 @@ vm.distribution=function(){
         }else{
           var objectForValues={field:'grant_type',item:res.data[i].grant_type};
         }
-        distributionService.getValues(objectForValues,i).then(function(res){
-          console.log('new stuff from db',res.data);
+        distributionService.getValues(objectForValues,i).then(function(result){
+          console.log('new stuff from db',result.data);
 
-          if(res.data[0].grant_type=='Electric Bill Payment'||res.data[0].grant_type=='Phone Bill Payment'||res.data[0].grant_type=='Water Bill Payment'||res.data[0].grant_type=='Garbage Bill Payment'||res.data[0].grant_type=='Gas Bill Payment'){
+          if(result.data[0].grant_type=='Electric Bill Payment'||result.data[0].grant_type=='Phone Bill Payment'||result.data[0].grant_type=='Water Bill Payment'||result.data[0].grant_type=='Garbage Bill Payment'||result.data[0].grant_type=='Gas Bill Payment'){
             for(var i=0;i<data.length;i++){
               if(data[i].label=='Utilities'){
-                data[i].value+=res.data.length;
+                for(var l=0;l<result.data.length;l++){
+                  data[i].value+=parseInt(result.data[l].fund_total.substring(1)) ;
+                }
+                // data[i].value+=result.data.length;
               }
             }
-          }else if(res.data[0].grant_type=='Mortgage Payment'||res.data[0].grant_type=='Rent Payment'){
+          }else if(result.data[0].grant_type=='Mortgage Payment'||result.data[0].grant_type=='Rent Payment'){
             for(var i=0;i<data.length;i++){
               if(data[i].label=='Housing'){
-                data[i].value+=res.data.length;
+                for(var l=0;l<result.data.length;l++){
+                  data[i].value+=parseInt(result.data[l].fund_total.substring(1)) ;
+                }
+                // data[i].value+=result.data.length;
               }
             }
-          }else if(res.data[0].grant_type=="Schwan's Food Card"||res.data[0].grant_type=='Target Card'||res.data[0].grant_type=='Grocery Card'){
+          }else if(result.data[0].grant_type=="Schwan's Food Card"||result.data[0].grant_type=='Target Card'||result.data[0].grant_type=='Grocery Card'){
             for(var i=0;i<data.length;i++){
               if(data[i].label=='Food'){
-                data[i].value+=res.data.length;
+                for(var l=0;l<result.data.length;l++){
+                  data[i].value+=parseInt(result.data[l].fund_total.substring(1)) ;
+                }
+                // data[i].value+=result.data.length;
+              }
+            }
+          }else if(result.data[0].grant_type=="Adjustment"||result.data[0].grant_type=='Other'){
+            for(var i=0;i<data.length;i++){
+              if(data[i].label=='Other/Adjustment'){
+                for(var l=0;l<result.data.length;l++){
+                  if(result.data[0].grant_type=='Adjustment'){
+                    data[i].value+=parseInt(result.data[l].fund_total.substring(2)) ;
+                  }else{
+                    data[i].value+=parseInt(result.data[l].fund_total.substring(1)) ;
+
+                  }
+                }
+                // data[i].value+=result.data.length;
               }
             }
           }else{
-            data.push({'label':res.data[0].grant_type,'value':res.data.length});
+            var sum=0;
+            for(var l=0;l<result.data.length;l++){
+
+                sum+=parseInt(result.data[l].fund_total.substring(1));
+
+
+              if(l==result.data.length-1){
+
+                  data.push({'label':result.data[0].grant_type,'value':sum});
+
+              }
+            }
           }
             console.log('data data data',data);
-          // if(res.data[0].i==res.data.length-2){
+          // if(result.data[0].i==result.data.length-2){
 
             data.sort(function(a, b) {
                            return parseFloat(b.value) - parseFloat(a.value);

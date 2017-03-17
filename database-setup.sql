@@ -28,7 +28,8 @@ CREATE TABLE patient (
   doctor_id INT,
   doctor_clinic TEXT,
   does_not_qualify BOOLEAN,
-  does_not_qualify_reason TEXT
+  does_not_qualify_reason TEXT,
+  householdcount TEXT
 );
 
 
