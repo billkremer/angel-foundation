@@ -85,7 +85,7 @@ INSERT INTO standard_reports (report_name, query)
 VALUES ('Report One', 'SELECT * FROM patient');
 
 INSERT INTO standard_reports (report_name, query)
-VALUES ('Report Two', 'SELECT ethnicity, income FROM patient');
+VALUES ('Report Two', 'SELECT ethnicity, monthly_income FROM patient');
 
 
 CREATE TABLE date (

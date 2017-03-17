@@ -104,160 +104,202 @@ angular.module("AngelApp").controller("CustomReportController",
         title:'Application Date',
         options:[],
         dateOptions: {flag:true},
+        table: 'patient'
       },
       {
         title:'App. Expiration Date',
         options:[],
-        dateOptions: {flag:true}
+        dateOptions: {flag:true},
+        table: 'patient'
       },
       {
         title:'Distribution Date',
         options:[],
-        dateOptions: {flag:true}
+        dateOptions: {flag:true},
+        table: 'patient'
       },
       {
         title:'Qualify Amount',
-        options:['0-100','101-300','301-500','501-800','801+']
+        options:['0-100','101-300','301-500','501-800','> 801'],
+        table: 'patient'
       },
       {
         title:'Transaction Type',
-        options:["General", "Margie's Fund"]
+        options:["General", "Margie's Fund"],
+        table: 'patient'
       },
       {
         title:'Diagnosis',
-        options: vm.diagnosis
+        options: vm.diagnosis,
+        table: 'patient'
       },
       {
         title:'Cancer Stage',
-        options:["Remission","None Specified","IV","III","II","I"]
+        options:["Remission","None Specified","IV","III","II","I"],
+        table: 'patient'
       },
       {
         title:'Age',
-        options:['<18','19-29','30-39','40-49','50-59','60-69','70+']
+        options:['< 18','19-29','30-39','40-49','50-59','60-69','> 70'],
+        table: 'patient'
       },
       {
         title:'Gender',
-        options:['Female','Male']
+        options:['Female','Male'],
+        table: 'patient'
       },
       {
         title:'Ethnicity',
         options:['African American or Black', 'American Indian or Alaskan Native',
                 'Asian', 'Asian Indian', 'Caucasian', 'Chinese', 'Hispanic', 'Hmong', 'Japanese',
-                'Korean', 'Middle Eastern', 'Other', 'Unknown', 'Vietnamese']
+                'Korean', 'Middle Eastern', 'Other', 'Unknown', 'Vietnamese'],
+        table: 'patient'
       },
       {
         title:'Marital Status',
-        options:['Married','Single', 'Widowed', 'Seperated', 'Not specified']
+        options:['Married','Single', 'Widowed', 'Seperated', 'Not specified'],
+        table: 'patient'
       },
       {
         title:'Veteran',
-        options:['Yes','No']
+        options:['Yes','No'],
+        table: 'patient'
       },
       {
         title:'City',
-        options: vm.cities
+        options: vm.cities,
+        table: 'patient'
       },
       {
         title:'County',
-        options: vm.counties
+        options: vm.counties,
+        table: 'patient'
       },
       {
         title:'State',
-        options: vm.states
+        options: vm.states,
+        table: 'patient'
       },
       {
         title:'Zip Code',
-        options: vm.zipCodes
+        options: vm.zipCodes,
+        table: 'patient'
       },
       {
         title:'Yearly Income',
-        options:['0','1-15000','15001-30000','30001-45000','45001-60000','60001-75000','75001+']
+        options:['0','1-15000','15001-30000','30001-45000','45001-60000','60001-75000','> 75001'],
+        table: 'patient'
+      },
+      {
+        title:'Household Count',
+        options: ['0','1-3','4-6','6-8','>8'],
+        table: 'patient'
       },
       {
         title:'FaCT Family',
-        options:['yes','no']
+        options:['yes','no'],
+        table: 'patient'
       },
       {
         title:'Reason',
-        options:['Cannot work die to treatment','Extreme Circumstances', 'Forced to move/homeless',
+        options:['Cannot work due to treatment','Extreme Circumstances', 'Forced to move/homeless',
                 'Has young children', 'High medical costs', 'In school/recently finished', 'Increasing exp. due to treatment',
-                'Lost job', 'Other', 'Terminal', 'Waiting for other funds']
+                'Lost job', 'Other', 'Terminal', 'Waiting for other funds'],
+        table: 'patient'
       },
       {
         title:'Referred by',
         options:['Brochure', 'Family', 'Friend', 'Internet', 'Nurse', 'Nurse Navigator', 'Oncologist', 'Other', 'Patient Financial Counselor',
-                'Patient Navigator', 'Social Worker', 'United Way 211']
+                'Patient Navigator', 'Social Worker', 'United Way 211'],
+        table: 'patient'
       },
       {
         title:'Social Worker ID',
-        options: vm.socialWorkerId
+        options: vm.socialWorkerId,
+        table: 'patient'
       },
       {
         title:'Social Worker Clinic',
-        options: vm.socialWorkerClinic
+        options: vm.socialWorkerClinic,
+        table: 'patient'
       },
       {
         title:'Doctor ID',
-        options: vm.doctorIds
+        options: vm.doctorIds,
+        table: 'patient'
       },
       {
         title:'Doctor Clinic',
-        options: vm.doctorClinic
+        options: vm.doctorClinic,
+        table: 'patient'
       },
       {
         title:'Does not qualify',
-        options: ['True', 'False']
+        options: ['True', 'False'],
+        table: 'patient'
       },
       {
         title:'Not qualify reason',
         options: ["Already received grant", "Applied too soon (2 years)", "Exceeds income guidelines",
-                  "Margie's Fund DNQ", "No cancer diagnosis", "Not in active treatment", "Not in service area"]
+                  "Margie's Fund DNQ", "No cancer diagnosis", "Not in active treatment", "Not in service area"],
+        table: 'patient'
       },
       {
         title:'Grant Type',
         options: ['Adjustment', 'Electric Bill Payment', 'Fuel Card', 'Garbage Bill Payment',
                   'Gas Bill Payment', 'Grocery Card', 'Mortgage Payment', 'Phone Bill Payment',
-                  'Rent Payment', 'Schwans Food Card', 'Target Card', 'Water Bill Payment', 'Other']
+                  'Rent Payment', 'Schwans Food Card', 'Target Card', 'Water Bill Payment', 'Other'],
+        table: 'distributions'
       },
       {
         title:'Fund General',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
       {
         title:'Fund Komen',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
       {
         title:'Fund Brain',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
       {
         title:'Fund Park Nicollet',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
       {
         title:'Fund Lung',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
       {
         title:'Fund Melanoma',
-        options: ['< -800', '-800 -- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201 -- 400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201 -- 400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
       {
         title:'Fund Margies',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
       {
         title:'Fund Colon',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
       {
         title:'Fund Total',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
       {
         title:'Fund Qualify Amount',
-        options: ['< -800', '-800- -600', '-599- -400', '-399- -200', '-199-1', '0', '1-200', '201-400', '401-600', '600-800', '>800']
+        options: ['< 0', '1-200', '201-400', '401-600', '600-800', '> 800'],
+        table: 'distributions'
       },
     ];  // end of dataSetList object
 
@@ -332,13 +374,14 @@ angular.module("AngelApp").controller("CustomReportController",
 
   vm.showHeaders=false;
 
-  vm.addSelection = function(category,option) {
+  vm.addSelection = function(category,option,table) {
     if (vm.dataSetSelections[0].title == 'no filters selected'){
       vm.dataSetSelections=[];
     }
 
     console.log('category', category);
     console.log('option', option);
+    console.log('table', category.table);
 
     function isMatch(element,index,array){
       return element.title == category.title;
@@ -348,7 +391,12 @@ angular.module("AngelApp").controller("CustomReportController",
       for(var i=0; i < vm.dataSetSelections.length; i++) {
         if (vm.dataSetSelections[i].title == category.title){
           if (vm.dataSetSelections[i].options.indexOf(option) == -1) {
-            vm.dataSetSelections[i].options.push(option);
+            vm.dataSetSelections[i].options.push(
+              {
+                title: category.title,
+                options: option,
+                table: category.table
+              });
             vm.showHeaders=true;
           };
         };
@@ -357,11 +405,12 @@ angular.module("AngelApp").controller("CustomReportController",
       vm.dataSetSelections.push(
         {
           title:category.title,
-          options:[option]
+          options: option,
+          table: category.table
         });
         vm.showHeaders=true;
       }
-      console.log(vm);
+      console.log(vm.dataSetSelections);
     }; // close addSelection
 
 
@@ -407,27 +456,65 @@ angular.module("AngelApp").controller("CustomReportController",
     // this function builds the SQL query string
       var reportString="SELECT ";
       console.log(reportString);
-      if (vm.columnLimitSelections!="no filters selected") {
-        for (var i=0;i<vm.columnLimitSelections.length-1;i++) {
-          if (vm.columnLimitSelections[i] == "age") {
+      console.log(vm.dataSetSelections);
+      if (vm.dataSetSelections.title!="no filters selected") {
+        for (var i=0;i<vm.dataSetSelections.length-1;i++) {
+          if (vm.dataSetSelections[i] == "age") {
             reportString += "age(date_of_birth),";
           } else {
-            reportString+=(vm.columnLimitSelections[i]+",");
+            reportString+=(vm.dataSetSelections[i].title+",");
           };
         };
 
-        if (vm.columnLimitSelections[vm.columnLimitSelections.length-1] == "age") {
+        if (vm.dataSetSelections[vm.dataSetSelections.length-1] == "age") {
           reportString += "age(date_of_birth) ";
         } else {
-          reportString+=(vm.columnLimitSelections[vm.columnLimitSelections.length-1] + " ");
+          reportString+=(vm.dataSetSelections[vm.dataSetSelections.length-1].title + " ");
         };
 
-        reportString+="FROM patient ";
+        var bothTables=false;
+        var table=[];
+        var dbTable='';
+        for (var i = 0; i < vm.dataSetSelections.length; i++) {
+          table.push(vm.dataSetSelections[i].table);
+        }
+        console.log("table", table);
+
+        if (table.includes('patient')){
+          console.log("it has patient");
+        }
+        if (table.includes('distributions')) {
+          console.log("it has distributions");
+        }
+        if (table.includes('distributions') && table.includes('patient')){
+          console.log("it has both!!!!");
+          bothTables=true;
+        }
+
+        if (bothTables==true) {
+          reportString+='FROM (SELECT DISTINCT ON (patient.patient_id) * FROM patient ) as p FULL JOIN distributions ON p.patient_id = distributions.patient_id;';
+        } else {
+          dbTable=table[0];
+          reportString+='FROM '+dbTable;
+        }
+
+          // if (vm.dataSetSelections[i].table!='patient'){
+          //   reportString+="FROM distributions ";
+          // }
+          // if (vm.dataSetSelections[i].table!='distributions'){
+          //   reportString+="FROM patient";
+          // }
+          // if (vm.dataSetSelections)
+          // }
+
+
+
         console.log(reportString);
+
       } else {
+
         reportString = "SELECT * FROM patient ";
-// TODO need to add in logic whether patient or distributions table
-        // if columnLimitSelections == "no selections"
+
       }
       console.log(reportString);
       if (vm.dataFilterSelections[0].title == "no filters selected"){
@@ -518,8 +605,10 @@ angular.module("AngelApp").controller("CustomReportController",
       }
 
       var category=vm.selectedCategory.title;
+      var table=vm.selectedCategory.table;
       console.log('category', category);
       console.log('option', option);
+
       // var newItem={
       //   title:category,
       //   options:option
@@ -548,6 +637,13 @@ angular.module("AngelApp").controller("CustomReportController",
       function isMatch(element,index,array){
         return element.title == category;
       }
+// =======
+//       var newItem={
+//         title:category,
+//         options:option,
+//         table:table
+//         };
+// >>>>>>> master
 
       if (vm.dataFilterSelections.some(isMatch)) {
         for(var i=0; i < vm.dataFilterSelections.length; i++) {

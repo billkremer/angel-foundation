@@ -27,7 +27,7 @@ function($location,$http,$route) {
 
 //Radio buttons on All tab
   vm.uploadAll=function($event){
-    alertify.confirm('Are you suuuuuuure?', 'Clicking OK will replace all the data in your database').set('onok', function(closeEvent){
+    alertify.confirm('Are you sure?  This will overwrite ALL data in the table', 'Clicking OK will replace all the data in your database').set('onok', function(closeEvent){
       $event.preventDefault();
       if(vm.type=='patient'){
         vm.uploadAllPatient();

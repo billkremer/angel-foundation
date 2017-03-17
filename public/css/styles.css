@@ -184,7 +184,7 @@ tr:nth-child(even) {
   margin-top:4%;
   padding:0px;
   max-height:25px;
-
+  width: 25%;
 }
 #uploadCSVInput{
   border:none;
@@ -207,6 +207,16 @@ tr:nth-child(even) {
   white-space: nowrap;
   overflow:hidden;
 }
+
+.tab-content {
+  border-style: solid;
+  border-width: thin;
+  border-color: lightgrey;
+  border-radius: 4px;
+  height: 400px;
+}
+
+
 
 
 
