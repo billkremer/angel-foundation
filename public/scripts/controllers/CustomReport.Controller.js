@@ -456,8 +456,13 @@ angular.module("AngelApp").controller("CustomReportController",
 
     var table=[]; // this variable is used in saveReport when choosing the database tables.
 
-    vm.saveReport=function(reportNameForSaving){
+    vm.saveReport=function(){
     // this function builds the SQL query string
+
+    var reportNameForSaving = vm.saveReportName;
+    vm.saveReportName = ""; // clears the form immediately.
+
+
       var reportString="SELECT ";
       if (verbose) console.log(reportString);
       if (verbose) console.log(vm.dataSetSelections);
@@ -619,7 +624,7 @@ angular.module("AngelApp").controller("CustomReportController",
   var objectToPost = {reportQuery: reportString, reportName: reportNameForSaving}
 
   $http.post('/data',objectToPost).then(function(response) {
-    alertify.success("Saved to Standard Reports")
+    alertify.success("Saved to Standard Reports");
   });
 
 
