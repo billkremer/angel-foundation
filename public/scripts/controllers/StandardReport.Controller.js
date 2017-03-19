@@ -54,12 +54,13 @@ app.controller("StandardReportController",
       if (verbose) console.log("vm in delete report", vm);
 
 
+      alertify.confirm("Are you sure you want to delete: <strong>" + vm.currentReport.report_name + "?</strong>",
+
+
+// var i = req.body.dataSetSelections.findIndex(function (x) { return x.title == "age" }); // gets the index for the age array
 
 
 
-
-
-      alertify.confirm("Are you sure you want to delete " + vm.currentReport.report_name + "?",
 
         function(){
           alertify.success("Deleted "+ vm.currentReport.report_name);
@@ -67,8 +68,19 @@ app.controller("StandardReportController",
 
 
           $http.delete('/standardReports/delReport/' + vm.currentReport.report_number).then( function () {
-          vm.showStandardReports(); // redraws the page
 
+
+            var selectPrevIndex = vm.standardReportList.findIndex(function (x) {return x.report_name == vm.currentReport.report_name})
+
+            console.log(selectPrevIndex, "selectPrevIndex");
+
+            if (selectPrevIndex > 0) {
+              selectPrevIndex--; // to select the previous report
+              vm.selectStandardReport(vm.standardReportList[selectPrevIndex]);
+              vm.showStandardReports(); // redraws the page
+            } else {
+// TODO go to custom-report page?
+            };
           });
 
           vm.showDeleteButton(); // hides the delete buttons
@@ -76,7 +88,7 @@ app.controller("StandardReportController",
         },
         function(){
           alertify.error("kept");
-        }).setting({  labels: {ok: ('Delete ' + vm.currentReport.report_name), cancel: "Keep it"},
+        }).setting({  labels: {ok: ('Delete: ' + vm.currentReport.report_name), cancel: "Keep it"},
 
           'defaultFocus': "Keep it",
                       'modal': true,
