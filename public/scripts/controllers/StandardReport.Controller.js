@@ -11,6 +11,11 @@ app.controller("StandardReportController",
     vm.dataObject = {}
     vm.keys = [];
 
+    alertify.defaults.glossary.title = 'Angel Foundation';
+    alertify.defaults.transition = "slide";
+    alertify.defaults.theme.ok = "btn btn-danger";
+    alertify.defaults.theme.cancel = "btn btn-primary";
+    alertify.defaults.theme.input = "form-control";
 
     vm.standardReportList = [];
     vm.standardReportResponse = {};
@@ -48,12 +53,36 @@ app.controller("StandardReportController",
       if (verbose) console.log(report);
       if (verbose) console.log("vm in delete report", vm);
 
-      $http.delete('/standardReports/delReport/' + vm.currentReport.report_number).then( function () {
-        vm.showStandardReports(); // redraws the page
 
-      });
 
-      vm.showDeleteButton(); // hides the delete buttons
+
+
+
+
+      alertify.confirm("Are you sure you want to delete " + vm.currentReport.report_name + "?",
+
+        function(){
+          alertify.success("Deleted "+ vm.currentReport.report_name);
+          // alertify.success('Delete ' + vm.currentReport.report_name);
+
+
+          $http.delete('/standardReports/delReport/' + vm.currentReport.report_number).then( function () {
+          vm.showStandardReports(); // redraws the page
+
+          });
+
+          vm.showDeleteButton(); // hides the delete buttons
+
+        },
+        function(){
+          alertify.error("kept");
+        }).setting({  labels: {ok: ('Delete ' + vm.currentReport.report_name), cancel: "Keep it"},
+
+          'defaultFocus': "Keep it",
+                      'modal': true,
+                      'movable': false,
+        }).setHeader('<strong> Angel Foundation  </strong> ');
+
     }; // end deleteReport buttons
 
 
