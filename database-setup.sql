@@ -34,9 +34,9 @@ CREATE TABLE patient (
 
 
 -- demo patient data to test table creation
-INSERT INTO patient ("application_date","expiration_date","qualify_amount","transaction_type","patient_id","diagnosis","cancer_stage","date_of_birth","gender","ethnicity","marital_status","veteran","city","county","state","zip","fact_family","monthly_income","reason","referred_by","social_worker_id","social_worker_clinic","doctor_id","doctor_clinic","does_not_qualify","does_not_qualify_reason")
+INSERT INTO patient ("application_date","expiration_date","qualify_amount","transaction_type","patient_id","diagnosis","cancer_stage","date_of_birth","gender","ethnicity","marital_status","veteran","city","county","state","zip","fact_family","monthly_income","reason","referred_by","social_worker_id","social_worker_clinic","doctor_id","doctor_clinic","does_not_qualify","does_not_qualify_reason",householdcount)
 VALUES
-('2016-07-25','2016-10-23',850,'General',3187,'Appendix','None Specified','1967-11-12','Female','','Single',FALSE,'St Louis Park','Hennepin','MN','55426',TRUE,'$800.00','Increasing exp. due to treatment','Social Worker',39,'U of M - Masonic Cancer Clinic',59,'University of Minnesota-Masonic',FALSE,'');
+('2016-07-25','2016-10-23',850,'General',3187,'Appendix','None Specified','1967-11-12','Female','','Single',FALSE,'St Louis Park','Hennepin','MN','55426',TRUE,'$800.00','Increasing exp. due to treatment','Social Worker',39,'U of M - Masonic Cancer Clinic',59,'University of Minnesota-Masonic',FALSE,'',3);
 
 
 

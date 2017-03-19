@@ -456,8 +456,13 @@ angular.module("AngelApp").controller("CustomReportController",
 
     var table=[]; // this variable is used in saveReport when choosing the database tables.
 
-    vm.saveReport=function(reportNameForSaving){
+    vm.saveReport=function(){
     // this function builds the SQL query string
+
+    var reportNameForSaving = vm.saveReportName;
+    vm.saveReportName = ""; // clears the form immediately.
+
+
       var reportString="SELECT ";
       if (verbose) console.log(reportString);
       if (verbose) console.log(vm.dataSetSelections);
@@ -495,7 +500,7 @@ angular.module("AngelApp").controller("CustomReportController",
         } else {
           reportString+=(vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase().split(" ").join("_") + " ");
         };
-
+      if (verbose) console.log(vm.dataSetSelections, "2");
 //
 // var titleForQ = dataSetSelectionsObject.title.toLowerCase().split(" ").join("_");
 
@@ -504,27 +509,44 @@ angular.module("AngelApp").controller("CustomReportController",
         var table=[];
         var bothTables=false;
         var dbTable='';
+        var orderByString = ''; // for ORDER BY appending to query string.
         for (var i = 0; i < vm.dataSetSelections.length; i++) {
-          table.push(vm.dataSetSelections[i].table);
-                  if (verbose) console.log("table1", table);
+          if (vm.dataSetSelections[i].table != undefined) {
+            table.push(vm.dataSetSelections[i].table);
+            if (verbose) console.log("table1", table);
+          }
         }
         for (var j = 0; j < vm.dataFilterSelections.length; j++) {
-          table.push(vm.dataFilterSelections[j].table);
-                  if (verbose) console.log("table2", table);
+          if (vm.dataFilterSelections[j].table != undefined) {
+            table.push(vm.dataFilterSelections[j].table);
+            if (verbose) console.log("table2", table);
+          }
         }
+
+console.log(orderByString);
 
         if (verbose) console.log("table", table);
 
+
+        console.log(orderByString, table);
+
         if (table.includes('patient')){
           if (verbose) console.log("it has patient");
+            orderByString = ' ORDER BY patient.id ';
         }
         if (table.includes('distributions')) {
           if (verbose) console.log("it has distributions");
+            orderByString = ' ORDER BY distributions.id ';
         }
         if (table.includes('distributions') && table.includes('patient')){
           if (verbose) console.log("it has both!!!!");
+            orderByString = '';
+            // no orderByString, because either might not exist.
           bothTables=true;
         }
+
+        console.log(orderByString);
+
 
         if (bothTables==true) {
           reportString+=' FROM (SELECT DISTINCT ON (patient.patient_id) * FROM patient ) as p FULL JOIN distributions ON p.patient_id = distributions.patient_id ';
@@ -566,7 +588,7 @@ angular.module("AngelApp").controller("CustomReportController",
 
           // if (vm.dataSetSelections[j].title.toLowerCase() == "age" || vm.dataSetSelections[j].title.toLowerCase() == "yearly income" ||  vm.dataSetSelections[j].title.toLowerCase() == "fund qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "qualify amount" || vm.dataSetSelections[j].title.toLowerCase() == "app. expiration date" || vm.dataSetSelections[j].title.toLowerCase() == "application date" || vm.dataSetSelections[j].title.toLowerCase() == "distribution date")
 
-          if (verbose) console.log((["age",  "yearly income" , "fund qualify amount" , "qualify amount" , "app. expiration date" , "application date" , "distribution date", "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(vm.dataFilterSelections[j].title.toLowerCase()) != -1));
+          if (verbose) console.log((["age",  "yearly income" , "fund qualify amount" , "qualify amount" , "app. expiration date" , "application date" , "distribution date", "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(vm.dataFilterSelections[j].title.toLowerCase()) != -1)); // true = in the list
 
 
 // if the filter needs special fixing - spaces in name, different name between table and column, age is not in the table -- it is a function within postgres.
@@ -611,7 +633,23 @@ angular.module("AngelApp").controller("CustomReportController",
           reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1]+"') )";
         }
       }; // end of WHERE filters
-      reportString += ";"
+
+      // p.patient_id = distributions.patient_id
+    // } else {
+      // dbTable=table[0];
+      // reportString+=' FROM '+dbTable;
+
+
+// TODO this should be fixed.
+console.log(dbTable, "dbTable", table);
+console.log(orderByString, "orderByString before add");
+      if (orderByString != undefined) {
+        reportString += orderByString + ";";
+      } else {
+        reportString += ";"
+      }
+
+
       if (verbose) console.log(reportString);
 
 // TODO insert code to actually save the reportString to the database
@@ -619,7 +657,7 @@ angular.module("AngelApp").controller("CustomReportController",
   var objectToPost = {reportQuery: reportString, reportName: reportNameForSaving}
 
   $http.post('/data',objectToPost).then(function(response) {
-    alertify.success("Saved to Standard Reports")
+    alertify.success("Saved to Standard Reports");
   });
 
 
@@ -665,9 +703,9 @@ angular.module("AngelApp").controller("CustomReportController",
 
       var category=vm.selectedCategory.title;
       var table=vm.selectedCategory.table;
-      if (verbose) console.log('category', category);
-      if (verbose) console.log('option', option);
-
+      if (verbose) console.log('category  addto filters', category);
+      if (verbose) console.log('option addto filters', option);
+      if (verbose) console.log('table addto filters', table);
       // var newItem={
       //   title:category,
       //   options:option
