@@ -1,7 +1,7 @@
 app.controller("StandardReportController",
   function(StandardReportGetService,tableHoldService,$http) {
 
-    var verbose = false;
+    var verbose = true; // hides console logs
 
     if (verbose) console.log('standard controller loaded');
 
@@ -48,11 +48,8 @@ app.controller("StandardReportController",
       if (verbose) console.log(report);
       if (verbose) console.log("vm in delete report", vm);
 
-
-
       $http.delete('/standardReports/delReport/' + vm.currentReport.report_number).then( function () {
         vm.showStandardReports(); // redraws the page
-
 
       });
 
@@ -103,7 +100,7 @@ app.controller("StandardReportController",
         var hiddenElement = document.createElement('a');
         hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
         hiddenElement.target = '_blank';
-        hiddenElement.download = 'people.csv';
+        hiddenElement.download = vm.currentReport.report_name.split(" ").join("-") + "-"+ (new Date()).toISOString().substring(0,10) +'.csv';
         hiddenElement.click();
     }
 
