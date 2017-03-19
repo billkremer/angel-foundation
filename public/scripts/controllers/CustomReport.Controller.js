@@ -471,7 +471,7 @@ angular.module("AngelApp").controller("CustomReportController",
           if (vm.dataSetSelections[i].title.toLowerCase() == "app. expiration date") {
             reportString += " expiration_date, ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "fund qualify amount") {
-            reportString += " qualify_amount, ";
+            reportString += " distributions.qualify_amount, ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "zip code") {
             reportString += " zip, ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "yearly income") {
@@ -480,6 +480,10 @@ angular.module("AngelApp").controller("CustomReportController",
             reportString += " does_not_qualify_reason, ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "age") {
             reportString += " age(date_of_birth), ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "transaction type") {
+            reportString += " p.transaction_type ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "application date") {
+            reportString += " p.application_date ";
           } else {
             reportString+=(vm.dataSetSelections[i].title.toLowerCase().split(" ").join("_")+", ");
           }; // last else
@@ -488,7 +492,7 @@ angular.module("AngelApp").controller("CustomReportController",
         if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "app. expiration date") {
           reportString += " expiration_date ";
         } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "fund qualify amount") {
-          reportString += " qualify_amount ";
+          reportString += " distributions.qualify_amount ";
         } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "zip code") {
           reportString += " zip ";
         } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "yearly income") {
@@ -497,6 +501,10 @@ angular.module("AngelApp").controller("CustomReportController",
           reportString += " does_not_qualify_reason ";
         } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "age") {
           reportString += " age(date_of_birth) ";
+        } else if         (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "transaction type") {
+          reportString += " p.transaction_type ";
+        } else if        (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "application date") {
+          reportString += " p.application_date ";
         } else {
           reportString+=(vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase().split(" ").join("_") + " ");
         };
@@ -532,7 +540,7 @@ console.log(orderByString);
 
         if (table.includes('patient')){
           if (verbose) console.log("it has patient");
-            orderByString = ' ORDER BY patient.id ';
+            orderByString = ' ORDER BY p.id ';
         }
         if (table.includes('distributions')) {
           if (verbose) console.log("it has distributions");
@@ -552,7 +560,12 @@ console.log(orderByString);
           reportString+=' FROM (SELECT DISTINCT ON (patient.patient_id) * FROM patient ) as p FULL JOIN distributions ON p.patient_id = distributions.patient_id ';
         } else {
           dbTable=table[0];
-          reportString+=' FROM '+dbTable;
+          if (dbTable == "distributions") {
+                      reportString+=' FROM '+dbTable;
+          } else {
+            reportString += ' FROM patient as p '
+          }
+
         }
 
           // if (vm.dataSetSelections[i].table!='patient'){
