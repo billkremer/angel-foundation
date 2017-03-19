@@ -509,6 +509,7 @@ angular.module("AngelApp").controller("CustomReportController",
         var table=[];
         var bothTables=false;
         var dbTable='';
+        var orderByString = ''; // for ORDER BY appending to query string.
         for (var i = 0; i < vm.dataSetSelections.length; i++) {
           table.push(vm.dataSetSelections[i].table);
                   if (verbose) console.log("table1", table);
@@ -522,12 +523,16 @@ angular.module("AngelApp").controller("CustomReportController",
 
         if (table.includes('patient')){
           if (verbose) console.log("it has patient");
+            orderByString = ' ORDER BY patient.id ';
         }
         if (table.includes('distributions')) {
           if (verbose) console.log("it has distributions");
+            orderByString = ' ORDER BY distributions.id ';
         }
         if (table.includes('distributions') && table.includes('patient')){
           if (verbose) console.log("it has both!!!!");
+            orderByString = '';
+            // no orderByString, because either might not exist.
           bothTables=true;
         }
 
@@ -616,7 +621,15 @@ angular.module("AngelApp").controller("CustomReportController",
           reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1]+"') )";
         }
       }; // end of WHERE filters
-      reportString += ";"
+
+      // p.patient_id = distributions.patient_id
+    // } else {
+      // dbTable=table[0];
+      // reportString+=' FROM '+dbTable;
+
+console.log(dbTable, "dbTable", table);
+
+      reportString += orderByString + ";"
       if (verbose) console.log(reportString);
 
 // TODO insert code to actually save the reportString to the database
