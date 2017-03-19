@@ -10,10 +10,8 @@ var config = {
 var pool = new pg.Pool(config);
 
 router.get("/", function(req, res) {
-  console.log(req.query.field);
-  console.log(req.query.item);
-  var string="SELECT * FROM distributions Where "+req.query.field+"='"+req.query.item+"'"+
-              "AND (application_date>'"+req.query.start+"' AND application_date<'"+req.query.end+"');";
+  console.log(req.query.search);
+  var string='SELECT DISTINCT ON ('+req.query.search+') '+req.query.search+' FROM patient;';
   console.log('done');
     pool.connect(function(err, client, done) {
         if (err) {

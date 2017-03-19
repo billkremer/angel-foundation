@@ -12,8 +12,8 @@ var pool = new pg.Pool(config);
 router.get("/", function(req, res) {
   console.log(req.query.field);
   console.log(req.query.item);
-  var string="SELECT * FROM distributions Where "+req.query.field+"='"+req.query.item+"'"+
-              "AND (application_date>'"+req.query.start+"' AND application_date<'"+req.query.end+"');";
+  var string="SELECT * FROM patient Where "+req.query.field+"='"+req.query.item+"' AND does_not_qualify=FALSE"+
+  " AND (application_date>'"+req.query.start+"' AND application_date<'"+req.query.end+"');";
   console.log('done');
     pool.connect(function(err, client, done) {
         if (err) {

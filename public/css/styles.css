@@ -166,19 +166,19 @@ display:block;
   /*margin-top:50px;*/
 }
 /* table styling */
-table {
+#previewTable {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-td, th {
+#previewTable td,#previewTable th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
 
-tr:nth-child(even) {
+#previewTable tr:nth-child(even) {
   background-color: #dddddd;
 }
 #fakeTable{
@@ -344,6 +344,7 @@ select {
 .axis line {
   fill: none;
   stroke: black;
+  stroke-width: 1;
   shape-rendering: crispEdges;
 }
 
@@ -391,9 +392,10 @@ text{
 
 
 #slider{
-  width:50%;
+  width:40%;
   position:relative;
   left:50px;
+  margin-left: 400px;
 }
 
 .d3-slider {
@@ -483,7 +485,9 @@ text{
     margin-bottom: -.6em;
 }
 
-
+#selectedTitle{
+  margin-left:100px;
+}
 .ca, .us {fill: #DF4949;}
 .uc, .br, .mx {fill: #E27A3F;}
 .other {fill: #45B29D;}
@@ -491,8 +495,8 @@ text{
 
 
 circle {
-  stroke: black;
-  stroke-width: 2px;
+  /*stroke: black;
+  stroke-width: 2px;*/
   opacity: .8;
 }
 .btn-group {
@@ -500,13 +504,40 @@ circle {
 }
 .label {
   fill: black;
-  font-size: 16px;
+  font-size: 12px;
 }
 
+rect {
+  cursor: pointer;                           /* NEW */
+  stroke-width: 2;
+}
+rect.disabled {                              /* NEW */
+  fill: transparent !important;              /* NEW */
+}
 
+#barChartH2{
+  margin-left:400px;
+}
+#pieChartH2{
+  text-align: center;
+  margin-bottom:20px;
+}
 .active{
   stroke-width: 5px;
 }
+#piechart{
+  margin-left:30%;
+}
+#barchart{
+  margin-left:200px;
+}
+.noborder{
+  border:0px;
+}
+md-select{
+  display:inline-block;
+}
+
 
 /*-----------------------------end of data vis------------------------------*/
 /*-----------------------------custom report styles------------------------------*/
@@ -683,10 +714,10 @@ circle {
 /*-----------------------------end of log in styles------------------------------*/
 /*-----------------------------data vis 4 styles------------------------------*/
 #chart {
-        height: 360px;
+        /*height: 360px;*/
         margin: 0 auto;                                               /* NEW */
         position: relative;
-        width: 360px;
+        /*width: 360px;*/
       }
       .tooltip {
         background: #eee;
@@ -719,3 +750,43 @@ circle {
 /*-----------------------------data vis 4  styles------------------------------*/
 
 /*-----------------------------end of log in styles-----------*/
+#all-container{
+  height:100%;
+  width:100%;
+}
+#data-vis-container,#data-vis-three-container,#data-vis-four-container,#d3barchart-container{
+position:fixed;
+width:80%;
+height:600px;
+margin-top:150px;
+margin-left:10%;
+transition:all 0.5s ease;
+}
+
+.positionOneUp{
+  transform:scale(.2);
+  transform-origin:0 -31%;
+  -moz-transform: scale(.2);
+}
+.positionTwoUp{
+  transform:scale(.2);
+  transform-origin:33% -31%;
+  -moz-transform: scale(.2);
+}
+.positionThreeUp{
+  transform:scale(.2);
+  transform-origin:66% -31%;
+  -moz-transform: scale(.2);
+}
+.positionFourUp{
+  transform:scale(.2);
+  transform-origin:100% -31%;
+  -moz-transform: scale(.2);
+}
+
+
+.positionDown{
+  transform:scale(1);
+  transform-origin:0 -0%;
+  -moz-transform: scale(1);
+}

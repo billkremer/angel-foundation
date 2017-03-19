@@ -1,7 +1,7 @@
 // <<<<<<< HEAD
 // var app=angular.module('AngelApp',['ngRoute','ngAnimate']);
 // =======
-var app=angular.module('AngelApp',['ngRoute','ngCsvImport', 'ngAnimate']);
+var app=angular.module('AngelApp',['ngRoute','ngCsvImport', 'ngAnimate','ngMaterial', 'ngMessages']);
 // >>>>>>> master
 
 
@@ -39,6 +39,9 @@ app.config(function($routeProvider,$locationProvider){
   }).when('/data-vis-four',{
     templateUrl:'views/data-vis-four.html',
     controller: 'dataVisFourController as visFourCtrl'
+
+  }).when('/all-vis',{
+    templateUrl:'views/all-vis.html'
 
   });
 

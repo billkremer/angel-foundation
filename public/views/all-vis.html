@@ -1,0 +1,135 @@
+<div id="all-container" ng-controller="allContainerController as allCtrl">
+
+<div ng-click="allCtrl.setActive('dataVis')">
+  <div ng-class="allCtrl.dataVis==true? 'positionDown' : 'positionOneUp' " id="data-vis-container" ng-controller="DataVisController as visCtrl">
+
+
+        <div id="content">
+          <div id="mapDiv">
+            <svg id="mapMain"></svg>
+          </div>
+          <div id="countyInfo">
+            <div id="dataToggle">
+              <!-- <input type="radio" name="displayOptions" value="state" onclick="toggleDisplay('state');"> By Region<br/>
+                <select id="statewideOptions" onchange="getSelectToggleRegion();" disabled>
+                </select> <br/> -->
+              <!-- <input type="radio" name="displayOptions" value="county" onclick="toggleDisplay('county');" checked> By County <br/>
+                <select id="countyOptions" onchange="getSelectToggleCounty();" >
+                </select> <br/><br/> -->
+              <!-- <input type="checkbox" name="cycle" value="cycle" id="cycleToggle"> Cycle every 10 seconds <br/> <br/> -->
+            </div>
+            <div id="selectedData">
+              <div id="selectedTitle"></div>
+              <div id="selectedContent"></div>
+              <svg id="selectedChart" width="800" height="300"></svg>
+            </div>
+          </div>
+        </div>
+        <div id="slider">
+
+        </div>
+        <div id="slidertextmin">
+
+        </div>
+        <div id="slidertextmax">
+
+        </div>
+
+  </div>
+</div>
+
+<div ng-click="allCtrl.setActive('dataVisThree')">
+  <div ng-class="allCtrl.dataVisThree==true ? 'positionDown' : 'positionTwoUp' " id="data-vis-three-container" ng-controller="DataVisThreeController as visThreeCtrl">
+
+        <md-select ng-model="visThreeCtrl.currentCat" ng-change="visThreeCtrl.catsel()" md-selected-text="'Bubble Layout: '+visThreeCtrl.currentCat">
+          <md-option>Ethnicity</md-option>
+          <md-option>Marital Status</md-option>
+          <md-option>Household Size</md-option>
+          <md-option>Cancer Stage</md-option>
+          <md-option>Gender</md-option>
+        </md-select>
+        <md-select ng-model="visThreeCtrl.color" ng-change="visThreeCtrl.colsel()" md-selected-text="'Color Scheme: '+visThreeCtrl.color">
+          <md-option>Ethnicity</md-option>
+          <md-option>Marital Status</md-option>
+          <md-option>Household Size</md-option>
+          <md-option>Cancer Stage</md-option>
+          <md-option>Gender</md-option>
+        </md-select>
+
+
+
+
+
+
+
+        <md-select ng-model="visThreeCtrl.bubbleSize" ng-change="visThreeCtrl.changeBubbleSize()" md-selected-text="'Bubble Size: '+visThreeCtrl.bubbleSize">
+          <md-option>1</md-option>
+          <md-option>2</md-option>
+          <md-option>3</md-option>
+          <md-option>4</md-option>
+          <md-option>5</md-option>
+          <md-option>6</md-option>
+          <md-option>7</md-option>
+          <md-option>8</md-option>
+          <md-option>9</md-option>
+          <md-option>10</md-option>
+        </md-select>
+        <md-datepicker ng-model="visThreeCtrl.startDate" placeholder="Start Date" ng-change="visThreeCtrl.changeDate()">start</md-datepicker>
+        <md-datepicker ng-model="visThreeCtrl.endDate" placeholder="End Date" ng-change="visThreeCtrl.changeDate()">end</md-datepicker>
+
+    <div id="chart"></div>
+
+  </div>
+</div>
+
+<div ng-click="allCtrl.setActive('d3bar')">
+  <div ng-class="allCtrl.d3bar==true ? 'positionDown' : 'positionThreeUp' " id="d3barchart-container" ng-controller="d3barchartController as barCtrl">
+
+
+      <md-select ng-model="barCtrl.option" ng-change="barCtrl.getBar()" md-selected-text="barCtrl.option">
+        <md-option>Number of applicants by Gender</md-option>
+        <md-option>Number of applicants by Ethnicity</md-option>
+        <md-option>Number of applicants by Marital Status</md-option>
+        <md-option>Number of applicants by Cancer Stage</md-option>
+        <md-option>Number of applicants by Qualify Amount</md-option>
+        <md-option>Number of applicants by Veteran Status</md-option>
+        <md-option>Number of applicants by Qualify Status</md-option>
+        <md-option>Number of applicants by Household Size</md-option>
+        <md-option>Distributions by cancer type</md-option>
+        <md-option>Distributions by county</md-option>
+      </md-select>
+
+
+
+
+
+    <md-datepicker ng-model="barCtrl.startDate" placeholder="Start Date" ng-change="barCtrl.changeDate()">start</md-datepicker>
+    <md-datepicker ng-model="barCtrl.endDate" placeholder="End Date" ng-change="barCtrl.changeDate()">end</md-datepicker>
+    <h2 id="barChartH2">{{barCtrl.option}}</h2>
+    <div id="barchart"></div>
+
+  </div>
+</div>
+
+<div ng-click="allCtrl.setActive('dataVisFour')">
+  <div ng-class="allCtrl.dataVisFour==true ? 'positionDown' : 'positionFourUp' " id="data-vis-four-container" ng-controller="dataVisFourController as visFourCtrl">
+
+
+      <md-select ng-model="visFourCtrl.option" ng-change="visFourCtrl.doVis()" md-selected-text="visFourCtrl.option">
+        <md-option>Amount of Distribution per Category</md-option>
+        <md-option>Number of Approved Applicateds by Ethnicity</md-option>
+      </md-select>
+
+<md-datepicker ng-model="visFourCtrl.startDate" placeholder="Start Date" ng-change="visFourCtrl.changeDate()">start</md-datepicker>
+<md-datepicker ng-model="visFourCtrl.endDate" placeholder="End Date" ng-change="visFourCtrl.changeDate()">end</md-datepicker>
+
+
+<h2 id="pieChartH2">{{visFourCtrl.option}}</h2>
+
+    <div id="piechart"></div>
+
+
+  </div>
+</div>
+
+</div>

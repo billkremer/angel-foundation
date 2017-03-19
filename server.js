@@ -29,9 +29,13 @@ var barChart2= require('./routes/barChart2');
 
 var dataVis= require('./routes/dataVis');
 var dataVis2= require('./routes/dataVis2');
+var dataVisFour= require('./routes/dataVisFour');
+var dataVisFour2= require('./routes/dataVisFour2');
 var dist= require('./routes/distribution');
 var dist2= require('./routes/distribution2');
 var distByCountyOrCancer= require('./routes/distByCountyOrCancer');
+var bubblechart= require('./routes/bubblechart');
+
 
 require('./auth/setup');
 
@@ -80,9 +84,13 @@ app.use('/barChart', barChart);
 app.use('/barChart2', barChart2);
 app.use('/dataVis', dataVis);
 app.use('/dataVis2', dataVis2);
+app.use('/dataVisFour', dataVisFour);
+app.use('/dataVisFour2', dataVisFour2);
 app.use('/dist', dist);
 app.use('/dist2', dist2);
 app.use('/distByCountyOrCancer', distByCountyOrCancer);
+app.use('/bubblechart', bubblechart);
+
 // app.get('/private/secretInfo', function(req, res){
 //   console.log('Sending secret info');
 //   res.send('This is very secret!');
