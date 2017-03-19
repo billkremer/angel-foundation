@@ -1,6 +1,9 @@
 app.controller("StandardReportController",
-  function(StandardReportGetService,tableHoldService) {
-    console.log('standard controller loaded');
+  function(StandardReportGetService,tableHoldService,$http) {
+
+    var verbose = false;
+
+    if (verbose) console.log('standard controller loaded');
 
 
     var vm=this;
@@ -27,18 +30,48 @@ app.controller("StandardReportController",
 
     vm.showStandardReports();
 
+    vm.showDelete = false; // opens the page without the delete buttons
+    vm.showDeleteString = "Delete a Report";
+
+    vm.showDeleteButton = function (resetBoolean) {
+      // this function shows the delete Xs on each report to delete them.
+      // after deleting, running the function in the deleteReport hides the Xs again
+
+      vm.showDelete = !vm.showDelete; // toggles between true and false
+      if (verbose) console.log(vm.showDelete);
+      if (vm.showDelete) { vm.showDeleteString = "Hide Delete"; };
+      if (!vm.showDelete) { vm.showDeleteString = "Delete a Report"; };
+      if (verbose) console.log(vm.showDeleteString);
+    }; // end of showDeleteButton function
+
+    vm.deleteReport = function (report) {
+      if (verbose) console.log(report);
+      if (verbose) console.log("vm in delete report", vm);
+
+
+
+      $http.delete('/standardReports/delReport/' + vm.currentReport.report_number).then( function () {
+        vm.showStandardReports(); // redraws the page
+
+
+      });
+
+      vm.showDeleteButton(); // hides the delete buttons
+    }; // end deleteReport buttons
+
+
     //queries db for specific report
     vm.selectStandardReport = function (report) {
       vm.reportSelected=true;
       vm.keys = [];
 
       vm.reportTitle=report.report_name;
-      console.log('report title',vm.reportTitle)
+      if (verbose) console.log('report title - selectStandardReport',vm.reportTitle)
       vm.currentReport=report;
       StandardReportGetService.selectedStandardReport(report).then(function(response){
         vm.standardReportResponse=response.data;
         docDefinition.content[0].table.body=[[]];
-        console.log('standard report returned', vm.standardReportResponse);
+        if (verbose) console.log('standard report returned', vm.standardReportResponse);
         for(key in vm.standardReportResponse[0]){
           vm.keys.push(key);
           docDefinition.content[0].table.body[0].push(key);
@@ -66,7 +99,7 @@ app.controller("StandardReportController",
                 csv += "\n";
         });
 
-        console.log(csv);
+        if (verbose) console.log(csv);
         var hiddenElement = document.createElement('a');
         hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
         hiddenElement.target = '_blank';
@@ -75,7 +108,7 @@ app.controller("StandardReportController",
     }
 
     vm.changeActive = function (buttonSelected) {
-      console.log(buttonSelected);
+      if (verbose) console.log(buttonSelected);
       vm.csvButtonClass = "";
       vm.pdfButtonClass = "";
       vm.dataVisButtonClass = "";
@@ -90,7 +123,7 @@ app.controller("StandardReportController",
         vm.dataVisButtonClass = "active";
         vm.goButtonSelected = "dataVisButton";
       };
-      console.log(vm);
+      if (verbose) console.log(vm);
     }; // closes changeActive
 
     var docDefinition = {
@@ -121,7 +154,7 @@ app.controller("StandardReportController",
           };
 
     vm.goNext = function (selection) {
-      console.log('which selected',vm.goButtonSelected);
+      if (verbose) console.log('which selected',vm.goButtonSelected);
       if(selection=='csvButton'){
         vm.downloadCSV();
       }
