@@ -1,5 +1,15 @@
 <div id="all-container" ng-controller="allContainerController as allCtrl">
-
+  <div class="dropdown">
+    <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+      <span class="glyphicon glyphicon-menu-hamburger"></span>
+    </button>
+    <ul class="dropdown-menu ">
+      <li><a href="/">Standard Reports</a></li>
+      <li><a href="/custom-report">Custom Reports</a></li>
+      <li><a href="/data-upload">Upload</a></li>
+      <li><a href="/all-vis">Data Visualization</a></li>
+    </ul>
+  </div>
 <div ng-click="allCtrl.setActive('dataVis')">
   <div ng-class="allCtrl.dataVis==true? 'positionDown' : 'positionOneUp' " id="data-vis-container" ng-controller="DataVisController as visCtrl">
 

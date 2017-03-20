@@ -9,9 +9,10 @@ var config = {
 
 var pool = new pg.Pool(config);
 
-var verbose = false;
+var verbose = true;
 
 router.get("/", function(req, res) {
+  console.log(req);
     pool.connect(function(err, client, done) {
         if (err) {
             if (verbose) console.log("Error connecting to DB", err);

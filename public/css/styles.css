@@ -31,6 +31,7 @@ Yellow-green:		rgb(211,223,115);	#d3df73
   justify-content: center;
   align-items: center;
   flex-direction:column;
+  overflow:scroll;
 }
 .standardReportHeader,.standardReportBody{
   background-color: white;
@@ -198,10 +199,9 @@ display:block;
 
 }
 #uploader{
-  margin-top:4%;
-  padding:0px;
-  max-height:25px;
-  width: 25%;
+margin-bottom:20px;
+font-size:12px;
+
 }
 #uploadCSVInput{
   border:none;
@@ -229,12 +229,21 @@ display:block;
   border-width: thin;
   border-color: lightgrey;
   border-radius: 4px;
-  height: 400px;
+  height: 350px;
+  border-top:0px;
+  padding:40px;
+}
+
+ng-csv-import{
+  border:0px;
 }
 
 
-
-
+.tab-pane h3{
+  margin-left:auto;
+  margin-top:0px !important;
+  text-align: center;
+}
 
 
 
