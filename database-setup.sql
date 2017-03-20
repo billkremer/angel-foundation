@@ -77,8 +77,8 @@ VALUES
 
 CREATE TABLE standard_reports (
   report_number SERIAL PRIMARY KEY,
-  report_name varchar (100),
-  query varchar (300)
+  report_name text,
+  query text
   );
 
 
