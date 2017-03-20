@@ -454,24 +454,25 @@ angular.module("AngelApp").controller("CustomReportController",
       }if (verbose) console.log(vm.columnLimitSelections[0]);
     }
 
-    var table=[]; // this variable is used in saveReport when choosing the database tables.
+    // var table=[]; // this variable is used in saveReport when choosing the database tables.
 
-    vm.saveReport=function(){
+    vm.buildQuery=function() { // updated name.
+//    vm.saveReport=function(){
     // this function builds the SQL query string
 
-    var reportNameForSaving = vm.saveReportName;
-    vm.saveReportName = ""; // clears the form immediately.
-
-
       var reportString="SELECT ";
-      if (verbose) console.log(reportString);
-      if (verbose) console.log(vm.dataSetSelections);
+      if (verbose) console.log(reportString,"laksdjflaskdfl");
+      if (verbose) console.log(vm.dataSetSelections, "oiuweroiwueoriweurow");
+
+      if (verbose) console.log(vm.dataFilterSelections, "Filoiuweroiwueoriweurow");
+
+// appends columns to the string.
       if (vm.dataSetSelections[0].title != "no filters selected") {
         for (var i=0;i<vm.dataSetSelections.length-1;i++) {
           if (vm.dataSetSelections[i].title.toLowerCase() == "app. expiration date") {
             reportString += " expiration_date, ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "fund qualify amount") {
-            reportString += " qualify_amount, ";
+            reportString += " distributions.qualify_amount, ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "zip code") {
             reportString += " zip, ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "yearly income") {
@@ -480,6 +481,10 @@ angular.module("AngelApp").controller("CustomReportController",
             reportString += " does_not_qualify_reason, ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "age") {
             reportString += " age(date_of_birth), ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "transaction type") {
+            reportString += " p.transaction_type ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "application date") {
+            reportString += " p.application_date ";
           } else {
             reportString+=(vm.dataSetSelections[i].title.toLowerCase().split(" ").join("_")+", ");
           }; // last else
@@ -488,7 +493,7 @@ angular.module("AngelApp").controller("CustomReportController",
         if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "app. expiration date") {
           reportString += " expiration_date ";
         } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "fund qualify amount") {
-          reportString += " qualify_amount ";
+          reportString += " distributions.qualify_amount ";
         } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "zip code") {
           reportString += " zip ";
         } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "yearly income") {
@@ -497,6 +502,10 @@ angular.module("AngelApp").controller("CustomReportController",
           reportString += " does_not_qualify_reason ";
         } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "age") {
           reportString += " age(date_of_birth) ";
+        } else if         (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "transaction type") {
+          reportString += " p.transaction_type ";
+        } else if        (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "application date") {
+          reportString += " p.application_date ";
         } else {
           reportString+=(vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase().split(" ").join("_") + " ");
         };
@@ -504,8 +513,15 @@ angular.module("AngelApp").controller("CustomReportController",
 //
 // var titleForQ = dataSetSelectionsObject.title.toLowerCase().split(" ").join("_");
 
-      if (verbose) console.log(vm.dataSetSelections, vm.dataFilterSelections);
 
+    } else {
+      reportString += " * ";
+    }
+// end appends column.
+
+// append FROM statement
+      if (verbose) console.log("here", vm.dataSetSelections, vm.dataFilterSelections);
+  // append the values from the "table" key to a table array.
         var table=[];
         var bothTables=false;
         var dbTable='';
@@ -523,7 +539,7 @@ angular.module("AngelApp").controller("CustomReportController",
           }
         }
 
-console.log(orderByString);
+// console.log(orderByString);
 
         if (verbose) console.log("table", table);
 
@@ -532,7 +548,7 @@ console.log(orderByString);
 
         if (table.includes('patient')){
           if (verbose) console.log("it has patient");
-            orderByString = ' ORDER BY patient.id ';
+            orderByString = ' ORDER BY p.id ';
         }
         if (table.includes('distributions')) {
           if (verbose) console.log("it has distributions");
@@ -545,15 +561,16 @@ console.log(orderByString);
           bothTables=true;
         }
 
-        console.log(orderByString);
+        // console.log(table);
 
 
         if (bothTables==true) {
           reportString+=' FROM (SELECT DISTINCT ON (patient.patient_id) * FROM patient ) as p FULL JOIN distributions ON p.patient_id = distributions.patient_id ';
+        } else if (table.includes("distributions")) {
+            reportString+=' FROM distributions';
         } else {
-          dbTable=table[0];
-          reportString+=' FROM '+dbTable;
-        }
+            reportString += ' FROM patient as p '
+        }; // end if bothTables
 
           // if (vm.dataSetSelections[i].table!='patient'){
           //   reportString+="FROM distributions ";
@@ -563,21 +580,26 @@ console.log(orderByString);
           // }
           // if (vm.dataSetSelections)
           // }
-
+// end FROM parts
 
 
         if (verbose) console.log(reportString);
 // table selecting section end
-      } else {
 
-        reportString = "SELECT * FROM patient ";
 
-      }
-      if (verbose) console.log(reportString);
+      //
+      // } else if (vm.dataSetSelections[0].title == "no filters selected" && vm.dataFilterSelections[0].options == "no filters selected") { // no categories lands here.
+      //
+      //   reportString = "SELECT * FROM patient ";
+      //
+      // }
+
+
 
 
       if (vm.dataFilterSelections[0].title == "no filters selected"){
         if (verbose) console.log(reportString);
+        // jump to end, don't add WHERE.
       } else {
 
 
@@ -640,30 +662,151 @@ console.log(orderByString);
       // reportString+=' FROM '+dbTable;
 
 
-// TODO this should be fixed.
-console.log(dbTable, "dbTable", table);
-console.log(orderByString, "orderByString before add");
-      if (orderByString != undefined) {
-        reportString += orderByString + ";";
-      } else {
-        reportString += ";"
+  reportString += " ;";
+
+  return reportString;
+}; // end of buildQuery
+
+// // TODO this should be fixed.
+// console.log(dbTable, "dbTable", table);
+// console.log(orderByString, "orderByString before add");
+//       if (orderByString != undefined) {
+//         reportString += orderByString + ";";
+//       } else {
+//         reportString += ";"
+//       }
+//
+
+
+
+
+// saveReport function here...
+// call build query
+// get the name here too
+
+vm.saveReport=function(){
+
+
+    var reportNameForSaving = vm.saveReportName;
+    vm.saveReportName = ""; // clears the form immediately.
+
+    var reportString=vm.buildQuery();
+
+    var objectToPost = {reportQuery: reportString, reportName: reportNameForSaving}
+
+    $http.post('/data',objectToPost).then(function(response) {
+      alertify.success("Saved to Standard Reports");
+    });
+
+
+  }; // end of saveReport function
+
+
+  vm.customReportResponse = {};
+  vm.dataArray = [];
+  vm.keys = [];
+
+  var dataIsHere = false;
+
+  var docDefinition = {
+          content: [
+            {
+              table: {
+                // headers are automatically repeated if the table spans over multiple pages
+                // you can declare how many rows should be treated as headers
+                headerRows: 1,
+
+                body: [
+
+
+                ]
+              },
+              layout: {
+                fillColor: function (i, node) { return (i % 2 === 0) ?  '#CCCCCC' : null; }
+              }
+
+            }
+          ],	styles: {
+                tableHeader: {
+                  fontSize: 18,
+                  bold: true,
+                  margin: [0, 0, 0, 10]
+                }
+              }
+        };
+
+  vm.createCSV=function(){
+    var reportString=vm.buildQuery();
+    vm.keys = [];
+
+    CustomReportService.getCustomReport(reportString).then(function(response){
+      console.log(response);
+      vm.customReportResponse=response.data;
+      console.log(vm.customReportResponse);
+
+      docDefinition.content[0].table.body=[[]];
+      console.log('standard report returned', vm.customReportResponse);
+      for(key in vm.customReportResponse[0]){
+        vm.keys.push(key);
+        docDefinition.content[0].table.body[0].push(key);
       }
+      vm.dataArray=[];
+
+      vm.customReportResponse.forEach(function(object){
+        var arr=[];
+        for (category in object){
+          arr.push(object[category]);
+        }
+        vm.dataArray.push(arr);
+        docDefinition.content[0].table.body.push(arr);
+      });
+      var csv = '';
+      csv=vm.keys.join(',');
+      csv+='\n';
+      vm.dataArray.forEach(function(row) {
+              csv += row.join(',');
+              csv += "\n";
+      });
+
+      console.log(csv);
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'people.csv';
+      hiddenElement.click();
+    })
+  }//end of getCustomData
 
 
-      if (verbose) console.log(reportString);
+  vm.downloadPdf=function(){
+    var reportString=vm.buildQuery();
+    vm.keys = [];
 
-// TODO insert code to actually save the reportString to the database
+    CustomReportService.getCustomReport(reportString).then(function(response){
+      console.log(response);
+      vm.customReportResponse=response.data;
+      console.log(vm.customReportResponse);
 
-  var objectToPost = {reportQuery: reportString, reportName: reportNameForSaving}
+      docDefinition.content[0].table.body=[[]];
+      console.log('standard report returned', vm.customReportResponse);
+      for(key in vm.customReportResponse[0]){
+        vm.keys.push(key);
+        docDefinition.content[0].table.body[0].push(key);
+      }
+      vm.dataArray=[];
+      vm.customReportResponse.forEach(function(object){
+        var arr=[];
+        for (category in object){
+          arr.push(object[category]);
+        }
+        vm.dataArray.push(arr);
+        docDefinition.content[0].table.body.push(arr);
+      });
+      pdfMake.createPdf(docDefinition).open()
+    })
 
-  $http.post('/data',objectToPost).then(function(response) {
-    alertify.success("Saved to Standard Reports");
-  });
+  }//end of downloadPdf
 
-
-
-
-    }; // end of saveReport function
 
 
 

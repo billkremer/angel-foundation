@@ -34,7 +34,11 @@ var dataVisFour2= require('./routes/dataVisFour2');
 var dist= require('./routes/distribution');
 var dist2= require('./routes/distribution2');
 var distByCountyOrCancer= require('./routes/distByCountyOrCancer');
+
 var bubblechart= require('./routes/bubblechart');
+
+
+var customReport= require('./routes/customReport');
 
 
 require('./auth/setup');
@@ -118,6 +122,7 @@ app.use('/socialWorkerClinic', socialWorkerClinic);
 app.use('/doctorClinic', doctorClinic);
 app.use('/doctorId', doctorId);
 app.use('/state', state);
+app.use('/customReport', customReport);
 app.use('/', index);
 
 
