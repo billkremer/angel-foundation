@@ -702,6 +702,112 @@ vm.saveReport=function(){
   }; // end of saveReport function
 
 
+  vm.customReportResponse = {};
+  vm.dataArray = [];
+  vm.keys = [];
+
+  var dataIsHere = false;
+
+  var docDefinition = {
+          content: [
+            {
+              table: {
+                // headers are automatically repeated if the table spans over multiple pages
+                // you can declare how many rows should be treated as headers
+                headerRows: 1,
+
+                body: [
+
+
+                ]
+              },
+              layout: {
+                fillColor: function (i, node) { return (i % 2 === 0) ?  '#CCCCCC' : null; }
+              }
+
+            }
+          ],	styles: {
+                tableHeader: {
+                  fontSize: 18,
+                  bold: true,
+                  margin: [0, 0, 0, 10]
+                }
+              }
+        };
+
+  vm.createCSV=function(){
+    var reportString=vm.buildQuery();
+    vm.keys = [];
+
+    CustomReportService.getCustomReport(reportString).then(function(response){
+      console.log(response);
+      vm.customReportResponse=response.data;
+      console.log(vm.customReportResponse);
+
+      docDefinition.content[0].table.body=[[]];
+      console.log('standard report returned', vm.customReportResponse);
+      for(key in vm.customReportResponse[0]){
+        vm.keys.push(key);
+        docDefinition.content[0].table.body[0].push(key);
+      }
+      vm.dataArray=[];
+
+      vm.customReportResponse.forEach(function(object){
+        var arr=[];
+        for (category in object){
+          arr.push(object[category]);
+        }
+        vm.dataArray.push(arr);
+        docDefinition.content[0].table.body.push(arr);
+      });
+      var csv = '';
+      csv=vm.keys.join(',');
+      csv+='\n';
+      vm.dataArray.forEach(function(row) {
+              csv += row.join(',');
+              csv += "\n";
+      });
+
+      console.log(csv);
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'people.csv';
+      hiddenElement.click();
+    })
+  }//end of getCustomData
+
+
+  vm.downloadPdf=function(){
+    var reportString=vm.buildQuery();
+    vm.keys = [];
+
+    CustomReportService.getCustomReport(reportString).then(function(response){
+      console.log(response);
+      vm.customReportResponse=response.data;
+      console.log(vm.customReportResponse);
+
+      docDefinition.content[0].table.body=[[]];
+      console.log('standard report returned', vm.customReportResponse);
+      for(key in vm.customReportResponse[0]){
+        vm.keys.push(key);
+        docDefinition.content[0].table.body[0].push(key);
+      }
+      vm.dataArray=[];
+      vm.customReportResponse.forEach(function(object){
+        var arr=[];
+        for (category in object){
+          arr.push(object[category]);
+        }
+        vm.dataArray.push(arr);
+        docDefinition.content[0].table.body.push(arr);
+      });
+      pdfMake.createPdf(docDefinition).open()
+    })
+
+  }//end of downloadPdf
+
+
 
 
     vm.addToDateFilters = function (category, dateObject) {
