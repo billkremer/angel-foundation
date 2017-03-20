@@ -101,11 +101,28 @@ margin-bottom:10px;
 #standardReport-previewContainer{
     transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
 }
+
+
+
 #standardReport-reportPreview {
-  border: 3px solid rgb(84, 84, 84);
+border: 3px solid rgb(84, 84, 84);
 text-align: center;
 font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
 border-radius:3px;
+/*border-bottom: none;*/
+/*table { box-shadow: 1px 1px 1px #999; }*/
+z-index: 1;
+}
+
+#bg-text {
+color:rgb(205, 208, 209);
+font-size:120px;
+transform:rotate(340deg);
+overflow: hidden;
+margin-left: 25%;
+opacity: 0.6;
+position:absolute;
+display:block;
 }
 
 #standardReport-reportButtons {
@@ -198,7 +215,6 @@ tr:nth-child(even) {
 
 
 #previewTable{
-
     table-layout:fixed;
     width:100%;
 

@@ -18,8 +18,8 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
           console.log('cancer');
           for(var i=0;i<cancers.length;i++){
             distByCountyOrCancerService.getDistinct("Where diagnosis='"+cancers[i]+"'",i).then(function(res){
-              console.log(res)
-               data.push({cat:cancers[res.data[0].i],val:res.data[0].count});
+              console.log('returned with distint',res);
+               data.push({cat:cancers[res.data[0].i],val:Number(res.data[0].sum.replace(/[^0-9\.]+/g,""))});
 
 
               data.forEach(function(d) {
@@ -35,7 +35,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
           distByCountyOrCancerService.getDistinct("Where diagnosis!='Multiple Myeloma' AND diagnosis!='Breast- not specified'"+
                                                     "AND diagnosis!='Lung- not specified' AND diagnosis!='Rectal' AND diagnosis!='Gastrointestinal - Colon'")
             .then(function(res){
-              data.push({cat:'Other',val:res.data[0].count});
+              data.push({cat:'Other',val:Number(res.data[0].sum.replace(/[^0-9\.]+/g,""))});
               data.forEach(function(d) {
                   d.cat = d.cat;
                   d.val = +d.val;
@@ -54,7 +54,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
           for(var i=0;i<counties.length;i++){
             distByCountyOrCancerService.getDistinct("Where county='"+counties[i]+"'",i).then(function(res){
               console.log(res)
-               data.push({cat:counties[res.data[0].i],val:res.data[0].count});
+               data.push({cat:counties[res.data[0].i],val:Number(res.data[0].sum.replace(/[^0-9\.]+/g,""))});
 
 
               data.forEach(function(d) {
@@ -72,7 +72,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
                                                     "AND county!='Ramsey' AND county!='Scott'"+
                                                     "AND county!='Washington'")
             .then(function(res){
-              data.push({cat:'Other',val:res.data[0].count});
+              data.push({cat:'Other',val:Number(res.data[0].sum.replace(/[^0-9\.]+/g,""))});
               data.forEach(function(d) {
                   d.cat = d.cat;
                   d.val = +d.val;
@@ -144,7 +144,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
 
     var draw=function(){
         // set the dimensions of the canvas
-    var margin = {top: 20, right: 20, bottom: 250, left: 40},
+    var margin = {top: 20, right: 20, bottom: 250, left: 60},
         width = 600 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -167,7 +167,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
 
 
     // add the SVG element
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#chart").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
