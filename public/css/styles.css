@@ -21,6 +21,10 @@ Yellow-green:		rgb(211,223,115);	#d3df73
 */
 
 /* ----------------------------data upload page--------------------------------*/
+#uploadSubmit {
+  border-radius: 5px;
+}
+
 /* --------------------------end of data upload page---------------------------*/
 /* --------------------------standard report view ------------------------------*/
 #flexContainer{
