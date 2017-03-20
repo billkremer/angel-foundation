@@ -454,16 +454,19 @@ angular.module("AngelApp").controller("CustomReportController",
       }if (verbose) console.log(vm.columnLimitSelections[0]);
     }
 
-    var table=[]; // this variable is used in saveReport when choosing the database tables.
+    // var table=[]; // this variable is used in saveReport when choosing the database tables.
 
-
-    vm.buildQuery=function(){
-
+    vm.buildQuery=function() { // updated name.
+//    vm.saveReport=function(){
     // this function builds the SQL query string
 
       var reportString="SELECT ";
-      if (verbose) console.log(reportString);
-      if (verbose) console.log(vm.dataSetSelections);
+      if (verbose) console.log(reportString,"laksdjflaskdfl");
+      if (verbose) console.log(vm.dataSetSelections, "oiuweroiwueoriweurow");
+
+      if (verbose) console.log(vm.dataFilterSelections, "Filoiuweroiwueoriweurow");
+
+// appends columns to the string.
       if (vm.dataSetSelections[0].title != "no filters selected") {
         for (var i=0;i<vm.dataSetSelections.length-1;i++) {
           if (vm.dataSetSelections[i].title.toLowerCase() == "app. expiration date") {
@@ -510,8 +513,15 @@ angular.module("AngelApp").controller("CustomReportController",
 //
 // var titleForQ = dataSetSelectionsObject.title.toLowerCase().split(" ").join("_");
 
-      if (verbose) console.log(vm.dataSetSelections, vm.dataFilterSelections);
 
+    } else {
+      reportString += " * ";
+    }
+// end appends column.
+
+// append FROM statement
+      if (verbose) console.log("here", vm.dataSetSelections, vm.dataFilterSelections);
+  // append the values from the "table" key to a table array.
         var table=[];
         var bothTables=false;
         var dbTable='';
@@ -529,7 +539,7 @@ angular.module("AngelApp").controller("CustomReportController",
           }
         }
 
-console.log(orderByString);
+// console.log(orderByString);
 
         if (verbose) console.log("table", table);
 
@@ -551,20 +561,16 @@ console.log(orderByString);
           bothTables=true;
         }
 
-        console.log(orderByString);
+        // console.log(table);
 
 
         if (bothTables==true) {
           reportString+=' FROM (SELECT DISTINCT ON (patient.patient_id) * FROM patient ) as p FULL JOIN distributions ON p.patient_id = distributions.patient_id ';
+        } else if (table.includes("distributions")) {
+            reportString+=' FROM distributions';
         } else {
-          dbTable=table[0];
-          if (dbTable == "distributions") {
-                      reportString+=' FROM '+dbTable;
-          } else {
             reportString += ' FROM patient as p '
-          }
-
-        }
+        }; // end if bothTables
 
           // if (vm.dataSetSelections[i].table!='patient'){
           //   reportString+="FROM distributions ";
@@ -574,21 +580,26 @@ console.log(orderByString);
           // }
           // if (vm.dataSetSelections)
           // }
-
+// end FROM parts
 
 
         if (verbose) console.log(reportString);
 // table selecting section end
-      } else {
 
-        reportString = "SELECT * FROM patient ";
 
-      }
-      if (verbose) console.log(reportString);
+      //
+      // } else if (vm.dataSetSelections[0].title == "no filters selected" && vm.dataFilterSelections[0].options == "no filters selected") { // no categories lands here.
+      //
+      //   reportString = "SELECT * FROM patient ";
+      //
+      // }
+
+
 
 
       if (vm.dataFilterSelections[0].title == "no filters selected"){
         if (verbose) console.log(reportString);
+        // jump to end, don't add WHERE.
       } else {
 
 
@@ -645,156 +656,53 @@ console.log(orderByString);
         }
       }; // end of WHERE filters
 
-      //duplicate end of function
-      reportString += " ;";
-      // console.log(reportString);
-      return reportString;
-
-
-
-      // reportString += ";"
-      // if (verbose) console.log(reportString);
-
-
       // p.patient_id = distributions.patient_id
     // } else {
       // dbTable=table[0];
       // reportString+=' FROM '+dbTable;
 
 
-// TODO this should be fixed.
+  reportString += " ;";
+
+  return reportString;
+}; // end of buildQuery
+
+// // TODO this should be fixed.
 // console.log(dbTable, "dbTable", table);
 // console.log(orderByString, "orderByString before add");
-      // if (orderByString != undefined) {
-      //   reportString += orderByString + ";";
-      // } else {
-      //   reportString += ";"
-      // }
+//       if (orderByString != undefined) {
+//         reportString += orderByString + ";";
+//       } else {
+//         reportString += ";"
+//       }
+//
 
 
-      // if (verbose) console.log(reportString);
-  }; // end of buildQuery function
 
 
-// TODO insert code to actually save the reportString to the database
+// saveReport function here...
+// call build query
+// get the name here too
 
-  vm.saveReport=function(){
+vm.saveReport=function(){
+
+
     var reportNameForSaving = vm.saveReportName;
     vm.saveReportName = ""; // clears the form immediately.
 
     var reportString=vm.buildQuery();
 
-    var objectToPost = {reportQuery: reportString, reportName: reportNameForSaving};
+    var objectToPost = {reportQuery: reportString, reportName: reportNameForSaving}
 
     $http.post('/data',objectToPost).then(function(response) {
       alertify.success("Saved to Standard Reports");
     });
-  }//end of saveReport
-
-  vm.customReportResponse = {};
-  vm.dataArray = [];
-  vm.keys = [];
-
-  var dataIsHere = false;
-
-  var docDefinition = {
-          content: [
-            {
-              table: {
-                // headers are automatically repeated if the table spans over multiple pages
-                // you can declare how many rows should be treated as headers
-                headerRows: 1,
-
-                body: [
 
 
-                ]
-              },
-              layout: {
-                fillColor: function (i, node) { return (i % 2 === 0) ?  '#CCCCCC' : null; }
-              }
-
-            }
-          ],	styles: {
-                tableHeader: {
-                  fontSize: 18,
-                  bold: true,
-                  margin: [0, 0, 0, 10]
-                }
-              }
-        };
-
-  vm.createCSV=function(){
-    var reportString=vm.buildQuery();
-    vm.keys = [];
-
-    CustomReportService.getCustomReport(reportString).then(function(response){
-      console.log(response);
-      vm.customReportResponse=response.data;
-      console.log(vm.customReportResponse);
-
-      docDefinition.content[0].table.body=[[]];
-      console.log('standard report returned', vm.customReportResponse);
-      for(key in vm.customReportResponse[0]){
-        vm.keys.push(key);
-        docDefinition.content[0].table.body[0].push(key);
-      }
-      vm.dataArray=[];
-
-      vm.customReportResponse.forEach(function(object){
-        var arr=[];
-        for (category in object){
-          arr.push(object[category]);
-        }
-        vm.dataArray.push(arr);
-        docDefinition.content[0].table.body.push(arr);
-      });
-      var csv = '';
-      csv=vm.keys.join(',');
-      csv+='\n';
-      vm.dataArray.forEach(function(row) {
-              csv += row.join(',');
-              csv += "\n";
-      });
-
-      console.log(csv);
-      var hiddenElement = document.createElement('a');
-      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-      hiddenElement.target = '_blank';
-      hiddenElement.download = 'people.csv';
-      hiddenElement.click();
-    })
-  }//end of getCustomData
+  }; // end of saveReport function
 
 
-  vm.downloadPdf=function(){
-    var reportString=vm.buildQuery();
-    vm.keys = [];
 
-    CustomReportService.getCustomReport(reportString).then(function(response){
-      console.log(response);
-      vm.customReportResponse=response.data;
-      console.log(vm.customReportResponse);
-
-      docDefinition.content[0].table.body=[[]];
-      console.log('standard report returned', vm.customReportResponse);
-      for(key in vm.customReportResponse[0]){
-        vm.keys.push(key);
-        docDefinition.content[0].table.body[0].push(key);
-      }
-      vm.dataArray=[];
-      vm.customReportResponse.forEach(function(object){
-        var arr=[];
-        for (category in object){
-          arr.push(object[category]);
-        }
-        vm.dataArray.push(arr);
-        docDefinition.content[0].table.body.push(arr);
-      });
-      pdfMake.createPdf(docDefinition).open()
-    })
-
-  }//end of downloadPdf
 
     vm.addToDateFilters = function (category, dateObject) {
       if (verbose) console.log(category, dateObject);
