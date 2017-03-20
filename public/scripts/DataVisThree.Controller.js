@@ -24,7 +24,8 @@ angular.module("AngelApp").controller("DataVisThreeController", ['$location','$h
 
           console.log('here is what data looks like',data);
           var width = 1000, height = 600;
-          var fill = d3.scale.ordinal().range(['rgb(149,193,69)','rgb(68,68,68)','rgb(0,82,156)','rgb(68,136,187)','rgb(36,126,176)','rgb(192,215,234)','rgb(211,223,115)','rgb(230,238,242)'])
+
+          var fill = d3.scale.ordinal().range(['rgb(149,193,69)','rgb(68,68,68)','rgb(0,82,156)','rgb(68,136,187)','rgb(36,126,176)','rgb(112, 46, 58)','rgb(48, 11, 82)','rgb(1, 9, 84)','rgb(12, 71, 0)','rgb(87, 62, 0)','rgb(249, 62, 12)','rgb(0, 111, 71)','rgb(88, 22, 64)','rgb(125, 116, 0)','rgb(0, 0, 0)'])
           // var fill=d3.scale.category20();
           d3.selectAll('#bubblesvg').remove();
           var svg = d3.select("#chart").append("svg")
