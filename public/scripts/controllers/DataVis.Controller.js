@@ -6,7 +6,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     var now=new Date()
     var currentDate=d3.time.format("%m-%Y")(now);
     var months=[];
-    var old=new Date(2012,0);
+    var old=new Date(2015,1);
     var dif=((((((now.getTime()-old.getTime())/1000)/60)/60)/24)/365)*12;
     for(var i=0;i<dif;i++){
       now=new Date()
@@ -88,7 +88,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     var highLimit=dif;
     // var months=["01-2016","02-2016","03-2016","04-2016","05-2016","06-2016","07-2016","08-2016","09-2016","10-2016","11-2016","12-2016"];
     d3.select('#slider').call(d3.slider().axis(true).min(1).max(dif).step(1).value( [ 1, dif ] ).on("slide", function(evt, value) {
-      var sliderLow=new Date(2012,1);
+      var sliderLow=new Date(2015,1);
       sliderLow.setMonth(sliderLow.getMonth()+value[0]);
     // 'min= '+d3.time.format("%m-%Y")(sliderLow)
 

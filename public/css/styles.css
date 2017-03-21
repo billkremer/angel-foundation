@@ -105,6 +105,7 @@ margin-bottom:10px;
 }
 #standardReport-previewContainer{
     transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    overflow:hidden;
 }
 
 
@@ -116,6 +117,7 @@ font-family: 'proxima-nova', Helvetica, Arial, sans-serif ;
 border-radius:3px;
 /*border-bottom: none;*/
 /*table { box-shadow: 1px 1px 1px #999; }*/
+overflow: hidden;
 z-index: 1;
 }
 
@@ -175,6 +177,7 @@ display:block;
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  overflow:hidden;
 }
 
 #previewTable td,#previewTable th {
@@ -517,7 +520,7 @@ circle {
 }
 .label {
   fill: black;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 rect {
