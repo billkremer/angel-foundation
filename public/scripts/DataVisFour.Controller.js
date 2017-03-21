@@ -310,8 +310,8 @@ vm.distribution=function(){
     var legendRectSize = 18;
     var legendSpacing = 4;
 
-    var w = 500;
-    var h = 500;
+    var w = 600;
+    var h = 600;
     var r = h/2;
     var aColor = [
         'rgb(68,68,68)',
