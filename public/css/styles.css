@@ -206,8 +206,12 @@ display:block;
 
 }
 #uploader{
-margin-bottom:20px;
-font-size:12px;
+  margin-top:4%;
+  padding:0px;
+  max-height:25px;
+  width: 25%;
+  margin-bottom:20px;
+  font-size:12px;
 
 }
 #uploadCSVInput{
