@@ -54,7 +54,7 @@ app.controller("StandardReportController",
       if (verbose) console.log("vm in delete report", vm);
 
 
-      alertify.confirm("Are you sure you want to delete: <strong>" + vm.currentReport.report_name + "?</strong>",
+      alertify.confirm("Are you sure you want to delete: <strong>" + report.report_name + "?</strong>",
 
 
 // var i = req.body.dataSetSelections.findIndex(function (x) { return x.title == "age" }); // gets the index for the age array
@@ -63,14 +63,14 @@ app.controller("StandardReportController",
 
 
         function(){
-          alertify.success("Deleted "+ vm.currentReport.report_name);
+          alertify.success("Deleted "+ report.report_name);
           // alertify.success('Delete ' + vm.currentReport.report_name);
 
 
-          $http.delete('/standardReports/delReport/' + vm.currentReport.report_number).then( function () {
+          $http.delete('/standardReports/delReport/' + report.report_number).then( function () {
 
 
-            var selectPrevIndex = vm.standardReportList.findIndex(function (x) {return x.report_name == vm.currentReport.report_name})
+            var selectPrevIndex = vm.standardReportList.findIndex(function (x) {return x.report_name == report.report_name})
 
             console.log(selectPrevIndex, "selectPrevIndex");
 
@@ -88,7 +88,7 @@ app.controller("StandardReportController",
         },
         function(){
           alertify.error("kept");
-        }).setting({  labels: {ok: ('Delete: ' + vm.currentReport.report_name), cancel: "Keep it"},
+        }).setting({  labels: {ok: ('Delete: ' + report.report_name), cancel: "Keep it"},
 
           'defaultFocus': "Keep it",
                       'modal': true,
@@ -107,6 +107,7 @@ app.controller("StandardReportController",
       if (verbose) console.log('report title - selectStandardReport',vm.reportTitle)
       vm.currentReport=report;
       StandardReportGetService.selectedStandardReport(report).then(function(response){
+        console.log('here is the stuff from the report',response.data);
         vm.standardReportResponse=response.data;
         docDefinition.content[0].table.body=[[]];
         if (verbose) console.log('standard report returned', vm.standardReportResponse);
@@ -119,7 +120,14 @@ app.controller("StandardReportController",
         vm.standardReportResponse.forEach(function(object){
           var arr=[];
           for (category in object){
-            arr.push(object[category]);
+            if(category='age'){
+              var ageyears=object.age.years?object.age.years+' years, ':'';
+              var agemonths=object.age.months?object.age.months+' months, ':'';
+              var agedays=object.age.days?object.age.days+' days':'';
+              arr.push(ageyears+agemonths+agedays);
+            }else{
+              arr.push(object[category]);
+            }
           }
           vm.dataArray.push(arr);
           docDefinition.content[0].table.body.push(arr);
