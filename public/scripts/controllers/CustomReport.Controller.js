@@ -482,9 +482,11 @@ angular.module("AngelApp").controller("CustomReportController",
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "age") {
             reportString += " age(date_of_birth), ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "transaction type") {
-            reportString += " p.transaction_type ";
+            reportString += " p.transaction_type, ";
           } else if (vm.dataSetSelections[i].title.toLowerCase() == "application date") {
-            reportString += " p.application_date ";
+            reportString += " p.application_date, ";
+          } else if (vm.dataSetSelections[i].title.toLowerCase() == "qualify amount") {
+            reportString += " p.qualify_amount, ";
           } else {
             reportString+=(vm.dataSetSelections[i].title.toLowerCase().split(" ").join("_")+", ");
           }; // last else
@@ -502,10 +504,12 @@ angular.module("AngelApp").controller("CustomReportController",
           reportString += " does_not_qualify_reason ";
         } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "age") {
           reportString += " age(date_of_birth) ";
-        } else if         (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "transaction type") {
+        } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "transaction type") {
           reportString += " p.transaction_type ";
-        } else if        (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "application date") {
+        } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "application date") {
           reportString += " p.application_date ";
+        } else if (vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase() == "qualify amount") {
+          reportString += " p.qualify_amount ";
         } else {
           reportString+=(vm.dataSetSelections[vm.dataSetSelections.length-1].title.toLowerCase().split(" ").join("_") + " ");
         };
@@ -625,9 +629,9 @@ angular.module("AngelApp").controller("CustomReportController",
           }else{
             // no special handling, put OR between all the filters
             for(var i=0;i<vm.dataFilterSelections[j].options.length-1;i++){
-              reportString+="("+vm.dataFilterSelections[j].title.toLowerCase().split(" ").join("_") +" = '" + vm.dataFilterSelections[j].options[i] + "') OR "
+              reportString+="("+vm.dataFilterSelections[j].title.toLowerCase().split(" ").join("_") +" = '" + vm.dataFilterSelections[j].options[i].split("'").join("''") + "') OR "
             }
-              reportString+="("+vm.dataFilterSelections[j].title.toLowerCase().split(" ").join("_") + "='"+vm.dataFilterSelections[j].options[vm.dataFilterSelections[j].options.length-1]+"')";
+              reportString+="("+vm.dataFilterSelections[j].title.toLowerCase().split(" ").join("_") + "='"+vm.dataFilterSelections[j].options[vm.dataFilterSelections[j].options.length-1].split("'").join("''")+"')";
           }
           reportString+=" AND "; // or OR?
         };
@@ -649,10 +653,10 @@ angular.module("AngelApp").controller("CustomReportController",
 
           // ORs between the filters per category
           for(var i=0;i<vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1;i++){
-            reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[i]+"') OR "
+            reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[i].split("'").join("''") +"') OR "
           }
           // the last filter doesn't take an OR
-          reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1]+"') )";
+          reportString+="("+vm.dataFilterSelections[vm.dataFilterSelections.length-1].title.toLowerCase().split(" ").join("_")+"='"+vm.dataFilterSelections[vm.dataFilterSelections.length-1].options[vm.dataFilterSelections[vm.dataFilterSelections.length-1].options.length-1].split("'").join("''") +"') )";
         }
       }; // end of WHERE filters
 
@@ -676,6 +680,16 @@ angular.module("AngelApp").controller("CustomReportController",
 //         reportString += ";"
 //       }
 //
+
+
+vm.changeApostrophe = function (stringToCheck) {
+  return stringToCheck.split("'").join("''");
+};
+// for passing things like 'margie''s' list to the query
+
+
+
+
 
 
 

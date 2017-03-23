@@ -11,7 +11,7 @@ app.service("subcategoryBucketService", function($http){
 
     var whereString = ""; // string to return
 
-console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
+    console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
     /* ------------ age section ------------    */
     if (dataSetSelectionsObject.title.toLowerCase() == "age") {
           whereString += " ( ";
@@ -99,11 +99,11 @@ console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
     }; // end if "monthly income"
 
 
-    /* ---------  qualify amount section ------    */
+    /* ---------  funds section ------    */
 
     // if ( dataSetSelectionsObject.title.toLowerCase() == "qualify amount" || dataSetSelectionsObject.title.toLowerCase() == "fund qualify amount") {
 
-      if (["fund qualify amount" , "qualify amount" , "fund general" , "fund komen" , "fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(dataSetSelectionsObject.title.toLowerCase()) != -1) {
+      if (["fund brain" , "fund park nicollet" , "fund lung" , "fund melanoma" , "fund margies" , "fund colon" , "fund total"].indexOf(dataSetSelectionsObject.title.toLowerCase()) != -1) {
 
       var titleForQ = dataSetSelectionsObject.title.toLowerCase().split(" ").join("_");
 
@@ -145,7 +145,66 @@ console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
         if (verbose) console.log(whereString);
       }; // for loop end
       whereString += " ) ";
-    }; // end if "qualify amount"
+    }; // end if "funds, etc"
+
+
+
+    /* ---------  funds amount section ------    */
+
+    // if ( dataSetSelectionsObject.title.toLowerCase() == "qualify amount" || dataSetSelectionsObject.title.toLowerCase() == "fund qualify amount") {
+
+      if (["fund qualify amount" , "qualify amount"].indexOf(dataSetSelectionsObject.title.toLowerCase()) != -1) {
+
+        var titleForQualAmt = dataSetSelectionsObject.title.toLowerCase();
+
+        if (titleForQualAmt == "fund qualify amount") {
+          titleForQualAmt = "distributions.qualify_amount";
+        } else {
+          titleForQualAmt = "p.qualify_amount";
+        };
+
+
+      // title:'Qualify Amount', // or "fund qualify amount"
+      // options:['0','100-300','301-500','501-800','801+']
+      // var whereString = "";
+      // var dataSetSelectionsObject = {options: ['< 100','501-800','801+']};
+      whereString += " ( ";
+      for (var k = 0; k < dataSetSelectionsObject.options.length; k++) {
+
+        if ((typeof dataSetSelectionsObject.options[k]) == "number") {
+          whereString += " (" + titleForQualAmt + " < " + dataSetSelectionsObject.options[k] + " ) ";
+
+        } else if (dataSetSelectionsObject.options[k].charAt(0) == "<" ) {
+          whereString += " (" + titleForQualAmt + " < " + (Number.parseInt(dataSetSelectionsObject.options[k].substring(1))) + " )"; // for "< 1000" (Number.parseInt(dataSetSelectionsObject.options[i]))
+
+        } else if (dataSetSelectionsObject.options[k].charAt(0) == ">" ) {
+          whereString += " (" + titleForQualAmt + " > " + (Number.parseInt(dataSetSelectionsObject.options[k].substring(1))) + " )";
+          // for "> 100000"
+
+        } else if ( dataSetSelectionsObject.options[k].indexOf("+") != -1) {
+          whereString += " (" + titleForQualAmt + " > " + (Number.parseInt(dataSetSelectionsObject.options[k])) + " A)";
+          // for "100000+"
+
+        } else if ( dataSetSelectionsObject.options[k] == "0" || dataSetSelectionsObject.options[k] == "") {
+          whereString += " (" + titleForQualAmt + " = 0)";
+          // for "O" or ""
+
+        } else {
+          var arrayForString = dataSetSelectionsObject.options[k].split("-");
+          // "45001-60000" -> ["45001","60000"]
+
+          whereString +=" (" + titleForQualAmt + " > " + arrayForString[0] + "  AND " + titleForQualAmt + " <= " + arrayForString[1] + " )";
+        };
+
+        if (k < dataSetSelectionsObject.options.length - 1) {
+          whereString += " OR ";
+        };
+        if (verbose) console.log(whereString);
+      }; // for loop end
+      whereString += " ) ";
+    }; // end if "qualify amount, etc"
+
+
 
 
     /* ------------ expiration date section ------------    */
@@ -216,9 +275,9 @@ console.log(expDateArray);
         if (verbose) console.log(appStartDate, appStopDate);
 
         if (appStartDate < appStopDate) {
-          whereString += "(application_date >= '" + appStartDate + "' AND application_date <= '" + appStopDate + "')";
+          whereString += "(p.application_date >= '" + appStartDate + "' AND p.application_date <= '" + appStopDate + "')";
         } else {
-          whereString += "(application_date >= '" + appStopDate + "' AND application_date <= '" + appStartDate + "')";
+          whereString += "(p.application_date >= '" + appStopDate + "' AND p.application_date <= '" + appStartDate + "')";
         };
 
 
