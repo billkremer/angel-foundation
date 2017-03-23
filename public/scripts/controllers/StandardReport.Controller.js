@@ -107,6 +107,7 @@ app.controller("StandardReportController",
       if (verbose) console.log('report title - selectStandardReport',vm.reportTitle)
       vm.currentReport=report;
       StandardReportGetService.selectedStandardReport(report).then(function(response){
+        console.log('here is the stuff from the report',response.data);
         vm.standardReportResponse=response.data;
         docDefinition.content[0].table.body=[[]];
         if (verbose) console.log('standard report returned', vm.standardReportResponse);
@@ -119,7 +120,14 @@ app.controller("StandardReportController",
         vm.standardReportResponse.forEach(function(object){
           var arr=[];
           for (category in object){
-            arr.push(object[category]);
+            if(category='age'){
+              var ageyears=object.age.years?object.age.years+' years, ':'';
+              var agemonths=object.age.months?object.age.months+' months, ':'';
+              var agedays=object.age.days?object.age.days+' days':'';
+              arr.push(ageyears+agemonths+agedays);
+            }else{
+              arr.push(object[category]);
+            }
           }
           vm.dataArray.push(arr);
           docDefinition.content[0].table.body.push(arr);
