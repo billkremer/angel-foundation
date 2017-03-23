@@ -14,7 +14,7 @@ app.service("subcategoryBucketService", function($http){
 console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
     /* ------------ age section ------------    */
     if (dataSetSelectionsObject.title.toLowerCase() == "age") {
-
+          whereString += " ( ";
       for (var i = 0; i < dataSetSelectionsObject.options.length; i++) {
 
         if ((typeof dataSetSelectionsObject.options[i]) == "number") {
@@ -43,6 +43,7 @@ console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
         };
         if (verbose) console.log(whereString);
       }; // for loop end
+      whereString += " ) ";
     }; // end "age" if
     /* ------------ end age section ------------    */
 
@@ -58,7 +59,7 @@ console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
       // // converts yearly income to monthly, as in the database
       // var whereString = "";
       // var dataSetSelectionsObject = {options: ['< 1000','>15000','15001-30000','30001-45000']};
-
+      whereString += " ( ";
       for (var j = 0; j < dataSetSelectionsObject.options.length; j++) {
 
         if (verbose) console.log(typeof dataSetSelectionsObject.options[j]);
@@ -94,6 +95,7 @@ console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
         };
         if (verbose) console.log(whereString);
       }; // for loop end
+      whereString += " ) ";
     }; // end if "monthly income"
 
 
@@ -109,7 +111,7 @@ console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
       // options:['0','100-300','301-500','501-800','801+']
       // var whereString = "";
       // var dataSetSelectionsObject = {options: ['< 100','501-800','801+']};
-
+      whereString += " ( ";
       for (var k = 0; k < dataSetSelectionsObject.options.length; k++) {
 
         if ((typeof dataSetSelectionsObject.options[k]) == "number") {
@@ -142,6 +144,7 @@ console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
         };
         if (verbose) console.log(whereString);
       }; // for loop end
+      whereString += " ) ";
     }; // end if "qualify amount"
 
 
@@ -160,7 +163,7 @@ console.log((dataSetSelectionsObject.title.toLowerCase() == "age"));
 
       console.log(dataSetSelectionsObject,"obj");
 // .options is a string, not an array. so no for loop
-
+      whereString += " ( ";
       for (var p = 0; p < dataSetSelectionsObject.options.length; p++) {
 // console.log(dataSetSelectionsObject.options[p]);
         expDateArray = dataSetSelectionsObject.options[p].split("--");
@@ -185,6 +188,7 @@ console.log(expDateArray);
         }; // connects all the potential strings
 
       }; // end for loop
+      whereString += " ) ";
     }; // end if "expiration date"
 
 
@@ -199,7 +203,7 @@ console.log(expDateArray);
       var appStartDate = new Date();
       var appStopDate = new Date();
       var appDateArray = []
-
+      whereString += " ( ";
       for (var m = 0; m < dataSetSelectionsObject.options.length; m++) {
 
         appDateArray = dataSetSelectionsObject.options[m].split(" -- ");
@@ -225,6 +229,7 @@ console.log(expDateArray);
         }; // connects all the potential strings
 
       }; // end for loop
+      whereString += " ) ";
     }; // end if "application date"
 
 
@@ -239,8 +244,9 @@ console.log(expDateArray);
 
       var distStartDate = new Date();
       var distStopDate = new Date();
-      var distDateArray = []
+      var distDateArray = [];
 
+      whereString += " ( ";
       for (var n = 0; n < dataSetSelectionsObject.options.length; n++) {
 
         distDateArray = dataSetSelectionsObject.options[n].split(" -- ");
@@ -255,9 +261,9 @@ var distStartDateString = (new Date(distDateArray[0])).toISOString().substring(0
         if (verbose) console.log(distStartDate, distStopDateString);
 
         if (distStartDateString < distStopDateString) {
-          whereString += "(application_date >= '" + distStartDateString + "' AND application_date <= '" + distStopDateString + "')";
+          whereString += "(distribution_date >= '" + distStartDateString + "' AND distribution_date <= '" + distStopDateString + "')";
         } else {
-          whereString += "(application_date >= '" + distStopDateString + "' AND application_date <= '" + distStartDateString + "')";
+          whereString += "(distribution_date >= '" + distStopDateString + "' AND distribution_date <= '" + distStartDateString + "')";
         };
 
         if (verbose) console.log(whereString);
@@ -267,6 +273,7 @@ var distStartDateString = (new Date(distDateArray[0])).toISOString().substring(0
         }; // connects all the potential strings
 
       }; // end for loop
+      whereString += " ) ";
     }; // end if "distribution date"
 
 

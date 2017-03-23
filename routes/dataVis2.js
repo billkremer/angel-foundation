@@ -12,7 +12,7 @@ var pool = new pg.Pool(config);
 router.get("/", function(req, res) {
   console.log(req.query.field);
   console.log(req.query.item);
-  var string="SELECT * FROM patient Where "+req.query.field+"='"+req.query.item+"';";
+  var string="SELECT * FROM patient Where "+req.query.field+"='"+req.query.item+"' AND does_not_qualify=FALSE;";
   console.log('done');
     pool.connect(function(err, client, done) {
         if (err) {

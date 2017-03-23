@@ -29,7 +29,7 @@ function($location,$http,$route) {
   vm.uploadAll=function($event){
     alertify.confirm('Are you sure?  This will overwrite ALL data in the table', 'Clicking OK will replace all the data in your database').set('onok', function(closeEvent){
       $event.preventDefault();
-      if(vm.type=='patient'){
+      if(vm.type=='Patient Data'){
         vm.uploadAllPatient();
         vm.databasePatientTimeStamp();
       }
@@ -80,7 +80,8 @@ vm.uploadAllDistributionData = function(){
 vm.uploadAdd=function($event){
   $event.preventDefault();
   console.log('vm.type',vm.type);
-  if(vm.type=='patient'){
+  console.log('stuff to send',vm.csv.result);
+  if(vm.type=='Patient Data'){
     vm.uploadAddPatient();
     vm.databasePatientTimeStamp();
   }
@@ -93,21 +94,21 @@ vm.uploadAdd=function($event){
 
 vm.uploadAddPatient = function(){
   // console.log(vm.csv.result); // array of objects.  each row is an object.
-  var objectToSend = {dataArray: vm.csv.result};
-  console.log('Adding to Patients', objectToSend);
-  // put in error checking?
-  // vm.csv.result.forEach(function(object){
-  $http.post('/upload/addPatientData', objectToSend // just pass the object...
-).then(function(response){
-  console.log(response);
-  alertify.set('notifier','position', 'bottom-right');
-  alertify.success(vm.csv.result.filename + ' Submitted!');
-  $route.reload();
-}, function(error) {
-  console.log('error uploading patient csv', error);
-});
-};
+    var objectToSend = {dataArray: vm.csv.result};
+    console.log('Adding to Patients', objectToSend);
+    // put in error checking?
+    // vm.csv.result.forEach(function(object){
+    $http.post('/upload/addPatientData', objectToSend // just pass the object...
+      ).then(function(response){
+        console.log(response);
+        alertify.set('notifier','position', 'bottom-right');
+        alertify.success(vm.csv.result.filename + ' Submitted!');
+        $route.reload();
+      }, function(error) {
+        console.log('error uploading patient csv', error);
+      });
 
+}
 
 vm.uploadAddDistributionData = function(){
   // console.log(vm.csv.result); // array of objects.  each row is an object.

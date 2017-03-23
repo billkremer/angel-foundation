@@ -13,7 +13,7 @@
               <li><a href="/">Standard Reports</a></li>
               <li><a href="/custom-report">Custom Reports</a></li>
               <li><a href="/data-upload">Upload</a></li>
-              <li><a href="/data-vis">Data Visualization</a></li>
+              <li><a href="/all-vis">Data Visualization</a></li>
             </ul>
           </div>
         </div>
@@ -56,10 +56,12 @@
 
 
       <ul >
-        <li ng-repeat="report in standardCtrl.standardReportList track by $index" ng-model="report" ng-click="standardCtrl.selectStandardReport(report)" >
+        <li ng-class="" ng-repeat="report in standardCtrl.standardReportList track by $index" ng-model="report" ng-click="standardCtrl.selectStandardReport(report)" ><span ng-model="report" >{{report.report_name}}</span>
 
-            {{report.report_name}}
 
+
+
+            <span ng-show="standardCtrl.showDelete" ng-click="standardCtrl.deleteReport(report)" class="removeButton glyphicon glyphicon-remove"></span>
         </li>
       </ul>
 
@@ -76,6 +78,7 @@
       <!-- report preview -->
       <div id="standardReport-reportPreview" class="">
         <h1>Preview of {{standardCtrl.reportTitle}}</h1>
+      
         <table id="previewTable">
             <p id="bg-text">Sample</p>
           <tr>
@@ -90,8 +93,12 @@
 
       <div id="standardReport-reportButtons" class="container-fluid">
         <div class="row">
+          <div  class="col-xs-3">
+            <button type="button" class="btn btn-warning" ng-click="standardCtrl.showDeleteButton()">{{standardCtrl.showDeleteString}}</button>
+          </div>
 
-          <div id="selectionButtons" class="btn-group col-xs-12" role="group" aria-label="...">
+
+          <div id="selectionButtons" class="btn-group col-xs-9" role="group" aria-label="save as a csv file or save as a pdf button">
             <button type="button" class="btn btn-default" ng-class="standardCtrl.csvButtonClass"  ng-click="standardCtrl.goNext('csvButton')">Save as CSV</button>
 
             <button type="button" class="btn btn-default"   ng-class="standardCtrl.pdfButtonClass" ng-click="standardCtrl.goNext('pdfButton')">Save as PDF</button>

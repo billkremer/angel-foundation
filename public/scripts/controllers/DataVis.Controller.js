@@ -6,7 +6,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     var now=new Date()
     var currentDate=d3.time.format("%m-%Y")(now);
     var months=[];
-    var old=new Date(2012,0);
+    var old=new Date(2015,1);
     var dif=((((((now.getTime()-old.getTime())/1000)/60)/60)/24)/365)*12;
     for(var i=0;i<dif;i++){
       now=new Date()
@@ -40,6 +40,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
               arrayOfCounties.push(currentCountyObject);
               if(result.data[0].i==res.data.length-1){
                 loadData();
+
                 console.log('array of counties',arrayOfCounties);
               }
 
@@ -77,11 +78,9 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
 
 
-
-
-
-
-
+// var sliderLow=new Date(2012,0);
+// sliderLow.setMonth(sliderLow.getMonth()-value[0]);
+// d3.time.format("%m-%Y")(sliderLow);
 
     dif=Number.parseInt(dif);
     var currentCounty='';
@@ -89,11 +88,20 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     var highLimit=dif;
     // var months=["01-2016","02-2016","03-2016","04-2016","05-2016","06-2016","07-2016","08-2016","09-2016","10-2016","11-2016","12-2016"];
     d3.select('#slider').call(d3.slider().axis(true).min(1).max(dif).step(1).value( [ 1, dif ] ).on("slide", function(evt, value) {
-      // d3.select('#slidertextmin').text(value[ 0 ]);
+      var sliderLow=new Date(2015,1);
+      sliderLow.setMonth(sliderLow.getMonth()+value[0]);
+    // 'min= '+d3.time.format("%m-%Y")(sliderLow)
+
+      d3.select('#slidertextmin').text('min= '+d3.time.format("%m-%Y")(sliderLow));
       lowLimit=value[0];
       // console.log(value[0]);
       months=[];
-      // d3.select('#slidertextmax').text(value[ 1 ]);
+
+      var sliderHigh=new Date();
+      sliderHigh.setMonth(sliderHigh.getMonth()-(dif-value[1]));
+
+
+      d3.select('#slidertextmax').text('max= '+d3.time.format("%m-%Y")(sliderHigh));
       highLimit=value[1];
       // console.log(value[1]);
       // for(var i=0;i<value[1]-value[0]+1;i++){
@@ -108,7 +116,12 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
           months = months.map(function(d){return parseDate.parse(d);});
           // console.log('months',months);
           console.log(months);
-          getSelectToggleCounty();
+          if(currentCounty==''){
+            console.log('no county selected');
+          }else{
+
+            getSelectToggleCounty();
+          }
         }
       }
 
@@ -175,19 +188,19 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
       return outArr;
     }
 
-    var statewideOptionList = [
-    	{condensedName: 'all', friendlyName: 'State-wide'},
-    	{condensedName: 'metro', friendlyName: 'All Metropolitan Counties'},
-    	{condensedName: 'MinneapolisStPaulBloomingtonMNWI', friendlyName: 'Minneapolis-St. Paul-Bloomington MN-WI Metro Region'},
-    	{condensedName: 'StCloudMN', friendlyName: '    St. Cloud MN Metro Region'},
-    	{condensedName: 'MankatoNorthMankatoMN', friendlyName: '    Mankato-North Mankato MN Metro Region'},
-    	{condensedName: 'DuluthMNWI', friendlyName: '    Duluth MN-WI Metro Region'},
-    	{condensedName: 'FargoNDMN', friendlyName: '    Fargo ND-MN Metro Region'},
-    	{condensedName: 'RochesterMN', friendlyName: '    Rochester MN Metro Region'},
-    	{condensedName: 'LaCrosseOnalaskaWIMN', friendlyName: '    La Crosse-Onalaska WI-MN Metro Region'},
-    	{condensedName: 'GrandForksNDMN', friendlyName: '    Grand Forks ND-MN Metro Region'},
-    	{condensedName: 'nonmetro', friendlyName: 'All Non-Metropolitan Counties'}
-    ];
+    // var statewideOptionList = [
+    // 	{condensedName: 'all', friendlyName: 'State-wide'},
+    // 	{condensedName: 'metro', friendlyName: 'All Metropolitan Counties'},
+    // 	{condensedName: 'MinneapolisStPaulBloomingtonMNWI', friendlyName: 'Minneapolis-St. Paul-Bloomington MN-WI Metro Region'},
+    // 	{condensedName: 'StCloudMN', friendlyName: '    St. Cloud MN Metro Region'},
+    // 	{condensedName: 'MankatoNorthMankatoMN', friendlyName: '    Mankato-North Mankato MN Metro Region'},
+    // 	{condensedName: 'DuluthMNWI', friendlyName: '    Duluth MN-WI Metro Region'},
+    // 	{condensedName: 'FargoNDMN', friendlyName: '    Fargo ND-MN Metro Region'},
+    // 	{condensedName: 'RochesterMN', friendlyName: '    Rochester MN Metro Region'},
+    // 	{condensedName: 'LaCrosseOnalaskaWIMN', friendlyName: '    La Crosse-Onalaska WI-MN Metro Region'},
+    // 	{condensedName: 'GrandForksNDMN', friendlyName: '    Grand Forks ND-MN Metro Region'},
+    // 	{condensedName: 'nonmetro', friendlyName: 'All Non-Metropolitan Counties'}
+    // ];
 
     var allCountyInfo = [];
     var allRegionInfo = [];
@@ -230,8 +243,8 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     				.append("option").attr("value", function(d){return d;}).text(function(d){return d;});
 
     				//build the metro area list
-    				d3.select("select#statewideOptions").selectAll('option').data(statewideOptionList).enter()
-    				.append("option").attr("value", function(d){return d.condensedName;}).text(function(d){return d.friendlyName;});
+    				// d3.select("select#statewideOptions").selectAll('option').data(statewideOptionList).enter()
+    				// .append("option").attr("value", function(d){return d.condensedName;}).text(function(d){return d.friendlyName;});
 
             //building svg map
     				svg.selectAll(".county")
@@ -281,12 +294,20 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     					}
     				});
 
-    				svg.append("path")
-    				.datum(topojson.mesh(mn, mn.objects.counties, function(a, b) { return a === b; }))
-    				.attr({
-    					"id": "highlightPath",
-    					"d": path
-    				});
+            var startCounty=function(){
+              var startCounty = arrayOfCounties.returnCountyInfo('Hennepin County');
+              var countyElement = document.getElementById('countyOptions');
+              currentCounty='Hennepin County';
+              toggleCounty(startCounty);
+            }
+            startCounty();
+
+    				// svg.append("path")
+    				// .datum(topojson.mesh(mn, mn.objects.counties, function(a, b) { return a === b; }))
+    				// .attr({
+    				// 	"id": "highlightPath",
+    				// 	"d": path
+    				// });
 
     				// getSelectToggleCounty();
     			});
@@ -302,11 +323,11 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     	toggleCounty(allCountyInfo.returnCountyInfo(county));
     }
 
-    function getSelectToggleRegion(){
-    	var e = document.getElementById("statewideOptions");
-    	var region = e.options[e.selectedIndex].value;
-    	toggleRegion(region);
-    }
+    // function getSelectToggleRegion(){
+    // 	var e = document.getElementById("statewideOptions");
+    // 	var region = e.options[e.selectedIndex].value;
+    // 	toggleRegion(region);
+    // }
 
     function toggleCounty(countyInfo){
     	d3.select("#highlightPath").remove();
@@ -323,72 +344,72 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     	displayCountyData(countyInfo);
     }
-
-    function toggleRegion(regionType){
-    	d3.select("#highlightPath").remove();
-
-    	if (regionType == 'all'){
-    		d3.selectAll("svg#mapMain").append("path")
-    		.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) { return a === b; }))
-    		.attr({
-    			"id": "highlightPath",
-    			"d": path
-    		});
-
-    		displayStateData();
-    	}
-    	else if (regionType == 'metro'){
-    		d3.selectAll("svg#mapMain").append("path")
-    		.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) {
-    			var aCounty = allCountyInfo.returnCountyInfo(a.properties.name);
-    			var bCounty = allCountyInfo.returnCountyInfo(b.properties.name);
-    			//I realize this logic can be simplified but I need it spelled out
-    			return (aCounty.metro === "" && bCounty.metro !== "") || //either border between metro and non metro
-    				(aCounty.metro !== "" && bCounty.metro === "") || //either border between metro and non metro
-    				(aCounty.metro !== "" && aCounty === bCounty) || //or border between metro and outside
-    				(bCounty.metro !== "" && aCounty === bCounty);  })) //or border between metro and outside
-    		.attr({
-    			"id": "highlightPath",
-    			"d": path
-    		});
-
-    		displayMetroOrRuralData(true);
-    	}
-    	else if (regionType == 'nonmetro'){
-    		d3.selectAll("svg#mapMain").append("path")
-    		.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) {
-    			var aCounty = allCountyInfo.returnCountyInfo(a.properties.name);
-    			var bCounty = allCountyInfo.returnCountyInfo(b.properties.name);
-    			//I realize this logic can be simplified but I need it spelled out
-    			return (aCounty.metro === "" && bCounty.metro !== "") || //either border between metro and non metro
-    				(aCounty.metro !== "" && bCounty.metro === "") || //either border between metro and non metro
-    				(aCounty.metro === "" && aCounty === bCounty) || //or border between nonmetro and outside
-    				(bCounty.metro === "" && aCounty === bCounty);  })) //or border between nonmetro and outside
-    		.attr({
-    			"id": "highlightPath",
-    			"d": path
-    		});
-
-    		displayMetroOrRuralData(false);
-    	}
-    	else  { //specific metro region
-    		d3.selectAll("svg#mapMain").append("path")
-    		.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) {
-    			var aCounty = allCountyInfo.returnCountyInfo(a.properties.name);
-    			var bCounty = allCountyInfo.returnCountyInfo(b.properties.name);
-    			//I realize this logic can be simplified but I need it spelled out
-    			return (aCounty.metro === regionType && bCounty.metro !== regionType) || //either border between specified region and outside specified region
-    				(aCounty.metro !== regionType && bCounty.metro === regionType) || //either border between metro and non metro
-    				(aCounty.metro === regionType && aCounty === bCounty) || //or border between nonmetro and outside
-    				(bCounty.metro === regionType && aCounty === bCounty);  })) //or border between nonmetro and outside
-    		.attr({
-    			"id": "highlightPath",
-    			"d": path
-    		});
-
-    		displayMetroRegionData(regionType);
-    	}
-    }
+    //
+    // function toggleRegion(regionType){
+    // 	d3.select("#highlightPath").remove();
+    //
+    // 	if (regionType == 'all'){
+    // 		d3.selectAll("svg#mapMain").append("path")
+    // 		.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) { return a === b; }))
+    // 		.attr({
+    // 			"id": "highlightPath",
+    // 			"d": path
+    // 		});
+    //
+    // 		displayStateData();
+    // 	}
+    // 	else if (regionType == 'metro'){
+    // 		d3.selectAll("svg#mapMain").append("path")
+    // 		.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) {
+    // 			var aCounty = allCountyInfo.returnCountyInfo(a.properties.name);
+    // 			var bCounty = allCountyInfo.returnCountyInfo(b.properties.name);
+    // 			//I realize this logic can be simplified but I need it spelled out
+    // 			return (aCounty.metro === "" && bCounty.metro !== "") || //either border between metro and non metro
+    // 				(aCounty.metro !== "" && bCounty.metro === "") || //either border between metro and non metro
+    // 				(aCounty.metro !== "" && aCounty === bCounty) || //or border between metro and outside
+    // 				(bCounty.metro !== "" && aCounty === bCounty);  })) //or border between metro and outside
+    // 		.attr({
+    // 			"id": "highlightPath",
+    // 			"d": path
+    // 		});
+    //
+    // 		displayMetroOrRuralData(true);
+    // 	}
+    // 	else if (regionType == 'nonmetro'){
+    // 		d3.selectAll("svg#mapMain").append("path")
+    // 		.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) {
+    // 			var aCounty = allCountyInfo.returnCountyInfo(a.properties.name);
+    // 			var bCounty = allCountyInfo.returnCountyInfo(b.properties.name);
+    // 			//I realize this logic can be simplified but I need it spelled out
+    // 			return (aCounty.metro === "" && bCounty.metro !== "") || //either border between metro and non metro
+    // 				(aCounty.metro !== "" && bCounty.metro === "") || //either border between metro and non metro
+    // 				(aCounty.metro === "" && aCounty === bCounty) || //or border between nonmetro and outside
+    // 				(bCounty.metro === "" && aCounty === bCounty);  })) //or border between nonmetro and outside
+    // 		.attr({
+    // 			"id": "highlightPath",
+    // 			"d": path
+    // 		});
+    //
+    // 		displayMetroOrRuralData(false);
+    // 	}
+    // 	else  { //specific metro region
+    // 		d3.selectAll("svg#mapMain").append("path")
+    // 		.datum(topojson.mesh(countyJson, countyJson.objects.counties, function(a, b) {
+    // 			var aCounty = allCountyInfo.returnCountyInfo(a.properties.name);
+    // 			var bCounty = allCountyInfo.returnCountyInfo(b.properties.name);
+    // 			//I realize this logic can be simplified but I need it spelled out
+    // 			return (aCounty.metro === regionType && bCounty.metro !== regionType) || //either border between specified region and outside specified region
+    // 				(aCounty.metro !== regionType && bCounty.metro === regionType) || //either border between metro and non metro
+    // 				(aCounty.metro === regionType && aCounty === bCounty) || //or border between nonmetro and outside
+    // 				(bCounty.metro === regionType && aCounty === bCounty);  })) //or border between nonmetro and outside
+    // 		.attr({
+    // 			"id": "highlightPath",
+    // 			"d": path
+    // 		});
+    //
+    // 		displayMetroRegionData(regionType);
+    // 	}
+    // }
 
     function toggleDisplay(displayType) {
     	if (displayType == 'state') {
@@ -526,7 +547,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     	index.append("text").attr({
           x: 25,
           y: 16
-    	}).text("Number of Applicants");
+    	}).text("Number of Approved Applicants");
       //
     	// index.append("text").attr({
       //     x: 25,

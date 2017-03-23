@@ -14,7 +14,7 @@
               <li><a href="/">Standard Reports</a></li>
               <li><a href="/custom-report">Custom Reports</a></li>
               <li><a href="/data-upload">Upload</a></li>
-              <li><a href="/data-vis">Data Visualization</a></li>
+              <li><a href="/all-vis">Data Visualization</a></li>
             </ul>
           </div>
         </div>
@@ -52,32 +52,29 @@
 
     <!-- Addendum Tab -->
     <div role="tabpanel" class="tab-pane active" id="addTab">
-      <h3 class = "col-xs-6 col-xs-offset-4">You are uploading an ADDENDUM</h3>
-      <button id="uploader" class = "col-xs-2 col-xs-offset-5 btn-default">
+      <h3>You are uploading an ADDENDUM</h3>
+      <!-- <md-button id="uploader" class = "col-xs-2 col-xs-offset-5 md-raised"> -->
 
           <ng-csv-import  content="uploadCtrl.csv.content"
           material
+          id="uploader"
           accept="uploadCtrl.csv.accept"
           md-button-class="md-icon-button md-raised md-accent"
           header="uploadCtrl.csv.header"
           separator="uploadCtrl.csv.separator"
+          class="col-xs-4 col-xs-offset-4 md-raised btn-lg"
           result="uploadCtrl.csv.result" value="Submit">
           </ng-csv-import>
-      </button>
-      <div class="col-xs-2 col-xs-offset-5">
-        {{uploadCtrl.csv.result.filename}}
-      </div>
+      <!-- </md-button> -->
 
-      <form name="myForm" class="col-xs-2 col-xs-offset-5">
-        <label>
-          <input type="radio" ng-model="uploadCtrl.type" value="patient">
-          Patient Data
-        </label>
-        <label>
-          <input type="radio" ng-model="uploadCtrl.type" ng-value="distribution">
-          Distribution Data
-        </label>
-       </form>
+
+
+       <md-radio-group class="col-xs-4 col-xs-offset-4" ng-model="uploadCtrl.type">
+         <md-radio-button value="Patient Data" class="md-primary">Patient Data</md-radio-button>
+         <md-radio-button value="Distribution Data"> Distribution Data </md-radio-button>
+       </md-radio-group>
+
+
 
       <input id="uploadSubmit" type="submit" value="Submit" ng-click="uploadCtrl.uploadAdd($event)" placeholder="Upload" class = "btn-primary col-sm-2 col-sm-offset-5">
 
@@ -90,32 +87,26 @@
 
       <!-- 'All' tab -->
       <div role="tabpanel" class="tab-pane" id="allTab">
-          <h3 class = "col-xs-6 col-xs-offset-4">You are OVERWRITING ALL</h3>
-          <button id="uploader" class = "col-xs-2 col-xs-offset-5 btn-default">
+          <h3>You are OVERWRITING ALL</h3>
+          <!-- <button id="uploader" class = "col-xs-2 col-xs-offset-5 btn-default"> -->
 
               <ng-csv-import  content="uploadCtrl.csv.content"
               material
+              id="uploader"
               accept="uploadCtrl.csv.accept"
               md-button-class="md-icon-button md-raised md-accent"
               header="uploadCtrl.csv.header"
               separator="uploadCtrl.csv.separator"
+              class="col-xs-4 col-xs-offset-4 md-raised btn-lg"
               result="uploadCtrl.csv.result" value="Submit">
               </ng-csv-import>
-          </button>
-          <div class="col-xs-2 col-xs-offset-5">
-            {{uploadCtrl.csv.result.filename}}
-          </div>
+          <!-- </button> -->
 
-          <form name="myForm" class="col-xs-2 col-xs-offset-5">
-            <label>
-              <input type="radio" ng-model="uploadCtrl.type" value="patient">
-              Patient Data
-            </label>
-            <label>
-              <input type="radio" ng-model="uploadCtrl.type" ng-value="distribution">
-              Distribution Data
-            </label>
-           </form>
+
+           <md-radio-group class="col-xs-4 col-xs-offset-4" ng-model="uploadCtrl.type">
+             <md-radio-button value="Patient Data" class="md-primary">Patient Data</md-radio-button>
+             <md-radio-button value="Distribution Data"> Distribution Data </md-radio-button>
+           </md-radio-group>
 
           <input id="uploadSubmit" type="submit" value="Submit" ng-click="uploadCtrl.uploadAll($event)" placeholder="Upload" class = "btn-primary col-sm-2 col-sm-offset-5">
 

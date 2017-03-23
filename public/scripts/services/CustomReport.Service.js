@@ -92,4 +92,18 @@ app.service("CustomReportService", function($http){
     });
   };//end of getAllDrIds
 
+  vm.getCustomReport=function(query){
+    return $http({
+      method: 'GET',
+      url: '/customReport',
+      params: {
+        search: query
+      }
+    }).then(function(response){
+      console.log('custom report response from db', response);
+      return response;
+    }).catch(function(err){
+      console.log('error getting custom report', err);
+    })
+  }
 });

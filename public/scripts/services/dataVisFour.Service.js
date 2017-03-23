@@ -1,10 +1,10 @@
-app.service("barChartService", function($http){
+app.service("dataVisFourService", function($http){
   var vm = this;
 
   vm.getDistinct = function(query){
     return $http({
       method: "GET",
-      url: "/barChart",
+      url: "/dataVis",
       params: {
         search: query.title
       }
@@ -19,7 +19,7 @@ app.service("barChartService", function($http){
   vm.getValues = function(query,index){
     return $http({
       method: "GET",
-      url: "/barChart2",
+      url: "/dataVisFour2",
       params: {
         field: query.field,
         item:  query.item,

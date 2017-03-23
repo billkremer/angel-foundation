@@ -22,7 +22,9 @@ app.service("distributionService", function($http){
       url: "/dist2",
       params: {
         field: query.field,
-        item:  query.item
+        item:  query.item,
+        start:query.start,
+        end:query.end
       }
     }).then(function(response){
       console.log(response);
