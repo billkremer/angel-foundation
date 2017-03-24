@@ -120,7 +120,7 @@ app.controller("StandardReportController",
         vm.standardReportResponse.forEach(function(object){
           var arr=[];
           for (category in object){
-            if(category='age'){
+            if(category=='age'){
               var ageyears=object.age.years?object.age.years+' years, ':'';
               var agemonths=object.age.months?object.age.months+' months, ':'';
               var agedays=object.age.days?object.age.days+' days':'';
