@@ -109,12 +109,19 @@ app.controller("StandardReportController",
       StandardReportGetService.selectedStandardReport(report).then(function(response){
         console.log('here is the stuff from the report',response.data);
         vm.standardReportResponse=response.data;
+
         docDefinition.content[0].table.body=[[]];
         if (verbose) console.log('standard report returned', vm.standardReportResponse);
         for(key in vm.standardReportResponse[0]){
           vm.keys.push(key);
           docDefinition.content[0].table.body[0].push(key);
         }
+        console.log(vm.keys, "vm.keys");
+        if (vm.keys.length == 0) {
+          console.log("inside vmkeys if");
+          vm.keys = ["No Data Matches This Search."];
+        };
+
         vm.dataArray=[];
 
         vm.standardReportResponse.forEach(function(object){
