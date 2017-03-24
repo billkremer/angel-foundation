@@ -4,7 +4,7 @@ var router = express.Router();
 var pg = require("pg");
 
 var config = {
-    database: "angel_data_reporting"
+    database: process.env.DATABASE_URL
 };
 
 var verbose = false; // hides console logs

@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var pg = require('pg');
-var config = {database: 'angel_data_reporting'};
+var config = {database: process.env.DATABASE_URL};
 var pool = new pg.Pool(config);
 
 router.post('/allPatientData', function(req, res) {

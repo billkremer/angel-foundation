@@ -1,5 +1,5 @@
 var pg = require('pg');
 var pool = new pg.Pool({
-  database: 'angel_data_reporting'
+  database: process.env.DATABASE_URL
 });
 module.exports = pool;
