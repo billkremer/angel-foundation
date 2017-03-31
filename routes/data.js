@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-var pg = require("pg");
-
-var config = {
-    database: "angel_data_reporting"
-};
-
-var pool = new pg.Pool(config);
+var pool = require("../db/connection");
+// var pg = require("pg");
+//
+// var config = {
+//     database: "angel_data_reporting"
+// };
+//
+// var pool = new pg.Pool(config);
 
 var verbose = true;
 

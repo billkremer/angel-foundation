@@ -1,13 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-var pg = require("pg");
+var pool = require("../db/connection");
 
-var config = {
-    database: "angel_data_reporting"
-};
-
-var pool = new pg.Pool(config);
+// var pg = require("pg");
+// 
+// var config = {
+//     database: "angel_data_reporting"
+// };
+//
+// var pool = new pg.Pool(config);
 
 router.get("/", function(req, res) {
   console.log(req.query.field);
