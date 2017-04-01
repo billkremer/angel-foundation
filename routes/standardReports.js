@@ -11,8 +11,6 @@ var pool = require("../db/connection");
 
 var verbose = false; // hides console logs
 
-
-
 router.get("/", function(req,res){
   pool.connect(function(err, client, done) {
     if (err) {

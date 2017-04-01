@@ -10,10 +10,10 @@ var pool = require("../db/connection");
 //
 // var pool = new pg.Pool(config);
 
-var verbose = true;
+var verbose = false; // turns off console logs
 
 router.get("/", function(req, res) {
-  console.log(req);
+  if (verbose) console.log(req);
     pool.connect(function(err, client, done) {
         if (err) {
             if (verbose) console.log("Error connecting to DB", err);

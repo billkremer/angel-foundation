@@ -1,6 +1,8 @@
 angular.module("AngelApp").controller("DataVisTwoController", ['$location','$http',
   function($location,$http) {
-    console.log('datavis2 controller loaded');
+
+    var verbose = false;
+    if (verbose) console.log('datavis2 controller loaded');
 
     var vm=this;
 
@@ -33,7 +35,7 @@ angular.module("AngelApp").controller("DataVisTwoController", ['$location','$htt
         var data2=[{Fruit:'apple',value:2},{Fruit:'grapes',value:1},{Fruit:'orange',value:8}];
         vm.swap=function(){
           nodes = bubble.nodes({children:data2}).filter(function(d) { return !d.children; });
-          console.log('hello');
+          if (verbose) console.log('hello');
           var allBubbles = d3.selectAll('circle');
           allBubbles.transition()
           .duration(duration + delay)

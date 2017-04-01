@@ -1,6 +1,8 @@
 angular.module("AngelApp").controller("d3barchartController", ['$location','$http','barChartService','distByCountyOrCancerService',
   function($location,$http,barChartService,distByCountyOrCancerService) {
-    console.log('d3bar controller loaded');
+
+    var verbose = false;
+    if (verbose) console.log('d3bar controller loaded');
 
     var vm=this;
     vm.responseOne=[];
@@ -16,16 +18,16 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
     vm.getBar=function(){
       data=[];
       vm.responseOne=[];
-      console.log(vm.option);
+      if (verbose) console.log(vm.option);
       if(vm.option=='Distributions by cancer type'||vm.option=='Distributions by county'){
         var counties=['Anoka','Carver','Dakota','Hennepin','Ramsey','Scott','Washington'];
         var cancers=['Multiple Myeloma','Breast- not specified','Lung- not specified','Rectal','Gastrointestinal - Colon'];
 
         if(vm.option=='Distributions by cancer type'){
-          console.log('cancer');
+          if (verbose) console.log('cancer');
           for(var i=0;i<cancers.length;i++){
             distByCountyOrCancerService.getDistinct("Where diagnosis='"+cancers[i]+"'  AND (distribution_date>'"+vm.startDate.toISOString().substring(0,10)+"' AND distribution_date<'"+vm.endDate.toISOString().substring(0,10)+"')",i).then(function(res){
-              console.log('returned with distint',res);
+              if (verbose) console.log('returned with distint',res);
                data.push({cat:cancers[res.data[0].i],val:Number(res.data[0].sum.replace(/[^0-9\.]+/g,""))});
 
 
@@ -33,7 +35,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
                   d.cat = d.cat;
                   d.val = +d.val;
               });
-              console.log(data);
+              if (verbose) console.log(data);
               d3.selectAll("#barsvg").remove();
               draw();
 
@@ -48,7 +50,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
                   d.cat = d.cat;
                   d.val = +d.val;
               });
-              console.log(data);
+              if (verbose) console.log(data);
               d3.selectAll("#barsvg").remove();
               draw();
           });
@@ -58,10 +60,10 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
 
 
 
-          console.log('county');
+          if (verbose) console.log('county');
           for(var i=0;i<counties.length;i++){
             distByCountyOrCancerService.getDistinct("Where county='"+counties[i]+"' AND (distribution_date>'"+vm.startDate.toISOString().substring(0,10)+"' AND distribution_date<'"+vm.endDate.toISOString().substring(0,10)+"')",i).then(function(res){
-              console.log(res)
+              if (verbose) console.log(res)
                data.push({cat:counties[res.data[0].i],val:Number(res.data[0].sum.replace(/[^0-9\.]+/g,""))});
 
 
@@ -69,7 +71,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
                   d.cat = d.cat;
                   d.val = +d.val;
               });
-              console.log(data);
+              if (verbose) console.log(data);
               d3.selectAll("#barsvg").remove();
               draw();
 
@@ -85,7 +87,7 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
                   d.cat = d.cat;
                   d.val = +d.val;
               });
-              console.log(data);
+              if (verbose) console.log(data);
               d3.selectAll("#barsvg").remove();
               draw();
           });
@@ -129,19 +131,19 @@ angular.module("AngelApp").controller("d3barchartController", ['$location','$htt
 
         var objectToGet={title:vm.choice};
         barChartService.getDistinct(objectToGet).then(function(res){
-          console.log('res.data',res.data);
+          if (verbose) console.log('res.data',res.data);
 
             for(var i=0;i<res.data.length;i++){
-              console.log('i1',i);
+              if (verbose) console.log('i1',i);
               var objectForValues={field:objectToGet.title,item:res.data[i][objectToGet.title],start:vm.startDate.toISOString().substring(0,10),end:vm.endDate.toISOString().substring(0,10)};
               barChartService.getValues(objectForValues,i).then(function(value){
                 // console.log(value.data);
-                console.log('i2',i);
-                console.log('value.data.i',value.data[0].i);
+                if (verbose) console.log('i2',i);
+                if (verbose) console.log('value.data.i',value.data[0].i);
                 vm.responseOne.push({cat:res.data[value.data[0].i][objectToGet.title],val:Number(value.data[0].count)});
 
                 if(value.data[0].i==res.data.length-1){
-                  console.log(vm.responseOne);
+                  if (verbose) console.log(vm.responseOne);
                   data=vm.responseOne;
                     data.forEach(function(d) {
                         d.cat = (d.cat===''?'Not Specified':d.cat);

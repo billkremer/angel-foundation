@@ -5,16 +5,18 @@ var pool = require("../db/connection");
 // var config = {database: 'angel_data_reporting'};
 // var pool = new pg.Pool(config);
 
+var verbose = false; // turns off console logs
+
 router.post('/allPatientData', function(req, res) {
-  console.log('posting patient csv to database');
-   console.log(req.body.dataArray[100]);
+  if (verbose) console.log('posting patient csv to database');
+   if (verbose) console.log(req.body.dataArray[100]);
 
 
   var patientArray = req.body.dataArray;
 
   pool.connect(function(err, client, done) {
     if(err) {
-      console.log('Error connecting to DB', err);
+      if (verbose) console.log('Error connecting to DB', err);
       res.sendStatus(500);
       done()
     } else {
@@ -23,7 +25,7 @@ router.post('/allPatientData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error setting time stamp in DB', err);
+            if (verbose) console.log('Error setting time stamp in DB', err);
             res.sendStatus(500);
           } else {
 
@@ -35,7 +37,7 @@ router.post('/allPatientData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error clearing DB', err);
+            if (verbose) console.log('Error clearing DB', err);
             res.sendStatus(500);
           } else {
 
@@ -55,7 +57,7 @@ router.post('/allPatientData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error querying DB', err);
+            if (verbose) console.log('Error querying DB', err);
             // res.sendStatus(500);
             res.send({status: 500, id: patientArray[i] });
             // let them know which rows have the error
@@ -78,15 +80,15 @@ router.post('/allPatientData', function(req, res) {
 
 
 router.post('/allDistributionData', function(req, res) {
-  console.log('posting csv to database');
-  console.log(req.body);
+  if (verbose) console.log('posting csv to database');
+  if (verbose) console.log(req.body);
 
   var distributionArray = req.body.dataArray;
 
 
   pool.connect(function(err, client, done) {
     if(err) {
-      console.log('Error connecting to DB, err');
+      if (verbose) console.log('Error connecting to DB, err');
       res.sendStatus(500);
       done()
     } else {
@@ -95,7 +97,7 @@ router.post('/allDistributionData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error setting time stamp in DB', err);
+            if (verbose) console.log('Error setting time stamp in DB', err);
             res.sendStatus(500);
           } else {
 
@@ -107,7 +109,7 @@ router.post('/allDistributionData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error clearing DB', err);
+            if (verbose) console.log('Error clearing DB', err);
             res.sendStatus(500);
           } else {
 
@@ -126,7 +128,7 @@ router.post('/allDistributionData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error querying DB', err);
+            if (verbose) console.log('Error querying DB', err);
             res.send({status: 500, id: distributionArray[i] });
             // res.sendStatus(500);
           } else {
@@ -143,14 +145,14 @@ router.post('/allDistributionData', function(req, res) {
 
 
 router.post('/addPatientData', function(req, res) {
-  console.log('posting patient csv to database');
+  if (verbose) console.log('posting patient csv to database');
   // console.log(req.body.dataArray[100]);
 
   var patientArray = req.body.dataArray;
 
   pool.connect(function(err, client, done) {
     if(err) {
-      console.log('Error connecting to DB', err);
+      if (verbose) console.log('Error connecting to DB', err);
       res.sendStatus(500);
       done()
     } else {
@@ -159,7 +161,7 @@ router.post('/addPatientData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error setting time stamp in DB', err);
+            if (verbose) console.log('Error setting time stamp in DB', err);
             res.sendStatus(500);
           } else {
 
@@ -180,7 +182,7 @@ router.post('/addPatientData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error querying DB', err);
+            if (verbose) console.log('Error querying DB', err);
             // res.sendStatus(500);
             res.send({status: 500, id: patientArray[i] });
             // let them know which rows have the error
@@ -203,15 +205,15 @@ router.post('/addPatientData', function(req, res) {
 
 
 router.post('/addDistributionData', function(req, res) {
-  console.log('posting csv to database');
-  console.log(req.body);
+  if (verbose) console.log('posting csv to database');
+  if (verbose) console.log(req.body);
 
   var distributionArray = req.body.dataArray;
 
 
   pool.connect(function(err, client, done) {
     if(err) {
-      console.log('Error connecting to DB, err');
+      if (verbose) console.log('Error connecting to DB, err');
       res.sendStatus(500);
       done()
     } else {
@@ -220,7 +222,7 @@ router.post('/addDistributionData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error setting time stamp in DB', err);
+            if (verbose) console.log('Error setting time stamp in DB', err);
             res.sendStatus(500);
           } else {
 
@@ -239,7 +241,7 @@ router.post('/addDistributionData', function(req, res) {
         function(err, result) {
           done();
           if (err) {
-            console.log('Error querying DB', err);
+            if (verbose) console.log('Error querying DB', err);
             res.send({status: 500, id: distributionArray[i] });
             // res.sendStatus(500);
           } else {
@@ -258,17 +260,17 @@ router.post('/addDistributionData', function(req, res) {
 router.get('/databasePatientTimeStamp', function(req,res){
   pool.connect(function(err, client, done) {
     if (err) {
-        console.log("Error connecting to DB", err);
+        if (verbose) console.log("Error connecting to DB", err);
         res.sendStatus(500);
         done();
     } else {
         client.query('SELECT to_char(patient_time, \'HH:MIAM  Day MonthDD, YYYY\') FROM date WHERE id = 1;', function(err, result) {
             done();
             if (err) {
-                console.log("Error querying DB", err);
+                if (verbose) console.log("Error querying DB", err);
                 res.sendStatus(500);
             } else {
-                console.log("Got timestamp from DB", result.rows);
+                if (verbose) console.log("Got timestamp from DB", result.rows);
                 res.send(result.rows);
             }
         });
@@ -279,17 +281,17 @@ router.get('/databasePatientTimeStamp', function(req,res){
 router.get('/databaseDistTimeStamp', function(req,res){
   pool.connect(function(err, client, done) {
     if (err) {
-        console.log("Error connecting to DB", err);
+        if (verbose) console.log("Error connecting to DB", err);
         res.sendStatus(500);
         done();
     } else {
         client.query('SELECT to_char(distributions_time, \'HH:MIAM  Day MonthDD, YYYY\') FROM date WHERE id = 1;', function(err, result) {
             done();
             if (err) {
-                console.log("Error querying DB", err);
+                if (verbose) console.log("Error querying DB", err);
                 res.sendStatus(500);
             } else {
-                console.log("Got timestamp from DB", result.rows);
+                if (verbose) console.log("Got timestamp from DB", result.rows);
                 res.send(result.rows);
             }
         });

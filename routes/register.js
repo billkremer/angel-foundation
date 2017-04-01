@@ -1,6 +1,8 @@
 var router = require('express').Router();
 var User = require('../models/user');
 
+var verbose = false; // turns off console logs
+
 router.post('/', function(req, res){
   User.findByUsername(req.body.username).then(function(user){
     if (user) {
@@ -8,10 +10,10 @@ router.post('/', function(req, res){
     }
 
     return User.create(req.body.username, req.body.password).then(function(user){
-      console.log('Created new user!');
+      if (verbose) console.log('Created new user!');
       req.login(user, function(err){
         if (err) {
-          console.log('Error logging in newly registered user', err);
+          if (verbose) console.log('Error logging in newly registered user', err);
           return res.sendStatus(500);
         }
       });
@@ -19,7 +21,7 @@ router.post('/', function(req, res){
       res.sendStatus(201);
     });
   }).catch(function(err){
-    console.log('Error creating user');
+    if (verbose) console.log('Error creating user');
     res.sendStatus(500);
   });
 });

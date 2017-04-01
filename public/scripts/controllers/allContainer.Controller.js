@@ -1,6 +1,6 @@
 angular.module("AngelApp").controller("allContainerController", ['$location','$http','dataVisService',
   function($location,$http,dataVisService) {
-    console.log('datavis controller loaded');
+  //  console.log('datavis controller loaded');
 
     var vm=this;
     vm.dataVis=false;

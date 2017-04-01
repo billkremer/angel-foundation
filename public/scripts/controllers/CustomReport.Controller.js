@@ -1,7 +1,7 @@
 angular.module("AngelApp").controller("CustomReportController",
   function(CustomReportService,subcategoryBucketService,$location,$http) {
 
-    var verbose = true;
+    var verbose = false;
 
     if (verbose) console.log('custom controller loaded');
 
@@ -435,11 +435,13 @@ angular.module("AngelApp").controller("CustomReportController",
         if (vm.dataSetSelections[i].title==category.title){
           vm.dataSetSelections.splice(i,1);
         }
-      }if (verbose) console.log(vm.dataSetSelections[0]);
+      }
+      if (verbose) console.log(vm.dataSetSelections[0]);
       if(vm.dataSetSelections[0]==undefined){
         vm.dataSetSelections=[{title:'no filters selected'}];
         vm.showHeaders=false;
-      }if (verbose) console.log(vm.dataSetSelections[0]);
+      }
+      if (verbose) console.log(vm.dataSetSelections[0]);
     }
 
     vm.removeColumnSelection=function(category){
@@ -447,11 +449,13 @@ angular.module("AngelApp").controller("CustomReportController",
         if (vm.columnLimitSelections[i]==category){
           vm.columnLimitSelections.splice(i,1);
         }
-      }if (verbose) console.log(vm.columnLimitSelections[0]);
+      }
+      if (verbose) console.log(vm.columnLimitSelections[0]);
       if(vm.columnLimitSelections[0]==undefined){
         vm.columnLimitSelections=['no filters selected'];
         vm.showHeaders=false;
-      }if (verbose) console.log(vm.columnLimitSelections[0]);
+      }
+      if (verbose) console.log(vm.columnLimitSelections[0]);
     }
 
     // var table=[]; // this variable is used in saveReport when choosing the database tables.
@@ -548,7 +552,7 @@ angular.module("AngelApp").controller("CustomReportController",
         if (verbose) console.log("table", table);
 
 
-        console.log(orderByString, table);
+        if (verbose) console.log(orderByString, table);
 
         if (table.includes('patient')){
           if (verbose) console.log("it has patient");
@@ -754,12 +758,12 @@ vm.saveReport=function(){
     vm.keys = [];
 
     CustomReportService.getCustomReport(reportString).then(function(response){
-      console.log(response);
+      if (verbose) console.log(response);
       vm.customReportResponse=response.data;
-      console.log(vm.customReportResponse);
+      if (verbose) console.log(vm.customReportResponse);
 
       docDefinition.content[0].table.body=[[]];
-      console.log('standard report returned', vm.customReportResponse);
+      if (verbose) console.log('standard report returned', vm.customReportResponse);
       for(key in vm.customReportResponse[0]){
         vm.keys.push(key);
         docDefinition.content[0].table.body[0].push(key);
@@ -782,7 +786,7 @@ vm.saveReport=function(){
               csv += "\n";
       });
 
-      console.log(csv);
+      if (verbose) console.log(csv);
       var hiddenElement = document.createElement('a');
       hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
       hiddenElement.target = '_blank';
@@ -797,12 +801,12 @@ vm.saveReport=function(){
     vm.keys = [];
 
     CustomReportService.getCustomReport(reportString).then(function(response){
-      console.log(response);
+      if (verbose) console.log(response);
       vm.customReportResponse=response.data;
-      console.log(vm.customReportResponse);
+      if (verbose) console.log(vm.customReportResponse);
 
       docDefinition.content[0].table.body=[[]];
-      console.log('standard report returned', vm.customReportResponse);
+      if (verbose) console.log('standard report returned', vm.customReportResponse);
       for(key in vm.customReportResponse[0]){
         vm.keys.push(key);
         docDefinition.content[0].table.body[0].push(key);

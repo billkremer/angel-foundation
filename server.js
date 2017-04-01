@@ -102,7 +102,7 @@ app.use('/bubblechart', bubblechart);
 
 
 function ensureAuthenticated(req, res, next) {
-  console.log('Ensuring the user is authenticated');
+  // console.log('Ensuring the user is authenticated');
   if (req.isAuthenticated()) {
     next();
   } else {

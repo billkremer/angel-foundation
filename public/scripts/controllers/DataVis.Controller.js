@@ -1,6 +1,8 @@
 angular.module("AngelApp").controller("DataVisController", ['$location','$http','dataVisService',
   function($location,$http,dataVisService) {
-    console.log('datavis controller loaded');
+    // console.log('datavis controller loaded');
+
+    var verbose = false;
 
     var vm=this;
     var now=new Date()
@@ -18,13 +20,13 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     var arrayOfCounties=[];
     dataVisService.getDistinct(objectToGet).then(function(res){
       res.data.shift();
-      console.log(res.data);
+      if (verbose) console.log(res.data);
 
       // var countyCountArray=[];
       for( var i=0; i<res.data.length;i++){
         var objectForValues={field:'county',item:res.data[i].county};
         dataVisService.getValues(objectForValues,i).then(function(result){
-          console.log('new stuff from db',result.data);
+          if (verbose) console.log('new stuff from db',result.data);
           // countyCountArray.push(count.data);
           var currentCountyObject={countyName:result.data[0].county+' County',count:result.data.length};
 
@@ -41,7 +43,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
               if(result.data[0].i==res.data.length-1){
                 loadData();
 
-                console.log('array of counties',arrayOfCounties);
+                if (verbose) console.log('array of counties',arrayOfCounties);
               }
 
             }
@@ -115,9 +117,9 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
         if(i==((dif-lowLimit)-1)){
           months = months.map(function(d){return parseDate.parse(d);});
           // console.log('months',months);
-          console.log(months);
+          if (verbose) console.log(months);
           if(currentCounty==''){
-            console.log('no county selected');
+            if (verbose) console.log('no county selected');
           }else{
 
             getSelectToggleCounty();
@@ -132,7 +134,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
       // getSelectToggleCounty();
 
     }));
-    console.log('months',months);
+    if (verbose) console.log('months',months);
     //Check if info exists, by school number
     Array.prototype.returnCountyInfo = function(county){
     		for (var i = 0; i < this.length; i++) {
@@ -144,7 +146,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     };
 
     function countyObj(countyInfo){
-      console.log('object passed into countyobj',countyInfo)
+      if (verbose) console.log('object passed into countyobj',countyInfo)
       var outArr = [];
       var popArr = [];
       var collArr = [];
@@ -176,9 +178,9 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
             popArr.push(0);
           }
               outArr.populations = popArr;
-              console.log('populations',popArr,popArr.length);
+              if (verbose) console.log('populations',popArr,popArr.length);
               outArr.collegeAmt = collArr;
-              console.log('outARR',outArr);
+              if (verbose) console.log('outARR',outArr);
 
         }
       }
@@ -210,7 +212,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
 
     // var months = ["1998","2001","2004","2007","2010"];
     months = months.map(function(d){return parseDate.parse(d);});
-    console.log(months);
+    if (verbose) console.log(months);
     var width = 400,height = 430;
 
     //other functions use the projection/path for highlighting certain sections of the map
@@ -289,7 +291,7 @@ angular.module("AngelApp").controller("DataVisController", ['$location','$http',
     						var countyElement = document.getElementById('countyOptions');
     						// countyElement.value = d.properties.name;
                 currentCounty=d.properties.name;
-                console.log('clicked county',clickedCounty);
+                if (verbose) console.log('clicked county',clickedCounty);
     						toggleCounty(clickedCounty);
     					}
     				});

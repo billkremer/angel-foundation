@@ -1,6 +1,8 @@
 angular.module("AngelApp").controller("DataVisThreeController", ['$location','$http',
   function($location,$http) {
-    console.log('datavis3 controller loaded');
+
+    var verbose = false;
+    if (verbose) console.log('datavis3 controller loaded');
 
     var vm=this;
     vm.startDate=new Date('12-01-2016');
@@ -18,11 +20,11 @@ angular.module("AngelApp").controller("DataVisThreeController", ['$location','$h
           end: vm.endDate.toISOString().substring(0,10)
         }
       }).then(function(response){
-        console.log('data from db',response.data);
+        if (verbose) console.log('data from db',response.data);
         var data=response.data;
 
 
-          console.log('here is what data looks like',data);
+          if (verbose) console.log('here is what data looks like',data);
           var width = 1500, height = 700;
 
           var fill = d3.scale.ordinal().range(['rgb(149,193,69)','rgb(68,68,68)','rgb(0,82,156)','rgb(68,136,187)','rgb(36,126,176)','rgb(112, 46, 58)','rgb(48, 11, 82)','rgb(1, 9, 84)','rgb(12, 71, 0)','rgb(87, 62, 0)','rgb(249, 62, 12)','rgb(0, 111, 71)','rgb(88, 22, 64)','rgb(125, 116, 0)','rgb(0, 0, 0)'])
@@ -295,7 +297,7 @@ angular.module("AngelApp").controller("DataVisThreeController", ['$location','$h
 
 
         }).catch(function(err){
-          console.log("error running standard report", err);
+          if (verbose) console.log("error running standard report", err);
         });
     }
   vm.changeDate();
