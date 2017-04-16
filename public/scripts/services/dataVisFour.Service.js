@@ -1,6 +1,8 @@
 app.service("dataVisFourService", function($http){
   var vm = this;
 
+  var verbose = false;
+
   vm.getDistinct = function(query){
     return $http({
       method: "GET",
@@ -9,10 +11,10 @@ app.service("dataVisFourService", function($http){
         search: query.title
       }
     }).then(function(response){
-      console.log(response);
+      if (verbose) console.log(response);
       return response;
     }).catch(function(err){
-      console.log("error running standard report", err);
+      if (verbose) console.log("error running standard report", err);
     })
   }//end of getDistinct
 
@@ -27,11 +29,11 @@ app.service("dataVisFourService", function($http){
         end:query.end
       }
     }).then(function(response){
-      console.log(response);
+      if (verbose) console.log(response);
       response.data[0].i=index;
       return response;
     }).catch(function(err){
-      console.log("error running standard report", err);
+      if (verbose) console.log("error running standard report", err);
     })
   }//end of getValues
 

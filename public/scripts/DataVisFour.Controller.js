@@ -1,6 +1,8 @@
 angular.module("AngelApp").controller("dataVisFourController", ['$location','$http','dataVisFourService','distributionService',
   function($location,$http,dataVisFourService,distributionService) {
-    console.log('datavis4 controller loaded');
+
+    var verbose = false;
+    if (verbose) console.log('datavis4 controller loaded');
 
     var vm=this;
     Number.prototype.round = function(decimals) {
@@ -34,13 +36,13 @@ vm.ethnicity=function(){
     // var arrayOfCounties=[];
     dataVisFourService.getDistinct(objectToGet).then(function(res){
       res.data.shift();
-      console.log('getDistinct data',res.data);
+      if (verbose) console.log('getDistinct data',res.data);
 
       // var countyCountArray=[];
       for( var i=0; i<res.data.length;i++){
         var objectForValues={field:'ethnicity',item:res.data[i].ethnicity,start:vm.startDate.toISOString().substring(0,10),end:vm.endDate.toISOString().substring(0,10)};
         dataVisFourService.getValues(objectForValues,i).then(function(res){
-          console.log('new stuff from db',res.data);
+          if (verbose) console.log('new stuff from db',res.data);
 
           if(res.data[0].ethnicity=='Caucasian'||res.data[0].ethnicity=='African American or Black'||res.data[0].ethnicity=='Hispanic'||res.data[0].ethnicity=='Asian'||res.data[0].ethnicity=='American Indian or Alaskan Native'){
               data.push({'label':res.data[0].ethnicity,'value':res.data.length,'enabled':true});
@@ -54,7 +56,7 @@ vm.ethnicity=function(){
               }
 
             }
-            console.log('data data data',data);
+            if (verbose) console.log('data data data',data);
           // if(res.data[0].i==res.data.length-2){
 
             data.sort(function(a, b) {
@@ -219,7 +221,7 @@ vm.distribution=function(){
     // var arrayOfCounties=[];
     distributionService.getDistinct(objectToGet).then(function(res){
 
-      console.log('getDistinct data',res.data);
+      if (verbose) console.log('getDistinct data',res.data);
 
 
       for( var i=0; i<res.data.length;i++){
@@ -229,7 +231,7 @@ vm.distribution=function(){
           var objectForValues={field:'grant_type',item:res.data[i].grant_type,start:vm.startDate.toISOString().substring(0,10),end:vm.endDate.toISOString().substring(0,10)};
         }
         distributionService.getValues(objectForValues,i).then(function(result){
-          console.log('new stuff from db',result.data);
+          if (verbose) console.log('new stuff from db',result.data);
 
           if(result.data[0].grant_type=='Electric Bill Payment'||result.data[0].grant_type=='Phone Bill Payment'||result.data[0].grant_type=='Water Bill Payment'||result.data[0].grant_type=='Garbage Bill Payment'||result.data[0].grant_type=='Gas Bill Payment'){
             for(var i=0;i<data.length;i++){
@@ -286,7 +288,7 @@ vm.distribution=function(){
               }
             }
           }
-            console.log('data data data',data);
+            if (verbose) console.log('data data data',data);
           // if(result.data[0].i==result.data.length-2){
 
             data.sort(function(a, b) {

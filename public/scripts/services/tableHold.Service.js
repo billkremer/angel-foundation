@@ -3,14 +3,12 @@ app.service("tableHoldService", function($http){
 
   vm.holdTable=function(table){
     vm.table=table;
-    console.log(vm.table);
+    // console.log(vm.table);
   }
 
   vm.returnTable=function(){
-    console.log(vm.table);
+    // console.log(vm.table);
     return vm.table;
   }
-
-
 
 });

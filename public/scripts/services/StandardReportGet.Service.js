@@ -1,6 +1,8 @@
 app.service("StandardReportGetService", function($http){
   var vm = this;
 
+  var verbose = false;
+
   vm.getAllStandardReports = function(){
     return $http({
       method: "GET",
@@ -8,7 +10,7 @@ app.service("StandardReportGetService", function($http){
     }).then(function(response){
       return response.data;
     }).catch(function(err){
-      console.log("error getting standard reports", err);
+      if (verbose) console.log("error getting standard reports", err);
     });
   };//end of getAllStandardReports
 
@@ -22,7 +24,7 @@ app.service("StandardReportGetService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(response){
-      console.log("error running standard report", err);
+      if (verbose) console.log("error running standard report", err);
     })
   }//end of selectedStandardReport
 

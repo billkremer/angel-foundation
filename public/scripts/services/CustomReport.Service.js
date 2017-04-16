@@ -1,6 +1,8 @@
 app.service("CustomReportService", function($http){
   var vm = this;
 
+  var verbose = false;
+
   vm.getAllDiagnosis=function(){
     return $http({
       method: "GET",
@@ -8,7 +10,7 @@ app.service("CustomReportService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(err){
-      console.log("error getting all diagnosis", err);
+      if (verbose) console.log("error getting all diagnosis", err);
     });
   };//end of getAllDiagnosis
   vm.getAllCities=function(){
@@ -18,7 +20,7 @@ app.service("CustomReportService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(err){
-      console.log("error getting all cities", err);
+      if (verbose) console.log("error getting all cities", err);
     });
   };//end of getAllCities
   vm.getAllCounties=function(){
@@ -28,7 +30,7 @@ app.service("CustomReportService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(err){
-      console.log("error getting all counties", err);
+      if (verbose) console.log("error getting all counties", err);
     });
   };//end of getAllCounties
   vm.getAllStates=function(){
@@ -38,7 +40,7 @@ app.service("CustomReportService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(err){
-      console.log("error getting states", err);
+      if (verbose) console.log("error getting states", err);
     });
   };//end of getAllZipCodes
   vm.getAllZipCodes=function(){
@@ -48,7 +50,7 @@ app.service("CustomReportService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(err){
-      console.log("error getting zip codes", err);
+      if (verbose) console.log("error getting zip codes", err);
     });
   };//end of getAllZipCodes
   vm.getAllSwIds=function(){
@@ -58,7 +60,7 @@ app.service("CustomReportService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(err){
-      console.log("error getting Social Worker Ids", err);
+      if (verbose) console.log("error getting Social Worker Ids", err);
     });
   };//end of getAllSwIds
   vm.getAllSwClinics=function(){
@@ -68,7 +70,7 @@ app.service("CustomReportService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(err){
-      console.log("error getting social worker clinics", err);
+      if (verbose) console.log("error getting social worker clinics", err);
     });
   };//end of getAllSwClinics
   vm.getAllDrClinics=function(){
@@ -78,7 +80,7 @@ app.service("CustomReportService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(err){
-      console.log("error getting doctor clinics", err);
+      if (verbose) console.log("error getting doctor clinics", err);
     });
   };//end of getAllDrClinics
   vm.getAllDrIds=function(){
@@ -88,7 +90,7 @@ app.service("CustomReportService", function($http){
     }).then(function(response){
       return response;
     }).catch(function(err){
-      console.log("error getting dcotor IDs", err);
+      if (verbose) console.log("error getting dcotor IDs", err);
     });
   };//end of getAllDrIds
 
@@ -100,10 +102,10 @@ app.service("CustomReportService", function($http){
         search: query
       }
     }).then(function(response){
-      console.log('custom report response from db', response);
+      if (verbose) console.log('custom report response from db', response);
       return response;
     }).catch(function(err){
-      console.log('error getting custom report', err);
+      if (verbose) console.log('error getting custom report', err);
     })
   }
 });

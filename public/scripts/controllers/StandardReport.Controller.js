@@ -1,7 +1,7 @@
 app.controller("StandardReportController",
   function(StandardReportGetService,tableHoldService,$http) {
 
-    var verbose = true; // hides console logs
+    var verbose = false; // hides console logs
 
     if (verbose) console.log('standard controller loaded');
 
@@ -72,7 +72,7 @@ app.controller("StandardReportController",
 
             var selectPrevIndex = vm.standardReportList.findIndex(function (x) {return x.report_name == report.report_name})
 
-            console.log(selectPrevIndex, "selectPrevIndex");
+            if (verbose) console.log(selectPrevIndex, "selectPrevIndex");
 
             if (selectPrevIndex > 0) {
               selectPrevIndex--; // to select the previous report
@@ -107,7 +107,7 @@ app.controller("StandardReportController",
       if (verbose) console.log('report title - selectStandardReport',vm.reportTitle)
       vm.currentReport=report;
       StandardReportGetService.selectedStandardReport(report).then(function(response){
-        console.log('here is the stuff from the report',response.data);
+        if (verbose) console.log('here is the stuff from the report',response.data);
         vm.standardReportResponse=response.data;
 
         docDefinition.content[0].table.body=[[]];
@@ -116,9 +116,9 @@ app.controller("StandardReportController",
           vm.keys.push(key);
           docDefinition.content[0].table.body[0].push(key);
         }
-        console.log(vm.keys, "vm.keys");
+        if (verbose) console.log(vm.keys, "vm.keys");
         if (vm.keys.length == 0) {
-          console.log("inside vmkeys if");
+          if (verbose) console.log("inside vmkeys if");
           vm.keys = ["No Data Matches This Search."];
         };
 
